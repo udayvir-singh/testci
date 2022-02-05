@@ -1,0 +1,40 @@
+TODO:
+  write build CI
+  include lua
+  release v0.1
+  [:DONE:]
+
+read $TODAY
+
+tangerine:
+  init.fnl
+  fennel.vim
+  utils:
+    env.fnl
+    fs.fnl
+    diff.fnl
+    path.fnl
+    error.fnl
+    logger.fnl
+  api:
+    init.fnl
+    compile.fnl
+    eval.fnl
+    clean.fnl
+  vim:
+    cmds.fnl
+    hooks.fnl
+
+ENV:
+  vimrc
+  source
+  target
+  compiler {
+    version "latest"
+    verbose true
+    clean   true
+    force   false
+    hooks   ["onsave", "onload"]
+  }
+
+
