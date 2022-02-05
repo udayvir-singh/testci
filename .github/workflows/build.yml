@@ -15,8 +15,9 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: install requirements
-      run: sudo apt update -y
-      run: sudo apt install -y neovim lua5.3 pandoc
+      run: |
+        sudo apt update -y
+        sudo apt install -y neovim lua5.3 pandoc
 
     - name: build Fennel
       run: make fnl
