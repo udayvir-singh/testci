@@ -14,12 +14,12 @@ default: help
 LUA_FILES := $(shell find lua -name '*.lua')
 
 git-skip:
-	git update-index --skip-worktree $(LUA_FILES)
-	git update-index --skip-worktree doc/tangerine.txt
+	git update-index --assume-unchanged $(LUA_FILES)
+	git update-index --assume-unchanged doc/tangerine.txt
 
 git-unskip:
-	git update-index --no-skip-worktree $(LUA_FILES)
-	git update-index --no-skip-worktree doc/tangerine.txt
+	git update-index --no-assume-unchanged $(LUA_FILES)
+	git update-index --no-assume-unchanged doc/tangerine.txt
 
 # ------------------- #
 #      BUILDING       #
@@ -71,8 +71,14 @@ help:
 	echo '  :clean          deletes build and install dir'
 	echo '  :loc            pretty print lines of code in fennel files'
 	echo '  :help           print this help.'
+	echo 
+	echo 'Git helpers:'
+	echo '  git-skip       make git ignore build dirs'
+	echo '  git-unskip     reverts git-skip, run :build before executing'
+	echo
+	echo 'PS: run git-skip before running any targets to prevent output files in git index'
 	echo
 	echo 'Examples:'
-	echo '  make clean install'
-	echo '  make vimdoc'
+	echo '  make clean build'
+	echo '  make install'
 	echo '  make loc  [do it]'

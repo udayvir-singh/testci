@@ -3,7 +3,6 @@
 ; (-string)  tangerine.utils.logger
 ; (-file)    tangerine.utils.path
 ; (-file)    tangerine.utils.fs
-(fn test [])
 (local fennel (require :tangerine.fennel))
 (local {
   : p
