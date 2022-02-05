@@ -14,22 +14,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: install requirements
+    - name: Install requirements
       run: |
         apk update && apk upgrade 
         apk add make bash curl coreutils neovim
 
-    - name: clean old docs
-      run: rm doc/tangerine.txt
+    - name: Clean docs
+      run: rm -v doc/tangerine.txt
 
-    - name: run panvimdoc
+    - name: Run panvimdoc
       run: make vimdoc
-
-    - name: check panvimdoc
-      run: cat doc/tangerine.txt
-
-      # - name: build Fennel
-      #   run: make fnl
-    
-      # - name: copy dependencies
-      #   run: make deps
