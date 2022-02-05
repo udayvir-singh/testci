@@ -25,6 +25,12 @@ jobs:
     - name: Run panvimdoc
       run: make vimdoc
 
+    - uses: actions/upload-artifact@master
+      with:
+        name: vimdoc.txt
+        path: doc/tangerine.txt
+
+
   commit:
     runs-on: ubuntu-latest
     needs: [vimdoc]
@@ -32,4 +38,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Run Clean
+      run: make clean
+
+    - run: ls -a doc
+
+    - uses: actions/download-artifact@master
+      with:
+        name: vimdoc.txt
+        path: doc/tangerine.txt
+
     - run: cat doc/tangerine.txt
+
