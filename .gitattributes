@@ -1,4 +1,4 @@
 lololol
-lua/**  -diff linguist-generated
+lua/** linguist-generated
 deps/** -diff linguist-vendored
 lua/tangerine/fennel/* -diff linguist-vendored
