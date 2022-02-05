@@ -14,7 +14,8 @@ default: help
 LUA_FILES := $(shell find lua -name '*.lua')
 
 --pull:
-	git pull
+	echo :: RUNNING GIT PULL
+	git pull | sed 's:^:   :'
 
 git-pull: clean --pull build
 
@@ -44,19 +45,21 @@ vimdoc:
 	echo :: GENERATING HELPTAGS
 	nvim --noplugin --headless -c "helptags doc" -c "q" doc/tangerine.txt
 
+clean:
+	rm -rf doc/tags doc/tangerine.txt
+	echo :: CLEANED VIMDOC
+	rm -rf lua/**
+	echo :: CLEANED BUILD DIR
+
 install:
 	[ -d $(INSTALL_DIR) ] || mkdir -p $(INSTALL_DIR)
 	ln -srf lua $(INSTALL_DIR)/lua
 	ln -srf doc $(INSTALL_DIR)/doc
 	echo :: FINISHED INSTALLING
 
-clean:
-	rm -rf doc/tags doc/tangerine.txt
-	echo :: CLEANED VIMDOC
-	rm -rf lua/**
-	echo :: CLEANED BUILD DIR
+uninstall:
 	rm -rf $(INSTALL_DIR)
-	echo :: CLEANED INSTALL DIR
+	echo :: UN-INSTALLED TANGERINE
 
 # ------------------- #
 #        EXTRA        #
