@@ -41,6 +41,9 @@ jobs:
       run: |
         apk update && apk upgrade 
         apk add make bash curl coreutils lua5.4
+        # links lua5.4 -> lua
+        cd /usr/bin && ln -s lua5.4 lua
+        cd /usr/lib && ln -s lua5.4/liblua.so liblua5.4.so
 
     - name: Clean previous build
       run:  make clean
