@@ -69,15 +69,20 @@ jobs:
     - name: Clean previous build
       run:  make clean
 
-    - uses: actions/download-artifact@v2
+    - name: Download vimdoc
+      uses: actions/download-artifact@v2
       with:
         name: vimdoc
         path: doc
 
-    - uses: actions/download-artifact@v2
+    - name: Artifact fennel
+      uses: actions/download-artifact@v2
       with:
         name: fennel
         path: fnl
 
-    - run: cat doc/tangerine.txt
+    - name: Checks files
+      run: |
+        ls -l doc
+        ls -l lua
 
