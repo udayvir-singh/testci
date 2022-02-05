@@ -9,6 +9,19 @@ endif
 default: help
 
 # ------------------- #
+#         GIT         #
+# ------------------- #
+LUA_FILES := $(shell find lua -name '*.lua')
+
+git-skip:
+	git update-index --skip-worktree $(LUA_FILES)
+	git update-index --skip-worktree doc/tangerine.txt
+
+git-unskip:
+	git update-index --no-skip-worktree $(LUA_FILES)
+	git update-index --no-skip-worktree doc/tangerine.txt
+
+# ------------------- #
 #      BUILDING       #
 # ------------------- #
 .PHONY: fnl deps

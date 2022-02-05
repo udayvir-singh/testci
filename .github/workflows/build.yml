@@ -97,9 +97,6 @@ jobs:
         name: fennel-out
         path: lua
 
-    - name: Add files
-      run: git add --force lua doc/tangerine.txt
-
     - name: Print Changes
       run:  git status --short --ignored
 
