@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  panvimdoc:
+  vimdoc:
     runs-on: ubuntu-latest
     container: pandoc/minimal:2.17-alpine
 
@@ -24,3 +24,10 @@ jobs:
 
     - name: Run panvimdoc
       run: make vimdoc
+
+  commit:
+    runs-on: ubuntu-latest
+    needs: [vimdoc]
+    
+    steps:
+      - run: cat doc/tangerine.txt
