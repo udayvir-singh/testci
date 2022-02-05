@@ -16,7 +16,7 @@ jobs:
     
     - name: install requirements
       run: apt install lua
-l
+
     - name: build Fennel
       run: make fnl
     
