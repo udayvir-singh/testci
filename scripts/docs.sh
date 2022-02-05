@@ -22,7 +22,7 @@ if [ ${DOWNLOAD} -eq 1 ]; then
 
 	:: DOWNLOADING PANVIMDOC
 	for FILE in ${FILES}; do
-		if curl -sLJO "${REMOTE}/${FILE}" --output-dir "${SRCDIR}"; then
+		if curl -sLJ "${REMOTE}/${FILE}" -o "${SRCDIR}/${FILE}"; then
 			log 2 "${SRCDIR}/${FILE}"
 		else
 			log 1 "${SRCDIR}/${FILE}"
