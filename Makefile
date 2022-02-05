@@ -33,8 +33,8 @@ install:
 	echo :: FINISHED INSTALLING
 
 clean:
-	rm -rf doc/tags
-	echo :: CLEANED HELPTAGS
+	rm -rf doc/tags doc/tangerine.txt
+	echo :: CLEANED VIMDOC
 	rm -rf lua/**
 	echo :: CLEANED BUILD DIR
 	rm -rf $(INSTALL_DIR)
