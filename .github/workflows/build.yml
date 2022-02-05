@@ -30,4 +30,6 @@ jobs:
     needs: [vimdoc]
     
     steps:
-      - run: cat doc/tangerine.txt
+    - uses: actions/checkout@v2
+
+    - run: cat doc/tangerine.txt
