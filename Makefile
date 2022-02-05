@@ -21,12 +21,13 @@ deps:
 	./scripts/link.sh deps/lua lua/tangerine/fennel
 
 vimdoc:
+	[ -d doc ] || mkdir doc
 	./scripts/docs.sh README.md ./doc/tangerine.txt
 	echo :: GENERATING HELPTAGS
 	nvim --noplugin --headless -c "helptags doc" -c "q" doc/tangerine.txt
 
 install:
-	[[ -d $(INSTALL_DIR) ]] || mkdir -p $(INSTALL_DIR)
+	[ -d $(INSTALL_DIR) ] || mkdir -p $(INSTALL_DIR)
 	ln -srf lua $(INSTALL_DIR)/lua
 	ln -srf doc $(INSTALL_DIR)/doc
 	echo :: FINISHED INSTALLING
