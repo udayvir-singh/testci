@@ -13,13 +13,18 @@ default: help
 # ------------------- #
 LUA_FILES := $(shell find lua -name '*.lua')
 
+--pull:
+	git pull
+
+git-pull: clean --pull build
+
 git-skip:
-	git update-index --assume-unchanged $(LUA_FILES)
-	git update-index --assume-unchanged doc/tangerine.txt
+	git update-index --skip-worktree $(LUA_FILES)
+	git update-index --skip-worktree doc/tangerine.txt
 
 git-unskip:
-	git update-index --no-assume-unchanged $(LUA_FILES)
-	git update-index --no-assume-unchanged doc/tangerine.txt
+	git update-index --no-skip-worktree $(LUA_FILES)
+	git update-index --no-skip-worktree doc/tangerine.txt
 
 # ------------------- #
 #      BUILDING       #
@@ -75,6 +80,7 @@ help:
 	echo 'Git helpers:'
 	echo '  git-skip       make git ignore build dirs'
 	echo '  git-unskip     reverts git-skip, run :build before executing'
+	echo '  git-pull       clean build dirs before fetching to avoid conflicts'
 	echo
 	echo 'PS: run git-skip before running any targets to prevent output files in git index'
 	echo
