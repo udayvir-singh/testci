@@ -70,8 +70,8 @@ panvimdoc () {
 }
 
 pandoc --version
-ls --long panvimdoc
-ls --long
+ls panvimdoc
+ls
 
 :: RUNNING PANVIMDOC
 if panvimdoc; then
