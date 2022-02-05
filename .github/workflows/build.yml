@@ -1,12 +1,18 @@
 name: Build CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
+  loc:
+    name: lines of code
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Lines Of Code
+    - run:  make loc
+
   vimdoc:
     runs-on: ubuntu-latest
     container: pandoc/minimal:2.17-alpine
@@ -25,7 +31,7 @@ jobs:
     - name: Build vimdoc
       run:  make vimdoc
 
-    - uses: actions/upload-artifact@master
+    - uses: actions/upload-artifact@v2
       with:
         name: vimdoc
         path: doc
@@ -54,12 +60,13 @@ jobs:
     - name: Build fennel
       run: make fnl
 
-    - uses: actions/upload-artifact@master
+    - uses: actions/upload-artifact@v2
       with:
         name: fennel-out
         path: lua
 
   commit:
+    name: commit changes
     runs-on: ubuntu-latest
     needs: [vimdoc, fennel]
     
