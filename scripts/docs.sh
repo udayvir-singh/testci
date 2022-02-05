@@ -75,5 +75,6 @@ if panvimdoc; then
 else
 	log 1 ERROR
 	logcat "${LOGFILE}"
+	exit 1
 fi
 
