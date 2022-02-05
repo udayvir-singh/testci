@@ -22,8 +22,7 @@ jobs:
     - name: build Fennel
       run: make fnl
     
-    - name: build vimdoc
-      uses: docker
+    - uses: docker
       with:
         image: .github/workflows/pandoc.Dockerfile
           
