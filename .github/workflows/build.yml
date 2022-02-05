@@ -27,8 +27,8 @@ jobs:
 
     - uses: actions/upload-artifact@master
       with:
-        name: vimdoc.txt
-        path: doc/tangerine.txt
+        name: vimdoc
+        path: doc
 
 
   commit:
@@ -45,8 +45,8 @@ jobs:
 
     - uses: actions/download-artifact@master
       with:
-        name: vimdoc.txt
-        path: doc/tangerine.txt
+        name: vimdoc
+        path: doc
 
     - run: cat doc/tangerine.txt
 
