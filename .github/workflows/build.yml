@@ -97,8 +97,9 @@ jobs:
         name: fennel-out
         path: lua
 
-    - name: Checks files
-      run: |
-        ls -l doc
-        ls -l lua
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: '[auto]: build deps'
+        commit_options: '--force'
+        file_pattern: lua doc/tangerine.txt
 
