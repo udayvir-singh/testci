@@ -69,6 +69,10 @@ panvimdoc () {
 		-o "${TARGET}" 2> "${LOGFILE}"
 }
 
+pandoc --version
+ls --long panvimdoc
+ls --long
+
 :: RUNNING PANVIMDOC
 if panvimdoc; then
 	log 2 DONE
