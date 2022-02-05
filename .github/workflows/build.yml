@@ -1,12 +1,12 @@
 name: Build CI
 
 on: [push, pull_request]
-      paths:
-      - README.md
-      - Makefile
-      - deps/**
-      - fnl/**
-      - scripts/**
+  paths:
+    - README.md
+    - Makefile
+    - deps/**
+    - fnl/**
+    - scripts/**
 
 jobs:
   loc:
