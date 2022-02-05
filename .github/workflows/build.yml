@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Lines Of Code
-    - run:  make loc
+      run:  make loc
 
   vimdoc:
     runs-on: ubuntu-latest
