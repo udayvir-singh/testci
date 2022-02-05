@@ -9,6 +9,7 @@ on:
       - deps/**
       - fnl/**
       - scripts/**
+      - .github/**
 
 jobs:
   loc:
