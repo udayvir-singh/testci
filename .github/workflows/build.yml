@@ -40,7 +40,7 @@ jobs:
     - name: Install requirements
       run: |
         apk update && apk upgrade 
-        apk add make bash curl coreutils
+        apk add make bash curl coreutils lua5.4
 
     - name: Clean previous build
       run:  make clean
