@@ -14,10 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-      - name: install requirements
-        run: |
-           apk update && apk upgrade 
-           apk add make bash curl coreutils neovim
+    - name: install requirements
+      run: |
+        apk update && apk upgrade 
+        apk add make bash curl coreutils neovim
 
       # - name: build Fennel
       #   run: make fnl
