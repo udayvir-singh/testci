@@ -103,9 +103,9 @@ jobs:
     - name: Print Changes
       run:  git status --short --ignored
 
-    - uses: stefanzweifel/git-auto-commit-action@v4
+    - name: Commit
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: '[auto]: build deps'
-        add_options:  '--force'
         file_pattern: lua doc/tangerine.txt
 
