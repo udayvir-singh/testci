@@ -75,7 +75,7 @@ jobs:
         name: vimdoc
         path: doc
 
-    - name: Artifact fennel
+    - name: Download fennel:out
       uses: actions/download-artifact@v2
       with:
         name: fennel-out
