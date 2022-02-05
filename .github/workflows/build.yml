@@ -23,10 +23,9 @@ jobs:
       run: make fnl
     
     - name: build vimdoc
-      description: Runs panvimdoc in Docker container
-      runs:
-        using: 'docker'
-        image: '.github/workflows/pandoc.Dockerfile'  
+      uses: docker
+      with:
+        image: .github/workflows/pandoc.Dockerfile
           
     - name: copy dependencies
       run: make deps
