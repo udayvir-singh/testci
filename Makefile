@@ -9,25 +9,6 @@ endif
 default: help
 
 # ------------------- #
-#         GIT         #
-# ------------------- #
-LUA_FILES := $(shell find lua -name '*.lua')
-
---pull:
-	echo :: RUNNING GIT PULL
-	git pull | sed 's:^:   :'
-
-git-pull: clean --pull build
-
-git-skip:
-	git update-index --skip-worktree $(LUA_FILES)
-	git update-index --skip-worktree doc/tangerine.txt
-
-git-unskip:
-	git update-index --no-skip-worktree $(LUA_FILES)
-	git update-index --no-skip-worktree doc/tangerine.txt
-
-# ------------------- #
 #      BUILDING       #
 # ------------------- #
 .PHONY: fnl deps
@@ -53,13 +34,32 @@ clean:
 
 install:
 	[ -d $(INSTALL_DIR) ] || mkdir -p $(INSTALL_DIR)
-	ln -srf lua $(INSTALL_DIR)/lua
-	ln -srf doc $(INSTALL_DIR)/doc
+	ln -srf lua doc -t $(INSTALL_DIR)
 	echo :: FINISHED INSTALLING
 
 uninstall:
 	rm -rf $(INSTALL_DIR)
 	echo :: UN-INSTALLED TANGERINE
+
+# ------------------- #
+#         GIT         #
+# ------------------- #
+LUA_FILES := $(shell find lua -name '*.lua')
+
+--pull:
+	echo :: RUNNING GIT PULL
+	echo -e  "   \e[1;32m$$\e[0m git pull"
+	git pull | sed 's:^:   :'
+
+git-pull: clean --pull build
+
+git-skip:
+	git update-index --skip-worktree $(LUA_FILES)
+	git update-index --skip-worktree doc/tangerine.txt
+
+git-unskip:
+	git update-index --no-skip-worktree $(LUA_FILES)
+	git update-index --no-skip-worktree doc/tangerine.txt
 
 # ------------------- #
 #        EXTRA        #

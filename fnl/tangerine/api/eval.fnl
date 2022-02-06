@@ -6,7 +6,6 @@
 (local fennel (require :tangerine.fennel))
 (local {
   : p
-  : m
   : fs
   : log
   : err

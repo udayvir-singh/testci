@@ -15,6 +15,20 @@
 } (require :tangerine.utils))
 
 ;; -------------------- ;;
+;;        Utils         ;;
+;; -------------------- ;;
+(lambda force? [opts]
+  "Returns value of force set in 'opts' or ENV."
+  (if (not= opts.force nil)
+      (. opts :force)
+      (env.get :compiler :force)))
+
+(lambda compile? [source target opts]
+  "If force != true, then diffs 'source' against stale? 'target'"
+  (or (force? opts)
+      (df.stale? source target)))
+
+;; -------------------- ;;
 ;;      Low Level       ;;
 ;; -------------------- ;;
 (lambda compile-string [str ?filename]
@@ -34,16 +48,18 @@
             (->> (.. marker "\n" output)
                  (fs.write target)))))
 
+
+;; maybe mid level???
 (lambda compile-dir [sourcedir targetdir ?opts]
-  "diff compiles fnl files in 'sourcedir' and barfs it to targetdir."
+  "diff compiles fnl files in 'sourcedir' and outputs it to 'targetdir'."
   ;; ?opts {:verbose boolean :force boolean}
   (local opts (or ?opts {}))
-  (local sources  (p.wildcard sourcedir "**/*.fnl"))
   (local logs [])
+  (local sources (p.wildcard sourcedir "**/*.fnl"))
   (each [_ source (ipairs sources)]
-    (let [luafile (source:gsub ".fnl$" ".lua")
-          target  (luafile:gsub sourcedir targetdir)
-          compile? (or opts.force (df.stale? source target))]
+    (let [luafile  (source:gsub ".fnl$" ".lua")
+          target   (luafile:gsub sourcedir targetdir)
+          compile? (compile? source target opts)]
          (when compile?
              (table.insert logs (p.shortname source))
              :compile (compile-file source target))))
@@ -56,23 +72,23 @@
 (fn compile-buffer [opts]
   "compiles the current active vim buffer."
   ;; opts {:verbose boolean}
-  (let [opts (or opts {})
+  (let [opts    (or opts {})
         bufname (vim.fn.expand :%:p)
         target  (p.target bufname)]
       :compile (compile-file bufname target)
-      :logger (log.compiled-buffer opts.verbose)))
+      :logger  (log.compiled-buffer opts.verbose)))
 
 (fn compile-vimrc [opts]
   "diff compiles ENV.vimrc to ENV.target dir."
   ;; opts {:verbose boolean :force boolean}
-  (let [opts (or opts {})
-        vimrc  (env.get :vimrc)
-        target (p.target vimrc)
-        compile? (or opts.force (df.stale? vimrc target))]
-       (when (and compile? (fs.readable? vimrc)
-                  :compile (compile-file vimrc target))
-         :logger (log.compiled [(p.shortname vimrc)] opts.verbose)
-         :return true)))
+  (let [opts     (or opts {})
+        vimrc    (env.get :vimrc)
+        target   (p.target vimrc)
+        compile? (compile? vimrc target opts)]
+       (when (and compile? (fs.readable? vimrc))
+           :compile (compile-file vimrc target)
+           :logger  (log.compiled [(p.shortname vimrc)] opts.verbose)
+           true)))
 
 (fn compile-all [opts]
   "diff compiles all indexed fnl files, present in ENV.source dir."
@@ -82,8 +98,8 @@
   (if (compile-vimrc opts)
       (table.insert logs (p.shortname (env.get :vimrc))))
   (each [_ source (ipairs (p.list-fnl-files))]
-    (let [target (p.target source)
-          compile? (or opts.force (df.stale? source target))]
+    (let [target   (p.target source)
+          compile? (compile? source target opts)]
          (when compile?
              (table.insert logs (p.shortname source))
              :compile (compile-file source target))))
