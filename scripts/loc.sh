@@ -8,9 +8,9 @@ source $(dirname $0)/utils/table.sh
 # --------------------- #
 #         VARS          #
 # --------------------- #
-DOCS_REGEX="^ *\""
-BLANK_REGEX="^$"
-COMMENT_REGEX="^;"
+DOCS_REGEX='^ *".*" *$'
+BLANK_REGEX='^ *$'
+COMMENT_REGEX='^ *;'
 
 COLUMNS="FILE Code Comments Docs Blanks SUBTOTAL"
 TCODE=0; TCOMMENTS=0; TDOCS=0; TBLANKS=0; TOTAL=0
