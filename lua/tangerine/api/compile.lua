@@ -5,14 +5,28 @@ local fs = _local_1_["fs"]
 local df = _local_1_["df"]
 local env = _local_1_["env"]
 local log = _local_1_["log"]
+local function force_3f(opts)
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/api/compile.fnl:20")
+  if (opts.force ~= nil) then
+    return opts.force
+  else
+    return env.get("compiler", "force")
+  end
+end
+local function compile_3f(source, target, opts)
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/api/compile.fnl:26")
+  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:26")
+  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:26")
+  return (force_3f(opts) or df["stale?"](source, target))
+end
 local function compile_string(str, _3ffilename)
-  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/compile.fnl:20")
+  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/compile.fnl:34")
   local fennel0 = fennel.load()
   return fennel0.compileString(str, {filename = _3ffilename})
 end
 local function compile_file(source, target)
-  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:25")
-  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:25")
+  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:39")
+  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:39")
   local source0 = p.resolve(source)
   local target0 = p.resolve(target)
   local sname = p.shortname(source0)
@@ -25,16 +39,16 @@ local function compile_file(source, target)
   return fs.write(target0, (marker .. "\n" .. output))
 end
 local function compile_dir(sourcedir, targetdir, _3fopts)
-  _G.assert((nil ~= targetdir), "Missing argument targetdir on fnl/tangerine/api/compile.fnl:37")
-  _G.assert((nil ~= sourcedir), "Missing argument sourcedir on fnl/tangerine/api/compile.fnl:37")
+  _G.assert((nil ~= targetdir), "Missing argument targetdir on fnl/tangerine/api/compile.fnl:53")
+  _G.assert((nil ~= sourcedir), "Missing argument sourcedir on fnl/tangerine/api/compile.fnl:53")
   local opts = (_3fopts or {})
-  local sources = p.wildcard(sourcedir, "**/*.fnl")
   local logs = {}
+  local sources = p.wildcard(sourcedir, "**/*.fnl")
   for _, source in ipairs(sources) do
     local luafile = source:gsub(".fnl$", ".lua")
     local target = luafile:gsub(sourcedir, targetdir)
-    local compile_3f = (opts.force or df["stale?"](source, target))
-    if compile_3f then
+    local compile_3f0 = compile_3f(source, target, opts)
+    if compile_3f0 then
       table.insert(logs, p.shortname(source))
       compile_file(source, target)
     else
@@ -53,8 +67,9 @@ local function compile_vimrc(opts)
   local opts0 = (opts or {})
   local vimrc = env.get("vimrc")
   local target = p.target(vimrc)
-  local compile_3f = (opts0.force or df["stale?"](vimrc, target))
-  if (compile_3f and fs["readable?"](vimrc) and "compile" and compile_file(vimrc, target)) then
+  local compile_3f0 = compile_3f(vimrc, target, opts0)
+  if (compile_3f0 and fs["readable?"](vimrc)) then
+    compile_file(vimrc, target)
     log.compiled({p.shortname(vimrc)}, opts0.verbose)
     return true
   else
@@ -70,8 +85,8 @@ local function compile_all(opts)
   end
   for _, source in ipairs(p["list-fnl-files"]()) do
     local target = p.target(source)
-    local compile_3f = (opts0.force or df["stale?"](source, target))
-    if compile_3f then
+    local compile_3f0 = compile_3f(source, target, opts0)
+    if compile_3f0 then
       table.insert(logs, p.shortname(source))
       compile_file(source, target)
     else
