@@ -45,11 +45,10 @@
         bufname (vim.fn.expand :%)]
        (err.clear) ; clear previous errors
        :eval (local (ok? res) (pcall #(eval-string lines bufname)))
-       (if ok? :skip
-           (err.compile? res)
-           (err.send (err.parse res))
-           :else
-           (softerr res))))
+       (when (not ok?)
+           (softerr res)
+           (and (err.compile? res)
+                (err.send (err.parse res))))))
 
 (lambda eval-buffer []
   "evaluate all lines in current vim buffer."
