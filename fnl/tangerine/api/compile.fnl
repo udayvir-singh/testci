@@ -18,15 +18,21 @@
 ;;        Utils         ;;
 ;; -------------------- ;;
 (lambda force? [opts]
-  "Returns value of force set in 'opts' or ENV."
+  "returns value of force set in 'opts' or ENV."
   (if (not= opts.force nil)
       (. opts :force)
       (env.get :compiler :force)))
 
 (lambda compile? [source target opts]
-  "If force != true, then diffs 'source' against stale? 'target'"
+  "if force != true, then diffs 'source' against stale? 'target'"
   (or (force? opts)
       (df.stale? source target)))
+
+(lambda merge [?list1 list2]
+  "merges all the values of 'list1' onto 'list2'."
+  (each [i v (ipairs (or ?list1 []))]
+        (table.insert list2 v))
+  list2)
 
 ;; -------------------- ;;
 ;;      Low Level       ;;
@@ -87,16 +93,27 @@
         compile? (compile? vimrc target opts)]
        (when (and compile? (fs.readable? vimrc))
            :compile (compile-file vimrc target)
-           :logger  (log.compiled [(p.shortname vimrc)] opts.verbose)
-           true)))
+           :logger  (log.compiled [(p.shortname vimrc)] opts.verbose))))
 
-(fn compile-all [opts]
-  "diff compiles all indexed fnl files, present in ENV.source dir."
-  ;; opts {:verbose boolean :force boolean}
+(fn compile-rtp [opts]
+  "diff compiles files in ENV.rtpdirs and 'opts.dirs'"
+  ;; opt {:verbose boolean :force boolean :rtpdirs list}
   (local opts (or opts {}))
   (local logs [])
-  (if (compile-vimrc opts)
-      (table.insert logs (p.shortname (env.get :vimrc))))
+  (local dirs 
+      (->> (merge (env.get :rtpdirs) (or opts.rtpdirs []))
+           (vim.tbl_map p.resolve-rtpdir)))
+  (each [_ dir (ipairs dirs)]
+        (merge (compile-dir dir dir opts) logs))
+  logs)
+
+(fn compile-all [opts]
+  "diff compiles all indexed fnl files, present in ENV."
+  ;; opts {:verbose boolean :force boolean :rtpdirs list}
+  (local opts (or opts {}))
+  (local logs [])
+  (merge (compile-vimrc opts) logs)
+  (merge (compile-rtp opts) logs)
   (each [_ source (ipairs (p.list-fnl-files))]
     (let [target   (p.target source)
           compile? (compile? source target opts)]
@@ -113,6 +130,7 @@
 ;    {:force true :verbose true})
 ; (compile-buffer {:verbose true})
 ; (compile-vimrc {:force true :verbose true})
+; (compile-rtp {:rtpdirs ["plugin"] :force true})
 ; (compile-all {:force true :verbose true})
 
 :return {
@@ -123,3 +141,4 @@
   :vimrc  compile-vimrc
   :all    compile-all
 }
+

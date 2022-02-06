@@ -16,7 +16,6 @@
            out
            (.. out "/"))))
 
-
 (lambda deepcopy [tbl1 tbl2]
   "deep copy 'tbl1' onto 'tbl2'."
   (each [key val (pairs tbl1)]
@@ -29,9 +28,10 @@
 ;;        Schema        ;;
 ;; -------------------- ;;
 (local schema {
-  :source "string"
-  :target "string"
-  :vimrc  "string"
+  :source  "string"
+  :target  "string"
+  :vimrc   "string"
+  :rtpdirs "list"
   :compiler {
     :verbose "boolean"
     :clean   "boolean"
@@ -50,6 +50,7 @@
   :source resolve
   :target resolve
   :vimrc  resolve
+  :rtpdirs nil
   :compiler nil
   :diagnostic nil
 })
@@ -58,6 +59,7 @@
   :vimrc  (resolve (.. config-dir "/init.fnl"))
   :source (resolve (.. config-dir "/fnl/"))
   :target (resolve (.. config-dir "/lua/"))
+  :rtpdirs []
   :compiler {
     :verbose true
     :clean   true
@@ -78,9 +80,15 @@
 ;; -------------------- ;;
 (lambda validate-type [name val scm]
   "checks if 'scm' == typeof 'val', else throws an error."
-  (if (not= (type val) scm)
+  (fn fail []
     (error 
-      (.. "[tangerine]: bad argument in 'setup()' to " name ", " scm " expected got " (type val) "."))))
+      (.. "[tangerine]: bad argument in 'setup()' to " name ", " scm " expected got " (type val) ".")))
+  (if (= scm :list)
+      (or (vim.tbl_islist val) 
+          (fail))
+      :else
+      (or (= (type val) scm)
+          (fail))))
 
 (lambda validate-oneof [name val scm]
   "checks if 'val' is member of 'scm', else throws error."
@@ -148,3 +156,4 @@
   :get env-get
   :set env-set
 }
+

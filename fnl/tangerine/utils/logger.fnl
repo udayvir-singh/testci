@@ -13,7 +13,8 @@
 (lambda print-array [arr title]
   (let [sep (get-sep arr)
         out (table.concat arr sep)]
-       (print (.. title sep out))))
+       (print (.. title sep out))
+       arr))
 
 (lambda disable? [?verbose]
   (local env-verbose (env.get :compiler :verbose))
