@@ -1,5 +1,5 @@
 FENNEL_BIN  = deps/bin/fennel
-SOURCE_DIR  = fnl 
+SOURCE_DIR  = fnl
 INSTALL_DIR = ~/.local/share/nvim/site/pack/tangerine/start/tangerine.nvim
 
 ifndef VERBOSE
