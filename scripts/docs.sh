@@ -62,7 +62,7 @@ panvimdoc () {
 		if (! ignore) print $0 
 	}' |
 	pandoc \
-		-M 'project:tangerine' -M 'vimversion:Neovim v0.5.0' \
+		-M 'project:tangerine' -M 'description:Sweet fennel integeration for neovim' \
 		-t           "${SRCDIR}/panvimdoc.lua" \
 		--lua-filter "${SRCDIR}/include-files.lua" \
 		--lua-filter "${SRCDIR}/inspect.lua" \
