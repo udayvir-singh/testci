@@ -21,6 +21,7 @@ Table of Contents                                *tangerine-table-of-contents*
   - Building from source                      |tangerine-building-from-source|
   - Make Targets                                      |tangerine-make-targets|
   - Git Hooks                                            |tangerine-git-hooks|
+  - LOC Helpers                                        |tangerine-loc-helpers|
 7. The End                                                 |tangerine-the-end|
 
 
@@ -625,14 +626,13 @@ see `make help` or |tangerine-below| for information on targets.
 
 MAKE TARGETS                                          *tangerine-make-targets*
 
-│   Target   │               Description                │
-│:fnl        │compiles fennel files                     │
-│:deps       │copy required deps in lua folder          │
-│:vimdoc     │runs panvimdoc to generate vimdocs        │
-│:build      │combines :fnl :deps :vimdoc               │
-│:install    │install tangerine on this system          │
-│:clean      │deletes build and install dir             │
-│:loc        │pretty print lines of code in fennel files│
+│   Target   │              Description              │
+│:fnl        │compiles fennel files                  │
+│:deps       │copy required deps in lua folder       │
+│:vimdoc     │runs panvimdoc to generate vimdocs     │
+│:build      │combines :fnl :deps :vimdoc            │
+│:install    │install tangerine on this system       │
+│:clean      │deletes build and install dir          │
 
 
 
@@ -677,6 +677,27 @@ GIT HOOKS                                                *tangerine-git-hooks*
     
     # cleanly fetch from origin
     $ make git-pull
+<
+
+
+LOC HELPERS                                            *tangerine-loc-helpers*
+
+Tangerine comes with helpers to generate detailed summary about lines of source
+code
+
+>
+    $ make loc-{language}
+<
+
+
+Supported Languages: - fennel - bash / shellscript - markdown - makefile - yaml
+
+Examples:
+
+>
+    $ make loc-fennel
+    
+    $ make loc-bash
 <
 
 
