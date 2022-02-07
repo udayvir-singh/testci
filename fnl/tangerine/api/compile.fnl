@@ -29,10 +29,14 @@
       (df.stale? source target)))
 
 (lambda merge [?list1 list2]
-  "merges all the values of 'list1' onto 'list2'."
-  (each [i v (ipairs (or ?list1 []))]
-        (table.insert list2 v))
-  list2)
+  "merges values of 'list1' and 'list2' onto a new list."
+  (local out [])
+  (local list1 (or ?list1 []))
+  (each [_ val (ipairs list1)]
+        (table.insert out val))
+  (each [_ val (ipairs list2)]
+        (table.insert out val))
+  out)
 
 ;; -------------------- ;;
 ;;      Low Level       ;;
@@ -142,4 +146,3 @@
   :rtp    compile-rtp
   :all    compile-all
 }
-
