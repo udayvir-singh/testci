@@ -21,19 +21,24 @@ local function compile_3f(source, target, opts)
 end
 local function merge(_3flist1, list2)
   _G.assert((nil ~= list2), "Missing argument list2 on fnl/tangerine/api/compile.fnl:31")
-  for i, v in ipairs((_3flist1 or {})) do
-    table.insert(list2, v)
+  local out = {}
+  local list1 = (_3flist1 or {})
+  for _, val in ipairs(list1) do
+    table.insert(out, val)
   end
-  return list2
+  for _, val in ipairs(list2) do
+    table.insert(out, val)
+  end
+  return out
 end
 local function compile_string(str, _3ffilename)
-  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/compile.fnl:40")
+  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/compile.fnl:44")
   local fennel0 = fennel.load()
   return fennel0.compileString(str, {filename = _3ffilename})
 end
 local function compile_file(source, target)
-  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:45")
-  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:45")
+  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:49")
+  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:49")
   local source0 = p.resolve(source)
   local target0 = p.resolve(target)
   local sname = p.shortname(source0)
@@ -46,8 +51,8 @@ local function compile_file(source, target)
   return fs.write(target0, (marker .. "\n" .. output))
 end
 local function compile_dir(sourcedir, targetdir, _3fopts)
-  _G.assert((nil ~= targetdir), "Missing argument targetdir on fnl/tangerine/api/compile.fnl:59")
-  _G.assert((nil ~= sourcedir), "Missing argument sourcedir on fnl/tangerine/api/compile.fnl:59")
+  _G.assert((nil ~= targetdir), "Missing argument targetdir on fnl/tangerine/api/compile.fnl:63")
+  _G.assert((nil ~= sourcedir), "Missing argument sourcedir on fnl/tangerine/api/compile.fnl:63")
   local opts = (_3fopts or {})
   local logs = {}
   local sources = p.wildcard(sourcedir, "**/*.fnl")
