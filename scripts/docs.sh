@@ -40,24 +40,33 @@ LOGFILE="$(mktemp)"
 panvimdoc () {
 	< "${SOURCE}" \
 	awk '{ 
-		if ($0 ~ "ignore-start") { 
-			ignore="Yes" 
-		} 
-		if (ignore && $0 ~ "ignore-end") { 
-			ignore=Null; getline 
-		}
-
+		# parse ignore
 		if ($0 ~ "ignore-line") { 
 			getline
 		}
+		if ($0 ~ "ignore-start") {
+			ignore="Yes" 
+		}
+		if (ignore && $0 ~ "ignore-end") {
+			ignore=Null; getline 
+		}
 
+		# parse docstring
 		if ($2 ~ "doc=.+") {
 			doc=$2
 			getline 
 			$(NF + 1)="{"doc"}"
 		}
 
-		gsub("<.+>", "", $0)
+		# strip html blocks
+		if (! code && $1 ~ "^```") {
+			code="Yes"
+		}
+		else if (code && $1 ~ "^```") {
+			code=Null
+		}
+
+		if (! code) gsub("<[^>]+>", "", $0)
 
 		if (! ignore) print $0 
 	}' |

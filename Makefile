@@ -24,7 +24,7 @@ vimdoc:
 	[ -d doc ] || mkdir doc
 	./scripts/docs.sh README.md ./doc/tangerine.txt
 	echo :: GENERATING HELPTAGS
-	nvim --noplugin --headless -c "helptags doc" -c "q" doc/tangerine.txt
+	nvim -n --noplugin --headless -c "helptags doc" -c "q" doc/tangerine.txt
 
 clean:
 	rm -rf doc/tags doc/tangerine.txt

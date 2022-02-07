@@ -139,6 +139,7 @@
   :dir    compile-dir
   :buffer compile-buffer
   :vimrc  compile-vimrc
+  :rtp    compile-rtp
   :all    compile-all
 }
 

@@ -31,6 +31,7 @@
     :dir    (lazy :api.compile "dir")
     :buffer (lazy :api.compile "buffer")
     :vimrc  (lazy :api.compile "vimrc")
+    :rtp    (lazy :api.compile "rtp")
     :all    (lazy :api.compile "all")
   }
   :clean {
