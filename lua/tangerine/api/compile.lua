@@ -107,4 +107,4 @@ local function compile_all(opts)
   end
   return log.compiled(logs, opts0.verbose)
 end
-return {string = compile_string, file = compile_file, dir = compile_dir, buffer = compile_buffer, vimrc = compile_vimrc, all = compile_all}
+return {string = compile_string, file = compile_file, dir = compile_dir, buffer = compile_buffer, vimrc = compile_vimrc, rtp = compile_rtp, all = compile_all}
