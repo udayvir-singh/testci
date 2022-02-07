@@ -1,4 +1,4 @@
-*tangerine.txt*         For Neovim v0.5.0        Last change: 2022 February 06
+*tangerine.txt*         For Neovim v0.5.0        Last change: 2022 February 07
 
 ==============================================================================
 Table of Contents                                *tangerine-table-of-contents*
