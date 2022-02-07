@@ -574,7 +574,6 @@ see `make help` or [below](#make-targets) for information on targets.
 | `:build`   | combines `:fnl` `:deps` `:vimdoc`          |
 | `:install` | install tangerine on this system           |
 | `:clean`   | deletes build and install dir              |
-| `:loc`     | pretty print lines of code in fennel files |
 
 - To build tangerine run:
 ```bash
@@ -587,7 +586,6 @@ $ make install
 ```
 
 ## Git Hooks
-
 | Target       | Description                                                    |
 |--------------|----------------------------------------------------------------|
 | `git-pull`   | safely fetches git repo, prevents conflicts with local changes |
@@ -607,6 +605,27 @@ $ git push
 
 # cleanly fetch from origin
 $ make git-pull
+```
+
+## LOC Helpers
+Tangerine comes with helpers to generate detailed summary about lines of source code
+
+```bash
+$ make loc-{language}
+```
+
+Supported Languages:
+- fennel
+- bash / shellscript
+- markdown
+- makefile
+- yaml
+
+Examples:
+```bash
+$ make loc-fennel
+
+$ make loc-bash
 ```
 
 # The End
