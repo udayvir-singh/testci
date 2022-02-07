@@ -30,13 +30,20 @@ shortname () {
 }
 
 # ---------------------- #
-#         Counter        #
+#          Files         #
 # ---------------------- #
+list_files () {
+	local DIR="${1}"
+	local EXT="${2}"
+
+	find "${DIR}" -name "${EXT}" -printf "%d %p\n" | LC_ALL=C sort -n | cut -d " " -f 2
+}
+
 count () {
 	FILE="${1}"
 	REGEX="${2}"
 
-	grep -c "$REGEX" < "$FILE"
+	egrep -c "$REGEX" < "$FILE"
 }
 
 lines () {

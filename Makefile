@@ -61,12 +61,28 @@ git-unskip:
 	git update-index --no-skip-worktree $(LUA_FILES)
 	git update-index --no-skip-worktree doc/tangerine.txt
 
-# ------------------- #
-#        EXTRA        #
-# ------------------- #
-loc:
-	./scripts/loc.sh "$(SOURCE_DIR)"
 
+# ------------------- #
+#         LOC         #
+# ------------------- #
+loc-fennel:
+	./scripts/loc/fennel.sh
+
+loc-bash: 
+	./scripts/loc/bash.sh
+
+loc-markdown: 
+	./scripts/loc/markdown.sh
+
+loc-makefile: 
+	./scripts/loc/makefile.sh
+
+loc-yaml: 
+	./scripts/loc/yaml.sh
+
+# ------------------- #
+#        INFO         #
+# ------------------- #
 help:
 	echo 'Usage: make [target] ...'
 	echo 
@@ -77,17 +93,26 @@ help:
 	echo '  :build          combines :fnl :deps :vimdoc'
 	echo '  :install        install tangerine on this system'
 	echo '  :clean          deletes build and install dir'
-	echo '  :loc            pretty print lines of code in fennel files'
 	echo '  :help           print this help.'
 	echo 
 	echo 'Git helpers:'
-	echo '  git-skip       make git ignore build dirs'
-	echo '  git-unskip     reverts git-skip, run :build before executing'
-	echo '  git-pull       clean build dirs before fetching to avoid conflicts'
+	echo '  Hooks for git meant to be used in development,'
+	echo '  run :git-skip before running :build to prevent output files in git index'
+	echo '  ---'
+	echo '  :git-skip       make git ignore build dirs'
+	echo '  :git-unskip     reverts git-skip, run :build before executing'
+	echo '  :git-pull       clean build dirs before fetching to avoid conflicts'
 	echo
-	echo 'PS: run git-skip before running any targets to prevent output files in git index'
+	echo 'Lines of Code:'
+	echo '  Pretty prints lines of code in source dirs, possible targets are:'
+	echo '  ---'
+	echo '  :loc-fennel'
+	echo '  :loc-bash'
+	echo '  :loc-markdown'
+	echo '  :loc-makefile'
+	echo '  :loc-yaml'
 	echo
 	echo 'Examples:'
 	echo '  make clean build'
 	echo '  make install'
-	echo '  make loc  [do it]'
+	echo '  make loc-fennel'

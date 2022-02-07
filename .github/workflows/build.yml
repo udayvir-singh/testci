@@ -19,8 +19,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Lines Of Code
-      run:  make loc
+    - name: FENNEL
+      run:  make loc-fennel
+
+    - name: BASH
+      run:  make loc-bash
+
+    - name: MARKDOWN
+      run:  make loc-markdown
+
+    - name: MAKEFILE
+      run:  make loc-makefile
+
+    - name: YAML
+      run:  make loc-yaml
 
   vimdoc:
     runs-on: ubuntu-latest
