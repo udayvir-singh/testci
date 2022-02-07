@@ -1,4 +1,4 @@
-*tangerine.txt*         For Neovim v0.5.0        Last change: 2022 February 07
+*tangerine.txt*                           Sweet fennel integeration for neovim
 
 ==============================================================================
 Table of Contents                                *tangerine-table-of-contents*
