@@ -12,13 +12,18 @@ on:
       - .github/**
 
 jobs:
-  # count lines
   loc:
     name: lines of code
     runs-on: ubuntu-latest
+    container: alpine
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Install requirements
+      run: |
+        apk update && apk upgrade 
+        apk add make bash curl coreutils findutils
 
     - name: FENNEL
       run:  make loc-fennel LOC_HEAD="HEAD"
