@@ -25,6 +25,13 @@ jobs:
 
     - uses: actions/checkout@v2
 
+    - name: test
+      run:
+        pwd
+        ls -a --long
+        git show --format="" --numstat HEAD
+        git show HEAD
+
     - name: FENNEL
       run:  make loc-fennel LOC_HEAD="HEAD"
 
