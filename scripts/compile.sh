@@ -23,7 +23,7 @@ compile () {
 # --------------------- #
 :: INITILIZE COMPILING
 
-SOURCES="$(find "${SOURCE_DIR}" -name "*.fnl")"
+SOURCES="$(list_files "${SOURCE_DIR}" "*.fnl")"
 
 for SOURCE in ${SOURCES}; do
 	TARGET="$(get-target "${SOURCE}")"

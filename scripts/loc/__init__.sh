@@ -57,15 +57,15 @@ main () {
 		if [ -n "${regex[Comment]}" ]; then
 			Comment=$(count $FILE "${regex[Comment]}")
 
-			let TOTAL[Comment]+=$Comment
 			let Code-=$Comment
+			let TOTAL[Comment]+=$Comment
 		fi
 
 		if [ -n "${regex[Docs]}" ]; then
 			Docs=$(count $FILE "${regex[Docs]}")
 
-			let TOTAL[Docs]+=$Docs
 			let Code-=$Docs
+			let TOTAL[Docs]+=$Docs
 		fi
 
 		let TOTAL[Blank]+=$Blank
