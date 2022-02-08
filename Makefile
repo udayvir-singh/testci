@@ -49,7 +49,7 @@ LUA_FILES := $(shell find lua -name '*.lua')
 --pull:
 	echo :: RUNNING GIT PULL
 	echo -e  "   \e[1;32m$$\e[0m git pull"
-	git pull | sed 's:^:   :'
+	git pull --rebase | sed 's:^:   :'
 
 git-pull: clean --pull build
 

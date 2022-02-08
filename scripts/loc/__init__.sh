@@ -118,7 +118,7 @@ main () {
 		if [ "${NFILES}" -gt 1 ]; then
 			DRAW_ROW ${COLS[*]} "$Lines"
 		else
-			DRAW_FOOTER ${COLS[*]} | tail -n +2
+			DRAW_FOOTER ${COLS[*]} "$Lines" | tail -n +2
 		fi
 	done
 
