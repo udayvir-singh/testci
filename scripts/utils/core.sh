@@ -8,8 +8,8 @@
 }
 
 log () {
-	COLOR="${1}"
-	CONTENT="$(echo $@ | cut -d' ' -f2-)"
+	local COLOR="${1}"
+	local CONTENT="$(echo $@ | cut -d' ' -f2-)"
 
 	echo -e "  \e[1;3${COLOR}m ==>\e[0m $CONTENT"
 } 
@@ -37,16 +37,5 @@ list_files () {
 	local EXT="${2}"
 
 	find "${DIR}" -name "${EXT}" -printf "%d %p\n" | LC_ALL=C sort -n | cut -d " " -f 2
-}
-
-count () {
-	FILE="${1}"
-	REGEX="${2}"
-
-	egrep -c "$REGEX" < "$FILE"
-}
-
-lines () {
-	wc -l < ${1}
 }
 

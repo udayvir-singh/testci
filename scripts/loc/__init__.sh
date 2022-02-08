@@ -3,6 +3,7 @@
 source $(dirname $0)/../utils/core.sh
 source $(dirname $0)/../utils/table.sh
 
+GIT_HEAD=""
 TITLE="FILE"
 DIR=""
 EXT=""
@@ -26,6 +27,7 @@ while [ -n "${1}" ]; do
 	case "${1}" in
 	--comment) regex[Comment]="${2}"; shift 2 ;;
 	--docs)    regex[Docs]="${2}";    shift 2 ;;
+	--head)    GIT_HEAD="${2}"; shift 2 ;;
 	--title)   TITLE="${2}"; shift 2 ;;
 	--dir)     DIR="${2}"; shift 2 ;;
 	--ext)     EXT="${2}"; shift 2 ;;
@@ -36,7 +38,43 @@ done
 [ -z "${DIR}" ] && error "missing required argument DIR"
 [ -z "${EXT}" ] && error "missing required argument EXT"
 
+if [ -n "${GIT_HEAD}" ]; then
+	DIFF_CMD="show --format= "
+else
+	DIFF_CMD="diff"
+fi
+
 ## MAIN
+lines () {
+	local FILE="${1}"
+
+	wc -l < "${FILE}"
+}
+
+count () {
+	local FILE="${1}"
+	local REGEX="${2}"
+
+	egrep -c "${REGEX}" < "${FILE}"
+}
+
+changes () {
+	local FILE="${1}"
+	local DIFF="$(git ${DIFF_CMD} --numstat ${GIT_HEAD} "${FILE}")"
+
+	[ -z "${DIFF}" ] && DIFF="0 0"
+
+	printf "${DIFF}" | awk '{
+		changes=($1 - $2)
+
+		if (changes == 0) changes=""
+
+		if (changes ~ "^[1-9]") changes=("+" changes)
+
+		printf "%s", changes
+	}'
+}
+
 main () {
 	declare -A TOTAL=()
 
@@ -72,10 +110,13 @@ main () {
 		let TOTAL[Lines]+=$Lines
 		let TOTAL[Code]+=$Code
 
-		COLS=(${FILE#$DIR/} $Code $Docs $Comment $Blank $Lines)
+		Changes=$(changes $FILE)
+		Lines=$(printf "%-4s%4s" $Lines $Changes)
+
+		COLS=(${FILE#$DIR/} $Code $Docs $Comment $Blank)
 
 		if [ "${NFILES}" -gt 1 ]; then
-			DRAW_ROW ${COLS[*]}
+			DRAW_ROW ${COLS[*]} "$Lines"
 		else
 			DRAW_FOOTER ${COLS[*]} | tail -n +2
 		fi

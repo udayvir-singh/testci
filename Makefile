@@ -65,20 +65,24 @@ git-unskip:
 # ------------------- #
 #         LOC         #
 # ------------------- #
+ifdef LOC_HEAD
+LOC_ARGS= --head " " $(LOC_HEAD)
+endif
+
 loc-fennel:
-	./scripts/loc/fennel.sh
+	./scripts/loc/fennel.sh $(LOC_ARGS)
 
 loc-bash: 
-	./scripts/loc/bash.sh
+	./scripts/loc/bash.sh $(LOC_ARGS)
 
 loc-markdown: 
-	./scripts/loc/markdown.sh
+	./scripts/loc/markdown.sh $(LOC_ARGS)
 
 loc-makefile: 
-	./scripts/loc/makefile.sh
+	./scripts/loc/makefile.sh $(LOC_ARGS)
 
 loc-yaml: 
-	./scripts/loc/yaml.sh
+	./scripts/loc/yaml.sh $(LOC_ARGS)
 
 # ------------------- #
 #        INFO         #

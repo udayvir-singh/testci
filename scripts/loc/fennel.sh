@@ -5,4 +5,4 @@ $(dirname $0)/__init__.sh \
 	--docs '^ *"[^"]+" *$' \
 	--comment "^ *;.+" \
 	--dir fnl \
-	--ext '*.fnl'
+	--ext '*.fnl' ${@}
