@@ -24,6 +24,8 @@ jobs:
         apk add make git bash curl coreutils findutils
 
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
 
     - name: test
       run: |
