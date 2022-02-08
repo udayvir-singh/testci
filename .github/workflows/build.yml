@@ -28,7 +28,7 @@ jobs:
     - name: test
       run: |
         pwd
-        ls -a --long
+        ls -a
         git show --format="" --numstat HEAD
         git show HEAD
 
