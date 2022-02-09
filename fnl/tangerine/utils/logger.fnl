@@ -57,6 +57,8 @@
 (lambda serialize [tbl]
   "pretty print lua table in fennel form."
   (local out (-> (vim.inspect tbl)
+                 ; escape single quotes
+                 (string.gsub "= +'([^']+)'" #(.. "\"" (string.gsub $1 "\"" "\\\"") "\""))
                  ; remove "," and "= "
                  (string.gsub "," "")
                  (string.gsub "= " "")
