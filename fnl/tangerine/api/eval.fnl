@@ -48,7 +48,7 @@
        (when (not ok?)
            (softerr res)
            (and (err.compile? res)
-                (err.send (err.parse res))))))
+                (err.send (err.parse res (- start 1)))))))
 
 (lambda eval-buffer []
   "evaluate all lines in current vim buffer."

@@ -12,12 +12,12 @@
   (if (or (msg:match "^Parse error.*:([0-9]+)")
           (msg:match "^Compile error.*:([0-9]+)")) true false))
 
-(lambda err.parse [msg]
+(lambda err.parse [msg offset]
   "parses raw error 'msg' to (line msg) values."
   (let [lines (vim.split msg "\n")
         line  (string.match (. lines 1) ".*:([0-9]+)")
         msg   (string.gsub  (. lines 2) "^ +" "")]
-    (values (tonumber line) msg)))
+    (values (+ (tonumber line) offset) msg)))
 
 ;; -------------------- ;;
 ;;      Diagnostic      ;;
