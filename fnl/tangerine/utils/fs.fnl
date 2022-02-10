@@ -3,8 +3,14 @@
 ;; -------------------- ;;
 ;;      Directory       ;;
 ;; -------------------- ;;
+(lambda fs.dirname [path]
+  (path:match "(.*[/\\])"))
+
 (lambda fs.mkdir [path]
   (vim.fn.mkdir path :p))
+
+(lambda fs.dir-exists? [dirpath]
+  (= 1 (vim.fn.isdirectory dirpath)))
 
 ;; -------------------- ;;
 ;;        Files         ;;
