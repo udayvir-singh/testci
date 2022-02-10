@@ -47,7 +47,13 @@
 ;; -------------------- ;;
 ;;         MAIN         ;;
 ;; -------------------- ;;
+(local called {:setup false})
+
 (lambda setup [config]
+  (if called.setup
+      (error "[tangerine]: setup() cannot be called twice.")
+      :else
+      (set called.setup true))
   (env.set config)
   (fennel.patch-package-path) 
   (load-api)

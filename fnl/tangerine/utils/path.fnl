@@ -61,8 +61,7 @@
 (lambda p.goto-output []
   "open lua:target of current fennel buffer."
   (let [target (p.target (vim.fn.expand :%:p))]
-       (vim.cmd (.. "badd" target))
-       (vim.cmd (.. "b"    target))))
+       (vim.cmd (.. "edit" target))))
 
 ;; -------------------- ;;
 ;;       Indexers       ;;

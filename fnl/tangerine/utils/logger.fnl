@@ -4,6 +4,40 @@
 (local log {})
 
 ;; -------------------- ;;
+;;       Window         ;;
+;; -------------------- ;;
+(lambda create-float [lineno filetype]
+  (let [buffer     (vim.api.nvim_create_buf true true)
+        win-width  (vim.api.nvim_win_get_width 0)
+        win-height (vim.api.nvim_win_get_height 0)
+        bordersize 2
+        width      (- win-width bordersize)
+        height     (math.floor (math.min (/ win-height 1.5) lineno))]
+  (vim.api.nvim_open_win buffer true {
+    : width 
+    : height
+    :col 0
+    :row (- win-height bordersize height)
+    :style "minimal"
+    :anchor "NW"
+    :border "single"
+    :relative "win"
+  })
+  ; set options
+  (vim.api.nvim_buf_set_option buffer :ft filetype)
+  (vim.api.nvim_win_set_option 0      :winhl "Normal:TangerineFloat")
+  ; set keymaps
+  (vim.api.nvim_buf_set_keymap buffer :n "<Esc>"   ":bd<CR>" {:silent true :noremap true})
+  (vim.api.nvim_buf_set_keymap buffer :n "<Enter>" ":bd<CR>" {:silent true :noremap true})
+  :return buffer))
+
+(lambda log.infloat [msg filetype]
+  (let [lines  (vim.split msg "\n")
+        lineno (length lines)
+        buffer (create-float lineno filetype)]
+    (vim.api.nvim_buf_set_lines buffer 0 -1 true lines)))
+
+;; -------------------- ;;
 ;;        Utils         ;;
 ;; -------------------- ;;
 (lambda get-sep [arr]
@@ -74,9 +108,16 @@
 (set log.serialize serialize)
 
 (fn log.value [val]
-  (if (= :table (type val))
-      (print ::return (serialize val))
-      (not= val nil)
-      (print ::return (vim.inspect val))))
+  (var out nil)
+  (if (= val nil)
+      (lua :return)
+      (= :table (type val))
+      (set out (.. ":return " (serialize val)))
+      :else
+      (set out (.. ":return " (vim.inspect val))))
+  (if (env.get :eval :float)
+      (log.infloat out :fennel)
+      :else
+      (print out)))
 
 :return log

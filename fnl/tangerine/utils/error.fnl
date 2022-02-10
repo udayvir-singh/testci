@@ -7,10 +7,15 @@
 ;; -------------------- ;;
 ;;       Parsing        ;;
 ;; -------------------- ;;
+(lambda toboolean [x]
+  "converts 'x' to a boolean based on it truthyness."
+  (if x true false))
+
 (lambda err.compile? [msg]
   "checks if 'msg' is an compile-time error."
-  (if (or (msg:match "^Parse error.*:([0-9]+)")
-          (msg:match "^Compile error.*:([0-9]+)")) true false))
+  (toboolean 
+    (or (msg:match "^Parse error.*:([0-9]+)")
+        (msg:match "^Compile error.*:([0-9]+)"))))
 
 (lambda err.parse [msg offset]
   "parses raw error 'msg' to (line msg) values."

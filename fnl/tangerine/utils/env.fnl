@@ -40,9 +40,13 @@
     :hooks   [:array ["onsave" "onload" "oninit"]]
   }
   :diagnostic {
-      :hl_normal  "string"
-      :hl_virtual "string"
-      :timeout    "number"
+    :hl_normal  "string"
+    :hl_virtual "string"
+    :timeout    "number"
+  }
+  :eval {
+    :float    "boolean"
+    :hl_float "string"
   }
 })
 
@@ -53,6 +57,7 @@
   :rtpdirs nil
   :compiler nil
   :diagnostic nil
+  :eval nil
 })
 
 (local ENV {
@@ -68,9 +73,13 @@
     :hooks   []
   }
   :diagnostic {
-      :hi_normal  "DiagnosticError"
-      :hi_virtual "DiagnosticVirtualTextError"
-      :timeout    10
+    :hi_normal  "DiagnosticError"
+    :hi_virtual "DiagnosticVirtualTextError"
+    :timeout    10
+  }
+  :eval {
+    :float true
+    :hl_float "TangerineFloat"
   }
 })
 

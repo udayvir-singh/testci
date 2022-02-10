@@ -24,8 +24,8 @@
 ;; -------------------- ;;
 ;;         CMDS         ;;
 ;; -------------------- ;;
-(command! :FnlCompile       "compile.all()"          [])
-(command! :FnlCompileBuffer "compile.buffer()"       [])
+(command! :FnlCompileBuffer "compile.buffer()"                                [])
+(command! :FnlCompile       "compile.all({force=(('<bang>' == '!') or nil)})" [:bang nil])
 
 (command! :FnlBuffer "eval.buffer()"                       [])
 (command! :Fnl       "eval.string(<q-args>)"               [:nargs "*"])
