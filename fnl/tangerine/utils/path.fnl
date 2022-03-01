@@ -1,5 +1,5 @@
 ; DEPENDS:
-; ALL() tangerine.utils.env
+; ALL() utils[env]
 (local env (require :tangerine.utils.env))
 (local p {})
 
@@ -7,7 +7,7 @@
 ;;        Utils         ;;
 ;; -------------------- ;;
 (lambda p.shortname [path]
-  "shortens absolute 'path' for better readabilty."
+  "shortens absolute 'path' for better readability."
   (or (path:match ".+/fnl/(.+)")
       (path:match ".+/lua/(.+)")
       (path:match ".+/(.+/.+)")))
@@ -23,6 +23,14 @@
            path ;; return absolute path
            :else
            (.. (vim.fn.stdpath :config) "/" dir))))
+
+(lambda p.resolve-rtpdirs [dirs]
+  "resolves list of 'dirs' to valid &rtp paths."
+  (local out [])
+  (each [_ dir (ipairs dirs)]
+        (table.insert out (p.resolve-rtpdir dir)))
+  :return out)
+
 
 ;; ------------------------- ;;
 ;;     Path Transformers     ;;
@@ -55,13 +63,20 @@
         :else
         (p.from-x-to-y path [:target "lua"] [:source "fnl"]))))
 
+
 ;; -------------------- ;;
 ;;         Vim          ;;
 ;; -------------------- ;;
 (lambda p.goto-output []
   "open lua:target of current fennel buffer."
-  (let [target (p.target (vim.fn.expand :%:p))]
-       (vim.cmd (.. "edit" target))))
+  (let [source (vim.fn.expand :%:p)
+        target (p.target source)]
+    (if (and (= 1 (vim.fn.filereadable target)) 
+             (not= source target))
+        (vim.cmd (.. "edit" target))
+        :else
+        (print "[tangerine]: error in goto-output, target not readable."))))
+
 
 ;; -------------------- ;;
 ;;       Indexers       ;;
@@ -81,5 +96,6 @@
   (let [target (env.get :target)
         out (p.wildcard target "**/*.lua")]
     out))
+
 
 :return p

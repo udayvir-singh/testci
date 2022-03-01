@@ -61,17 +61,23 @@ count () {
 changes () {
 	local FILE="${1}"
 	local DIFF="$(git ${DIFF_CMD} --numstat ${GIT_HEAD} "${FILE}")"
+	local STAT=""
+
+	[ -z "${GIT_HEAD}" ] && STAT="$(git status --short "${FILE}")"
 
 	[ -z "${DIFF}" ] && DIFF="0 0"
 
-	printf "${DIFF}" | awk '{
+	printf "${DIFF}" | awk -v stat="${STAT}" '{
 		changes=($1 - $2)
 
 		if (changes == 0) changes=""
 
 		if (changes ~ "^[1-9]") changes=("+" changes)
 
-		printf "%s", changes
+		if (stat ~ "^[?]{2} ")
+			printf "%s", "~"
+		else
+			printf "%s", changes
 	}'
 }
 

@@ -1,7 +1,8 @@
 ; DEPENDS:
 ; :api tangerine.api.**
-; :api tangerine.utils.path
-; :api tangerine.utils.logger
+; :api utils[path]
+; :api utils[logger]
+; :api utils[window]
 (local prefix "tangerine.")
 
 ;; -------------------- ;;
@@ -17,13 +18,13 @@
 ;; -------------------- ;;
 ;;         API          ;;
 ;; -------------------- ;;
-
-:return :api {
+:return
+{
   :eval {
     :string (lazy :api.eval "string")
     :file   (lazy :api.eval "file")
-    :range  (lazy :api.eval "range")
     :buffer (lazy :api.eval "buffer")
+    :peak   (lazy :api.eval "peak")
   }
   :compile {
     :string (lazy :api.compile "string")
@@ -37,6 +38,12 @@
   :clean {
     :target   (lazy :api.clean "target")
     :orphaned (lazy :api.clean "orphaned")
+  }
+  :win {
+    :next    (lazy :utils.window "next")
+    :prev    (lazy :utils.window "prev")
+    :close   (lazy :utils.window "close")
+    :killall (lazy :utils.window "killall")
   }
   :goto_output (lazy :utils.path "goto-output")
   :serialize   (lazy :utils.logger "serialize")

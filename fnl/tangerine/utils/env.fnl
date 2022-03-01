@@ -16,11 +16,20 @@
            out
            (.. out "/"))))
 
-(lambda deepcopy [tbl1 tbl2]
+(lambda table? [tbl]
+  "checks if 'tbl' is a valid table."
+  (and (= :table (type tbl))
+       (not (vim.tbl_islist tbl))))
+
+(lambda deepcopy [tbl1 tbl2 ?nested]
   "deep copy 'tbl1' onto 'tbl2'."
+  (local nested (or ?nested false))
   (each [key val (pairs tbl1)]
-        (if (= (type val) :table)
-            (deepcopy val (. tbl2 key))
+        (if (and (vim.tbl_isempty val) (not nested))
+            (do :skip) ;; skip empty tables
+            (table? val)
+            (deepcopy val (. tbl2 key) true)
+            :else
             (tset tbl2 key val))))
 
 
@@ -33,20 +42,36 @@
   :vimrc   "string"
   :rtpdirs "list"
   :compiler {
-    :verbose "boolean"
+    :float   "boolean"
     :clean   "boolean"
     :force   "boolean"
+    :verbose "boolean"
+    :globals "list"
     :version [:oneof ["latest" "1-0-0" "0-10-0" "0-9-2"]]
     :hooks   [:array ["onsave" "onload" "oninit"]]
   }
   :diagnostic {
-    :hl_normal  "string"
-    :hl_virtual "string"
-    :timeout    "number"
+    :float   "boolean"
+    :virtual "boolean"
+    :timeout "number"
   }
   :eval {
-    :float    "boolean"
-    :hl_float "string"
+    :float "boolean"
+  }
+  :mapping {
+    :PeakBuffer "string"
+    :EvalBuffer "string"
+    :GotoOutput "string"
+    :FloatNext  "string"
+    :FloatPrev  "string"
+    :FloatKill  "string"
+    :FloatClose "string"
+  }
+  :highlight {
+    :float   "string"
+    :success "string"
+    :errors  "string"
+    :virtual "string"
   }
 })
 
@@ -58,6 +83,8 @@
   :compiler nil
   :diagnostic nil
   :eval nil
+  :mapping nil
+  :highlight nil
 })
 
 (local ENV {
@@ -66,20 +93,36 @@
   :target (resolve (.. config-dir "/lua/"))
   :rtpdirs []
   :compiler {
-    :verbose true
+    :float   true
     :clean   true
     :force   false
+    :verbose true
+    :globals (vim.tbl_keys _G)
     :version "latest"           
     :hooks   []
   }
   :diagnostic {
-    :hi_normal  "DiagnosticError"
-    :hi_virtual "DiagnosticVirtualTextError"
-    :timeout    10
+    :float   true
+    :virtual true
+    :timeout 10
   }
   :eval {
     :float true
-    :hl_float "TangerineFloat"
+  }
+  :mapping {
+    :PeakBuffer "gL"
+    :EvalBuffer "gE"
+    :GotoOutput "gO"
+    :WinPrev    "<C-J>"
+    :WinNext    "<C-K>"
+    :WinKill    "<Esc>"
+    :WinClose   "<Enter>"
+  }
+  :highlight {
+    :float   "TangerineFloat"
+    :success "String"
+    :errors  "DiagnosticError"
+    :virtual "DiagnosticVirtualTextError"
   }
 })
 
@@ -142,27 +185,37 @@
 (lambda rget [tbl args]
   "recursively gets value in 'tbl' from list of args."
   (if (= 0 (# args)) tbl
+  :else
   (let [current (?. tbl (. args 1))]
        (table.remove args 1)
        (if current
            (rget current args)))))
 
 (lambda env-get [...]
-  "getter for table 'config'."
+  "getter for table ENV."
   (rget ENV [...]))
+
+(lambda env-get-config [opts args]
+  "getter for 'opts', returns value of last key in 'args' fallbacks to ENV."
+  (let [key (. args (# args))]
+    (if (not= nil (. opts key))
+        (. opts key)
+        :else
+        (rget ENV args))))
 
 
 ;; -------------------- ;;
 ;;        Setters       ;;
 ;; -------------------- ;;
 (lambda env-set [tbl]
-  "setter for table 'config'."
+  "setter for table ENV."
   (validate tbl schema)
   (pre-process tbl pre-schema)
   (deepcopy tbl ENV))
 
-:return {
-  :get env-get
-  :set env-set
-}
 
+:return {
+  :get  env-get
+  :set  env-set
+  :conf env-get-config
+}

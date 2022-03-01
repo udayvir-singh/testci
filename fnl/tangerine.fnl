@@ -10,6 +10,7 @@
 
 (local require-api   #(require :tangerine.api))
 (local require-cmds  #(require :tangerine.vim.cmds))
+(local require-maps  #(require :tangerine.vim.maps))
 (local require-hooks #(require :tangerine.vim.hooks))
 
 (local vimrc-module "tangerine_vimrc")
@@ -36,9 +37,6 @@
   (let [api (require-api)]
        (global tangerine {:api api :fennel fennel.load})))
 
-(lambda load-cmds []
-  (require-cmds))
-
 (lambda load-hooks []
   (let [hooks (require-hooks)]
        (each [_ hook (ipairs (env.get :compiler :hooks))]
@@ -57,7 +55,8 @@
   (env.set config)
   (fennel.patch-package-path) 
   (load-api)
-  (load-cmds)
+  (require-cmds)
+  (require-maps)
   (load-hooks)
   (load-vimrc)
   true)
