@@ -4,112 +4,212 @@ local p = _local_1_["p"]
 local fs = _local_1_["fs"]
 local df = _local_1_["df"]
 local env = _local_1_["env"]
-local log = _local_1_["log"]
-local function force_3f(opts)
-  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/api/compile.fnl:20")
-  if (opts.force ~= nil) then
-    return opts.force
-  else
-    return env.get("compiler", "force")
-  end
+local win = _local_1_["win"]
+local _local_2_ = require("tangerine.output")
+local log = _local_2_["log"]
+local err = _local_2_["err"]
+local compile = {}
+local function quoted(str)
+  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/compile.fnl:28")
+  local qt = "\""
+  return (qt .. str .. qt)
+end
+local function compiled(source)
+  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:33")
+  return print(quoted(source), "compiled")
 end
 local function compile_3f(source, target, opts)
-  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/api/compile.fnl:26")
-  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:26")
-  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:26")
-  return (force_3f(opts) or df["stale?"](source, target))
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/api/compile.fnl:37")
+  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:37")
+  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:37")
+  return (env.conf(opts, {"compiler", "force"}) or df["stale?"](source, target))
 end
-local function merge(_3flist1, list2)
-  _G.assert((nil ~= list2), "Missing argument list2 on fnl/tangerine/api/compile.fnl:31")
-  local out = {}
-  local list1 = (_3flist1 or {})
-  for _, val in ipairs(list1) do
-    table.insert(out, val)
-  end
+local function merge(list1, list2)
+  _G.assert((nil ~= list2), "Missing argument list2 on fnl/tangerine/api/compile.fnl:42")
+  _G.assert((nil ~= list1), "Missing argument list1 on fnl/tangerine/api/compile.fnl:42")
   for _, val in ipairs(list2) do
-    table.insert(out, val)
+    table.insert(list1, val)
   end
-  return out
+  return list1
 end
-local function compile_string(str, _3ffilename)
-  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/compile.fnl:44")
+local function tbl_merge(tbl1, tbl2)
+  _G.assert((nil ~= tbl2), "Missing argument tbl2 on fnl/tangerine/api/compile.fnl:48")
+  _G.assert((nil ~= tbl1), "Missing argument tbl1 on fnl/tangerine/api/compile.fnl:48")
+  return vim.tbl_extend("keep", (tbl1 or {}), tbl2)
+end
+compile.string = function(str, _3fopts)
+  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/compile.fnl:73")
+  local opts = (_3fopts or {})
   local fennel0 = fennel.load()
-  return fennel0.compileString(str, {filename = _3ffilename})
+  local filename = (opts.filename or "tangerine-out")
+  local globals = env.conf(opts, {"compiler", "globals"})
+  return fennel0.compileString(str, {filename = filename, allowedGlobals = globals, compilerEnv = _G})
 end
-local function compile_file(source, target)
-  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:49")
-  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:49")
+compile.file = function(source, target, _3fopts)
+  _G.assert((nil ~= target), "Missing argument target on fnl/tangerine/api/compile.fnl:83")
+  _G.assert((nil ~= source), "Missing argument source on fnl/tangerine/api/compile.fnl:83")
+  local opts = (_3fopts or {})
   local source0 = p.resolve(source)
   local target0 = p.resolve(target)
   local sname = p.shortname(source0)
+  local opts0 = tbl_merge(opts, {filename = sname})
   if not fs["readable?"](source0) then
-    error(("[tangerine]: source " .. sname .. " is not readable."))
+    err.soft(("[tangerine]: source " .. (sname or source0) .. " is not readable."))
   else
   end
-  local output = compile_string(fs.read(source0), sname)
   local marker = df["create-marker"](source0)
-  return fs.write(target0, (marker .. "\n" .. output))
+  local output = compile.string(fs.read(source0), opts0)
+  fs.write(target0, (marker .. "\n" .. output))
+  return true
 end
-local function compile_dir(sourcedir, targetdir, _3fopts)
-  _G.assert((nil ~= targetdir), "Missing argument targetdir on fnl/tangerine/api/compile.fnl:63")
-  _G.assert((nil ~= sourcedir), "Missing argument sourcedir on fnl/tangerine/api/compile.fnl:63")
+compile.dir = function(sourcedir, targetdir, _3fopts)
+  _G.assert((nil ~= targetdir), "Missing argument targetdir on fnl/tangerine/api/compile.fnl:101")
+  _G.assert((nil ~= sourcedir), "Missing argument sourcedir on fnl/tangerine/api/compile.fnl:101")
   local opts = (_3fopts or {})
   local logs = {}
-  local sources = p.wildcard(sourcedir, "**/*.fnl")
-  for _, source in ipairs(sources) do
-    local luafile = source:gsub(".fnl$", ".lua")
-    local target = luafile:gsub(sourcedir, targetdir)
-    local compile_3f0 = compile_3f(source, target, opts)
-    if compile_3f0 then
-      table.insert(logs, p.shortname(source))
-      compile_file(source, target)
+  for _, source in ipairs(p.wildcard(sourcedir, "**/*.fnl")) do
+    local sname = p.shortname(source)
+    local opts0 = tbl_merge({filename = sname}, opts)
+    local target = string.gsub(string.gsub(source, "fnl$", "lua"), p.resolve(sourcedir), p.resolve(targetdir))
+    if compile_3f(source, target, opts0) then
+      table.insert(logs, sname)
+      local out_2_auto
+      local function _4_()
+        return compile.file(source, target, opts0)
+      end
+      local function _5_(_241)
+        return log.failure("COMPILE ERROR", sname, _241, opts0)
+      end
+      out_2_auto = xpcall(_4_, _5_)
+      if ((0 == out_2_auto) or (false == out_2_auto)) then
+        return 0
+      else
+      end
     else
     end
   end
-  return log.compiled(logs, opts.verbose)
+  log.success("COMPILED", logs, opts)
+  return logs
 end
-local function compile_buffer(opts)
-  local opts0 = (opts or {})
+compile.buffer = function(_3fopts)
+  local opts = (_3fopts or {})
   local bufname = vim.fn.expand("%:p")
+  local sname = vim.fn.expand("%:t")
   local target = p.target(bufname)
-  compile_file(bufname, target)
-  return log["compiled-buffer"](opts0.verbose)
+  do
+    local out_2_auto
+    local function _8_()
+      return compile.file(bufname, target, tbl_merge(opts, {filename = sname}))
+    end
+    local function _9_(_241)
+      return log.failure("COMPILE ERROR", sname, _241, opts)
+    end
+    out_2_auto = xpcall(_8_, _9_)
+    if ((0 == out_2_auto) or (false == out_2_auto)) then
+      return 0
+    else
+    end
+  end
+  if env.conf(opts, {"compiler", "verbose"}) then
+    compiled(sname)
+  else
+  end
+  return true
 end
-local function compile_vimrc(opts)
-  local opts0 = (opts or {})
-  local vimrc = env.get("vimrc")
-  local target = p.target(vimrc)
-  local compile_3f0 = compile_3f(vimrc, target, opts0)
-  if (compile_3f0 and fs["readable?"](vimrc)) then
-    compile_file(vimrc, target)
-    return log.compiled({p.shortname(vimrc)}, opts0.verbose)
+compile.vimrc = function(_3fopts)
+  local opts = (_3fopts or {})
+  local source = env.get("vimrc")
+  local target = p.target(source)
+  local sname = p.shortname(source)
+  if compile_3f(source, target, opts) then
+    do
+      local out_2_auto
+      local function _12_()
+        return compile.file(source, target, opts)
+      end
+      local function _13_(_241)
+        return log.failure("COMPILE ERROR", sname, _241, opts)
+      end
+      out_2_auto = xpcall(_12_, _13_)
+      if ((0 == out_2_auto) or (false == out_2_auto)) then
+        return 0
+      else
+      end
+    end
+    if env.conf(opts, {"compiler", "verbose"}) then
+      compiled(sname)
+    else
+    end
+    return {sname}
   else
     return nil
   end
 end
-local function compile_rtp(opts)
-  local opts0 = (opts or {})
+compile.rtp = function(_3fopts)
+  local opts = (_3fopts or {})
   local logs = {}
-  local dirs = vim.tbl_map(p["resolve-rtpdir"], merge(env.get("rtpdirs"), (opts0.rtpdirs or {})))
+  local dirs = p["resolve-rtpdirs"]((opts.rtpdirs or env.get("rtpdirs")))
   for _, dir in ipairs(dirs) do
-    merge(compile_dir(dir, dir, opts0), logs)
+    local out_2_auto = (compile.dir(dir, dir, tbl_merge({verbose = false}, opts)) or {})
+    do
+      local out_2_auto0 = out_2_auto
+      if ((0 == out_2_auto0) or (false == out_2_auto0)) then
+        return 0
+      else
+      end
+    end
+    merge(logs, out_2_auto)
   end
+  log.success("COMPILED RTP", logs, opts)
   return logs
 end
-local function compile_all(opts)
-  local opts0 = (opts or {})
+compile.all = function(_3fopts)
+  local opts = (_3fopts or {})
+  local copts = tbl_merge({verbose = false}, opts)
   local logs = {}
-  merge(compile_vimrc(opts0), logs)
-  merge(compile_rtp(opts0), logs)
+  do
+    local out_2_auto = (compile.vimrc(copts) or {})
+    do
+      local out_2_auto0 = out_2_auto
+      if ((0 == out_2_auto0) or (false == out_2_auto0)) then
+        return 0
+      else
+      end
+    end
+    merge(logs, out_2_auto)
+  end
+  do
+    local out_2_auto = (compile.rtp(copts) or {})
+    do
+      local out_2_auto0 = out_2_auto
+      if ((0 == out_2_auto0) or (false == out_2_auto0)) then
+        return 0
+      else
+      end
+    end
+    merge(logs, out_2_auto)
+  end
   for _, source in ipairs(p["list-fnl-files"]()) do
     local target = p.target(source)
-    local compile_3f0 = compile_3f(source, target, opts0)
-    if compile_3f0 then
-      table.insert(logs, p.shortname(source))
-      compile_file(source, target)
+    local sname = p.shortname(source)
+    if compile_3f(source, target, opts) then
+      table.insert(logs, sname)
+      local out_2_auto
+      local function _20_()
+        return compile.file(source, target, opts)
+      end
+      local function _21_(_241)
+        return log.failure("COMPILE ERROR", sname, _241, opts)
+      end
+      out_2_auto = xpcall(_20_, _21_)
+      if ((0 == out_2_auto) or (false == out_2_auto)) then
+        return 0
+      else
+      end
     else
     end
   end
-  return log.compiled(logs, opts0.verbose)
+  log.success("COMPILED", logs, opts)
+  return logs
 end
-return {string = compile_string, file = compile_file, dir = compile_dir, buffer = compile_buffer, vimrc = compile_vimrc, rtp = compile_rtp, all = compile_all}
+return compile

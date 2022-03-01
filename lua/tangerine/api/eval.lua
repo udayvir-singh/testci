@@ -2,54 +2,87 @@ local fennel = require("tangerine.fennel")
 local _local_1_ = require("tangerine.utils")
 local p = _local_1_["p"]
 local fs = _local_1_["fs"]
-local log = _local_1_["log"]
-local err = _local_1_["err"]
+local _local_2_ = require("tangerine.output")
+local dp = _local_2_["dp"]
+local err = _local_2_["err"]
+local eval = {}
 local function get_lines(start, _end)
-  _G.assert((nil ~= _end), "Missing argument end on fnl/tangerine/api/eval.fnl:17")
-  _G.assert((nil ~= start), "Missing argument start on fnl/tangerine/api/eval.fnl:17")
-  return table.concat(vim.api.nvim_buf_get_lines(0, (start - 1), _end, true), "\n")
+  _G.assert((nil ~= _end), "Missing argument end on fnl/tangerine/api/eval.fnl:23")
+  _G.assert((nil ~= start), "Missing argument start on fnl/tangerine/api/eval.fnl:23")
+  return table.concat(vim.api.nvim_buf_get_lines(0, start, _end, true), "\n")
 end
-local function softerr(msg)
-  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/api/eval.fnl:21")
-  return vim.api.nvim_echo({{msg, "Error"}}, false, {})
-end
-local function eval_string(str, _3ffilename)
-  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/eval.fnl:27")
-  local fennel0 = fennel.load()
-  local filename = (_3ffilename or "string")
-  local result = fennel0.eval(str, {filename = filename})
-  return log.value(result)
-end
-local function eval_file(path)
-  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/api/eval.fnl:33")
-  local path0 = p.resolve(path)
-  local filename = p.shortname(path0)
-  return eval_string(fs.read(path0), filename)
-end
-local function eval_range(start, _end, _3fcount)
-  _G.assert((nil ~= _end), "Missing argument end on fnl/tangerine/api/eval.fnl:39")
-  _G.assert((nil ~= start), "Missing argument start on fnl/tangerine/api/eval.fnl:39")
-  if (_3fcount == 0) then
-    softerr("[tangerine]: error in \"eval-range\", Missing argument {range}.")
-    return
-  else
-  end
-  local lines = get_lines(start, _end)
-  local bufname = vim.fn.expand("%")
-  err.clear()
-  local ok_3f, res = nil, nil
-  local function _3_()
-    return eval_string(lines, bufname)
-  end
-  ok_3f, res = pcall(_3_)
-  if not ok_3f then
-    softerr(res)
-    return (err["compile?"](res) and err.send(err.parse(res)))
+local function get_bufname()
+  local bufname = vim.fn.expand("%:t")
+  if (bufname ~= "") then
+    return bufname
+  elseif "else" then
+    return "[No Name]"
   else
     return nil
   end
 end
-local function eval_buffer()
-  return eval_range(1, -1)
+local function tbl_merge(tbl1, tbl2)
+  _G.assert((nil ~= tbl2), "Missing argument tbl2 on fnl/tangerine/api/eval.fnl:34")
+  _G.assert((nil ~= tbl1), "Missing argument tbl1 on fnl/tangerine/api/eval.fnl:34")
+  return vim.tbl_extend("keep", tbl1, tbl2)
 end
-return {string = eval_string, file = eval_file, range = eval_range, buffer = eval_buffer}
+eval.string = function(str, _3fopts)
+  _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/api/eval.fnl:42")
+  local opts = (_3fopts or {})
+  local fennel0 = fennel.load()
+  local filename = (opts.filename or "string")
+  err.clear()
+  local ok, result = nil, nil
+  local function _4_()
+    return fennel0.eval(str, {filename = filename})
+  end
+  local function _5_(_241)
+    return err.handle(_241, {float = opts.float, offset = opts.offset})
+  end
+  ok, result = xpcall(_4_, _5_)
+  if ok then
+    return dp.show(result, {float = opts.float})
+  else
+    return nil
+  end
+end
+eval.file = function(path, _3fopts)
+  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/api/eval.fnl:55")
+  local opts = (_3fopts or {})
+  local path0 = p.resolve(path)
+  local sname = p.shortname(path0)
+  return eval.string(fs.read(path0), tbl_merge(opts, {filename = sname}))
+end
+eval.buffer = function(start, _end, _3fopts)
+  _G.assert((nil ~= _end), "Missing argument end on fnl/tangerine/api/eval.fnl:64")
+  _G.assert((nil ~= start), "Missing argument start on fnl/tangerine/api/eval.fnl:64")
+  local opts = (_3fopts or {})
+  local start0 = (start - 1)
+  local lines = get_lines(start0, _end)
+  local bufname = get_bufname()
+  return eval.string(lines, tbl_merge(opts, {filename = bufname, offset = start0}))
+end
+eval.peak = function(start, _end, _3fopts)
+  _G.assert((nil ~= _end), "Missing argument end on fnl/tangerine/api/eval.fnl:82")
+  _G.assert((nil ~= start), "Missing argument start on fnl/tangerine/api/eval.fnl:82")
+  local opts = (_3fopts or {})
+  local fennel0 = fennel.load()
+  local start0 = (start - 1)
+  local lines = get_lines(start0, _end)
+  local bufname = get_bufname()
+  err.clear()
+  local ok, result = nil, nil
+  local function _7_()
+    return fennel0.compileString(lines, {filename = (opts.filename or bufname)})
+  end
+  local function _8_(_241)
+    return err.handle(_241, {float = opts.float, offset = start0})
+  end
+  ok, result = xpcall(_7_, _8_)
+  if ok then
+    return dp["show-lua"](result, opts)
+  else
+    return nil
+  end
+end
+return eval

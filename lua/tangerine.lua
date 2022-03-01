@@ -12,14 +12,19 @@ local function _3_()
   return require("tangerine.vim.cmds")
 end
 require_cmds = _3_
-local require_hooks
+local require_maps
 local function _4_()
+  return require("tangerine.vim.maps")
+end
+require_maps = _4_
+local require_hooks
+local function _5_()
   return require("tangerine.vim.hooks")
 end
-require_hooks = _4_
+require_hooks = _5_
 local vimrc_module = "tangerine_vimrc"
 local function safe_require(module)
-  _G.assert((nil ~= module), "Missing argument module on fnl/tangerine.fnl:20")
+  _G.assert((nil ~= module), "Missing argument module on fnl/tangerine.fnl:21")
   local ok_3f, out = pcall(require, module)
   if not ok_3f then
     return print(out)
@@ -43,9 +48,6 @@ local function load_api()
   tangerine = {api = api, fennel = fennel.load}
   return nil
 end
-local function load_cmds()
-  return require_cmds()
-end
 local function load_hooks()
   local hooks = require_hooks()
   for _, hook in ipairs(env.get("compiler", "hooks")) do
@@ -53,12 +55,20 @@ local function load_hooks()
   end
   return nil
 end
+local called = {setup = false}
 local function setup(config)
   _G.assert((nil ~= config), "Missing argument config on fnl/tangerine.fnl:50")
+  if called.setup then
+    error("[tangerine]: setup() cannot be called twice.")
+  elseif "else" then
+    called.setup = true
+  else
+  end
   env.set(config)
   fennel["patch-package-path"]()
   load_api()
-  load_cmds()
+  require_cmds()
+  require_maps()
   load_hooks()
   load_vimrc()
   return true

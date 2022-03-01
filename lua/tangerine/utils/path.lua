@@ -19,6 +19,14 @@ p["resolve-rtpdir"] = function(dir)
     return nil
   end
 end
+p["resolve-rtpdirs"] = function(dirs)
+  _G.assert((nil ~= dirs), "Missing argument dirs on fnl/tangerine/utils/path.fnl:27")
+  local out = {}
+  for _, dir in ipairs(dirs) do
+    table.insert(out, p["resolve-rtpdir"](dir))
+  end
+  return out
+end
 local vimrc_out = (env.get("target") .. "tangerine_vimrc.lua")
 p["from-x-to-y"] = function(path, _2_, _4_)
   local _arg_3_ = _2_
@@ -27,11 +35,11 @@ p["from-x-to-y"] = function(path, _2_, _4_)
   local _arg_5_ = _4_
   local to = _arg_5_[1]
   local ext2 = _arg_5_[2]
-  _G.assert((nil ~= ext2), "Missing argument ext2 on fnl/tangerine/utils/path.fnl:32")
-  _G.assert((nil ~= to), "Missing argument to on fnl/tangerine/utils/path.fnl:32")
-  _G.assert((nil ~= ext1), "Missing argument ext1 on fnl/tangerine/utils/path.fnl:32")
-  _G.assert((nil ~= from), "Missing argument from on fnl/tangerine/utils/path.fnl:32")
-  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/utils/path.fnl:32")
+  _G.assert((nil ~= ext2), "Missing argument ext2 on fnl/tangerine/utils/path.fnl:40")
+  _G.assert((nil ~= to), "Missing argument to on fnl/tangerine/utils/path.fnl:40")
+  _G.assert((nil ~= ext1), "Missing argument ext1 on fnl/tangerine/utils/path.fnl:40")
+  _G.assert((nil ~= from), "Missing argument from on fnl/tangerine/utils/path.fnl:40")
+  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/utils/path.fnl:40")
   local from0 = env.get(from)
   local to0 = env.get(to)
   local path0 = path:gsub((ext1 .. "$"), ext2)
@@ -44,7 +52,7 @@ p["from-x-to-y"] = function(path, _2_, _4_)
   end
 end
 p.target = function(path)
-  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/utils/path.fnl:42")
+  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/utils/path.fnl:50")
   local vimrc = env.get("vimrc")
   if (path == vimrc) then
     return vimrc_out
@@ -55,7 +63,7 @@ p.target = function(path)
   end
 end
 p.source = function(path)
-  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/utils/path.fnl:50")
+  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/utils/path.fnl:58")
   local vimrc = env.get("vimrc")
   if (path == vimrc_out) then
     return vimrc
@@ -66,13 +74,19 @@ p.source = function(path)
   end
 end
 p["goto-output"] = function()
-  local target = p.target(vim.fn.expand("%:p"))
-  vim.cmd(("badd" .. target))
-  return vim.cmd(("b" .. target))
+  local source = vim.fn.expand("%:p")
+  local target = p.target(source)
+  if ((1 == vim.fn.filereadable(target)) and (source ~= target)) then
+    return vim.cmd(("edit" .. target))
+  elseif "else" then
+    return print("[tangerine]: error in goto-output, target not readable.")
+  else
+    return nil
+  end
 end
 p.wildcard = function(dir, pat)
-  _G.assert((nil ~= pat), "Missing argument pat on fnl/tangerine/utils/path.fnl:70")
-  _G.assert((nil ~= dir), "Missing argument dir on fnl/tangerine/utils/path.fnl:70")
+  _G.assert((nil ~= pat), "Missing argument pat on fnl/tangerine/utils/path.fnl:84")
+  _G.assert((nil ~= dir), "Missing argument dir on fnl/tangerine/utils/path.fnl:84")
   return vim.fn.glob((dir .. pat), 0, 1)
 end
 p["list-fnl-files"] = function()
