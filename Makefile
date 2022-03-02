@@ -40,6 +40,7 @@ clean:
 install:
 	[ -d $(INSTALL_DIR) ] || mkdir -p $(INSTALL_DIR)
 	ln -srf lua doc -t $(INSTALL_DIR)
+	nvim --headless -c "packadd tangerine" -c "q"
 	echo :: FINISHED INSTALLING
 
 uninstall:
