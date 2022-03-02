@@ -7,7 +7,7 @@ _G.tangerine.api
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :cmds [ true ]
 ```
 
@@ -21,7 +21,7 @@ utils[env]
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :hooks {
   :onit <function 1>
   :onload <function 2>
@@ -40,7 +40,7 @@ vim[cmds]
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :maps [ true ]
 ```
 

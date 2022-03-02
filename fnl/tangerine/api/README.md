@@ -11,7 +11,7 @@ utils[path]
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :clean {
   :orphaned <function 1>
   :target <function 2>
@@ -33,7 +33,7 @@ utils[path]
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :compile {
   :all <function 1>
   :buffer <function 2>
@@ -58,7 +58,7 @@ utils[path]
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :eval {
   :buffer <function 1>
   :file <function 2>

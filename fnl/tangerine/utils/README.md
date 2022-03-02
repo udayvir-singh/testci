@@ -5,7 +5,7 @@ Works by creating marker that looks like `-- :fennel:<UTC>`,
 compares UTC in marker to ftime(source).
 
 **EXPORTS**
-```clojure
+```fennel
 :diff {
   :create-marker <function 1>
   :read-marker <function 2>
@@ -19,7 +19,7 @@ compares UTC in marker to ftime(source).
 Provides getter and setter so that multiple modules can have shared configurations.
 
 **EXPORTS**
-```clojure
+```fennel
 :env {
   :conf <function 1>
   :get <function 2>
@@ -31,7 +31,7 @@ Provides getter and setter so that multiple modules can have shared configuratio
 > Basic utils around file system handlers.
 
 **EXPORTS**
-```clojure
+```fennel
 :fs {
   :dir-exists? <function 1>
   :dirname <function 2>
@@ -52,7 +52,7 @@ utils[env]
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :path {
   :from-x-to-y <function 1>
   :goto-output <function 2>
@@ -77,7 +77,7 @@ utils[env]
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :window {
   :close <function 1>
   :create-float <function 2>

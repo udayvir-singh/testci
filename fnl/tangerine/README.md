@@ -8,7 +8,7 @@ utils[env]
 ```
 
 **EXPORTS**
-```clojure
+```fennel
 :fennel {
   :load <function 1>
   :patch-path <function 2>
