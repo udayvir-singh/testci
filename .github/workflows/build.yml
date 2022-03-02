@@ -117,7 +117,9 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: fennel-out
-        path: lua
+        path: |
+          lua 
+          !lua/tangerine/fennel/*
 
   commit:
     name: commit changes
