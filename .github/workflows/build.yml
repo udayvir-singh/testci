@@ -108,11 +108,8 @@ jobs:
     - name: Clean previous build
       run:  make clean
 
-    - name: Copy dependencies
-      run: make deps
-
     - name: Build fennel
-      run: make fnl
+      run:  make fnl
 
     - uses: actions/upload-artifact@v2
       with:
@@ -150,12 +147,15 @@ jobs:
         name: fennel-out
         path: lua
 
+    - name: Build Deps
+      run:  make deps
+
     - name: Print Changes
       run:  git status --short --ignored
 
     - name: Commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: '[auto]: build deps'
+        commit_message: '[auto]: run build steps'
         file_pattern: lua fnl doc/tangerine.txt
 
