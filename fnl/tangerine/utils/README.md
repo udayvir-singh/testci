@@ -6,25 +6,11 @@ compares UTC in marker to ftime(source).
 
 **EXPORTS**
 ```fennel
-:diff Error detected while processing command line:
-E5108: Error executing lua .../tangerine/start/tangerine.nvim/lua/tangerine/fennel.lua:34: module 'tangerine.fennel.latest' not found:
-	no field package.preload['tangerine.fennel.latest']
-	no file './tangerine/fennel/latest.lua'
-	no file '/usr/share/luajit-2.1.0-beta3/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest/init.lua'
-	no file './tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
-	no file './tangerine.so'
-	no file '/usr/local/lib/lua/5.1/tangerine.so'
-	no file '/usr/lib/lua/5.1/tangerine.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
+:diff {
+  :create-marker <function 1>
+  :read-marker <function 2>
+  :stale? <function 3>
+}
 ```
 
 # env.fnl
@@ -34,25 +20,11 @@ Provides getter and setter so that multiple modules can have shared configuratio
 
 **EXPORTS**
 ```fennel
-:env Error detected while processing command line:
-E5108: Error executing lua .../tangerine/start/tangerine.nvim/lua/tangerine/fennel.lua:34: module 'tangerine.fennel.latest' not found:
-	no field package.preload['tangerine.fennel.latest']
-	no file './tangerine/fennel/latest.lua'
-	no file '/usr/share/luajit-2.1.0-beta3/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest/init.lua'
-	no file './tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
-	no file './tangerine.so'
-	no file '/usr/local/lib/lua/5.1/tangerine.so'
-	no file '/usr/lib/lua/5.1/tangerine.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
+:env {
+  :conf <function 1>
+  :get <function 2>
+  :set <function 3>
+}
 ```
 
 # fs.fnl
@@ -60,25 +32,15 @@ E5108: Error executing lua .../tangerine/start/tangerine.nvim/lua/tangerine/fenn
 
 **EXPORTS**
 ```fennel
-:fs Error detected while processing command line:
-E5108: Error executing lua .../tangerine/start/tangerine.nvim/lua/tangerine/fennel.lua:34: module 'tangerine.fennel.latest' not found:
-	no field package.preload['tangerine.fennel.latest']
-	no file './tangerine/fennel/latest.lua'
-	no file '/usr/share/luajit-2.1.0-beta3/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest/init.lua'
-	no file './tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
-	no file './tangerine.so'
-	no file '/usr/local/lib/lua/5.1/tangerine.so'
-	no file '/usr/lib/lua/5.1/tangerine.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
+:fs {
+  :dir-exists? <function 1>
+  :dirname <function 2>
+  :mkdir <function 3>
+  :read <function 4>
+  :readable? <function 5>
+  :remove <function 6>
+  :write <function 7>
+}
 ```
 
 # path.fnl
@@ -91,25 +53,19 @@ utils[env]
 
 **EXPORTS**
 ```fennel
-:path Error detected while processing command line:
-E5108: Error executing lua .../tangerine/start/tangerine.nvim/lua/tangerine/fennel.lua:34: module 'tangerine.fennel.latest' not found:
-	no field package.preload['tangerine.fennel.latest']
-	no file './tangerine/fennel/latest.lua'
-	no file '/usr/share/luajit-2.1.0-beta3/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest/init.lua'
-	no file './tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
-	no file './tangerine.so'
-	no file '/usr/local/lib/lua/5.1/tangerine.so'
-	no file '/usr/lib/lua/5.1/tangerine.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
+:path {
+  :from-x-to-y <function 1>
+  :goto-output <function 2>
+  :list-fnl-files <function 3>
+  :list-lua-files <function 4>
+  :resolve <function 5>
+  :resolve-rtpdir <function 6>
+  :resolve-rtpdirs <function 7>
+  :shortname <function 8>
+  :source <function 9>
+  :target <function 10>
+  :wildcard <function 11>
+}
 ```
 
 # window.fnl
@@ -122,24 +78,13 @@ utils[env]
 
 **EXPORTS**
 ```fennel
-:window Error detected while processing command line:
-E5108: Error executing lua .../tangerine/start/tangerine.nvim/lua/tangerine/fennel.lua:34: module 'tangerine.fennel.latest' not found:
-	no field package.preload['tangerine.fennel.latest']
-	no file './tangerine/fennel/latest.lua'
-	no file '/usr/share/luajit-2.1.0-beta3/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/local/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/5.1/tangerine/fennel/latest/init.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest.lua'
-	no file '/usr/share/lua/common/tangerine/fennel/latest/init.lua'
-	no file './tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/lib/lua/5.1/tangerine/fennel/latest.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
-	no file './tangerine.so'
-	no file '/usr/local/lib/lua/5.1/tangerine.so'
-	no file '/usr/lib/lua/5.1/tangerine.so'
-	no file '/usr/local/lib/lua/5.1/loadall.so'
+:window {
+  :close <function 1>
+  :create-float <function 2>
+  :killall <function 3>
+  :next <function 4>
+  :prev <function 5>
+  :set-float <function 6>
+}
 ```
 
