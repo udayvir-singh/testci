@@ -32,6 +32,8 @@ vimdoc:
 clean:
 	rm -rf doc/tags doc/tangerine.txt
 	echo :: CLEANED VIMDOC
+	rm -rf $(shell find fnl -name "*.md")
+	echo :: CLEANED FENNEL DOCS
 	rm -rf lua/**
 	echo :: CLEANED BUILD DIR
 
@@ -50,11 +52,12 @@ uninstall:
 LUA_FILES := $(shell find lua -name '*.lua')
 
 --pull:
+	git restore lua
 	echo :: RUNNING GIT PULL
 	echo -e  "   \e[1;32m$$\e[0m git pull"
 	git pull --rebase | sed 's:^:   :'
 
-git-pull: clean --pull build
+git-pull: --pull clean build
 
 git-skip:
 	git update-index --skip-worktree $(LUA_FILES)

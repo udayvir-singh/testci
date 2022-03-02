@@ -62,8 +62,31 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: vimdoc
-        path: doc
+        name: fnldoc
+        path: fnl/**/README.md
+
+  fnldoc:
+    runs-on: ubuntu-latest
+    container: alpine
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install requirements
+      run: |
+        apk update && apk upgrade 
+        apk add make bash curl coreutils findutils neovim
+
+    - name: Install Tangerine
+      run:  make clean install
+
+    - name: Build fennel docs
+      run: |
+        rm -rvf $(find fnl -name "*.md")
+        make fnldocs
+
+    - uses: actions/upload-artifact@v2
+      with:
+
 
   fennel:
     runs-on: ubuntu-latest
@@ -97,7 +120,7 @@ jobs:
   commit:
     name: commit changes
     runs-on: ubuntu-latest
-    needs: [vimdoc, fennel]
+    needs: [vimdoc, fnldoc, fennel]
     
     steps:
     - uses: actions/checkout@v2
