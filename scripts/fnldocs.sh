@@ -20,7 +20,7 @@ get-deps () {
 		}
 
 		if (block) print $(NF)
-	}' < "${SOURCE}"
+	}' < "${SOURCE}" | sort
 
 }
 
@@ -53,9 +53,16 @@ get-about () {
 get-exports () {
 	local SOURCE="${1}"
 
+	local RETURN=$(
 	nvim -n --noplugin --headless \
-	-c "lua require('tangerine.api').eval.file('${SOURCE}', {float=false})" \
-	-c "q" 2>&1 | sed "s/^:return //" | col -b
+		-c "lua require('tangerine.api').eval.file('${SOURCE}', {float=false})" \
+		-c "q" 2>&1 | 
+	sed 's/:return //' |
+	col -b)
+
+	local MODULE=$(basename "${SOURCE}")
+
+	printf ":%s %s\n" "${MODULE%.fnl}" "${RETURN}"
 }
 
 gen-markdown () {
@@ -78,7 +85,7 @@ gen-markdown () {
 
 	printf '
 **EXPORTS**
-```fennel
+```clojure
 %s
 ```
 \n' "${EXPORTS}"
@@ -90,7 +97,14 @@ gen-markdown-dir () {
 	echo "# $(basename ${DIR})/"
 
 	printf "| %-40s | %-60s |\n" "MODULE" "DESCRIPTION"
-	printf "| ----- | ----- |\n"
+
+	# print header line
+	printf "| "
+	printf -- "-%.0s" {1..40}
+	printf " | "
+	printf -- "-%.0s" {1..60}
+	printf " |\n"
+
 	for SOURCE in ${DIR}/*.fnl; do
 		if [[ "${SOURCE}" =~ "init.fnl" ]]; then
 			continue

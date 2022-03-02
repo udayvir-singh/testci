@@ -8,8 +8,8 @@ utils[window]
 ```
 
 **EXPORTS**
-```fennel
-{
+```clojure
+:display {
   :serialize <function 1>
   :show <function 2>
   :show-lua <function 3>
@@ -26,8 +26,8 @@ utils[window]
 ```
 
 **EXPORTS**
-```fennel
-{
+```clojure
+:error {
   :clear <function 1>
   :compile? <function 2>
   :float <function 3>
@@ -48,8 +48,8 @@ utils[window]
 ```
 
 **EXPORTS**
-```fennel
-{
+```clojure
+:logger {
   :failure <function 1>
   :float-failure <function 2>
   :float-success <function 3>

@@ -1,3 +1,6 @@
+; ABOUT:
+;   Provides functions for interactive fennel evaluation.
+;
 ; DEPENDS:
 ; (-file)         utils[fs]
 ; (-file)         utils[path]

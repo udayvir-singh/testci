@@ -1,3 +1,6 @@
+; ABOUT:
+;   Provides functions to diff/compile fennel code.
+;
 ; DEPENDS:
 ; (-string)        fennel
 ; (-file)          utils[fs]

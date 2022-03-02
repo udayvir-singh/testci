@@ -7,8 +7,8 @@ _G.tangerine.api
 ```
 
 **EXPORTS**
-```fennel
-[ true ]
+```clojure
+:cmds [ true ]
 ```
 
 # hooks.fnl
@@ -21,8 +21,8 @@ utils[env]
 ```
 
 **EXPORTS**
-```fennel
-{
+```clojure
+:hooks {
   :onit <function 1>
   :onload <function 2>
   :onsave <function 3>
@@ -35,12 +35,12 @@ utils[env]
 
 **DEPENDS:**
 ```
-vim[cmds]
 utils[env]
+vim[cmds]
 ```
 
 **EXPORTS**
-```fennel
-[ true ]
+```clojure
+:maps [ true ]
 ```
 

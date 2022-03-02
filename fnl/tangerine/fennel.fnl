@@ -1,3 +1,6 @@
+; ABOUT:
+;   Configures fennel and provides functions to load fennel bins.
+;
 ; DEPENDS:
 ; (-load) utils[env]
 ; (-load) fennel[*]
