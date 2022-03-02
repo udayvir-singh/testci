@@ -26,8 +26,7 @@ get-deps () {
 
 get-about () {
 	local SOURCE="${1}"
-
-	local ABOUT=$(
+local ABOUT=$(
 	awk '{
 		if ($2 == "ABOUT:") {
 			getline
@@ -58,7 +57,7 @@ get-exports () {
 		-c "lua require('tangerine.api').eval.file('${SOURCE}', {float=false})" \
 		-c "q" 2>&1 | 
 	sed 's/:return //' |
-	col -b)
+	tr -d '\r')
 
 	local MODULE=$(basename "${SOURCE}")
 
