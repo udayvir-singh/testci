@@ -52,13 +52,13 @@ uninstall:
 # ------------------- #
 LUA_FILES := $(shell find lua -name '*.lua')
 
-git-pull-:
+--pull:
 	git restore doc lua $(shell find fnl -name "README.md")
 	echo :: RUNNING GIT PULL
 	echo -e  "   \e[1;32m$$\e[0m git pull"
 	git pull --rebase | sed 's:^:   :'
 
-git-pull: git-unskip git-pull- clean build git-skip
+git-pull: git-unskip --pull clean build git-skip
 
 git-skip:
 	git update-index --skip-worktree $(LUA_FILES)
