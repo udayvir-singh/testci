@@ -46,6 +46,7 @@ install:
 uninstall:
 	rm -rf $(INSTALL_DIR)
 	echo :: UN-INSTALLED TANGERINE
+	
 
 # ------------------- #
 #         GIT         #
@@ -90,6 +91,7 @@ loc-makefile:
 
 loc-yaml: 
 	./scripts/loc/yaml.sh $(LOC_ARGS)
+
 
 # ------------------- #
 #        INFO         #
