@@ -1,9 +1,9 @@
 local env = require("tangerine.utils.env")
 local fennel = {}
 local function format_path(path, ext, macro_path_3f)
-  _G.assert((nil ~= macro_path_3f), "Missing argument macro-path? on fnl/tangerine/fennel.fnl:11")
-  _G.assert((nil ~= ext), "Missing argument ext on fnl/tangerine/fennel.fnl:11")
-  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/fennel.fnl:11")
+  _G.assert((nil ~= macro_path_3f), "Missing argument macro-path? on fnl/tangerine/fennel.fnl:14")
+  _G.assert((nil ~= ext), "Missing argument ext on fnl/tangerine/fennel.fnl:14")
+  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/fennel.fnl:14")
   local function _1_()
     if macro_path_3f then
       return (";" .. path .. "?/init-macros.fnl")
@@ -14,8 +14,8 @@ local function format_path(path, ext, macro_path_3f)
   return (path .. "?." .. ext .. ";" .. path .. "?/init." .. ext .. _1_())
 end
 local function get_rtp(ext, macro_path_3f)
-  _G.assert((nil ~= macro_path_3f), "Missing argument macro-path? on fnl/tangerine/fennel.fnl:16")
-  _G.assert((nil ~= ext), "Missing argument ext on fnl/tangerine/fennel.fnl:16")
+  _G.assert((nil ~= macro_path_3f), "Missing argument macro-path? on fnl/tangerine/fennel.fnl:19")
+  _G.assert((nil ~= ext), "Missing argument ext on fnl/tangerine/fennel.fnl:19")
   local out = {format_path(env.get("source"), ext, macro_path_3f)}
   do
     local rtp = (vim.o.runtimepath .. ",")
