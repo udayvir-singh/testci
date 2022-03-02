@@ -77,7 +77,7 @@ jobs:
         apk add make bash curl coreutils findutils neovim
 
     - name: Install Tangerine
-      run:  make clean install
+      run:  make clean build install
 
     - name: Build fennel docs
       run: |
