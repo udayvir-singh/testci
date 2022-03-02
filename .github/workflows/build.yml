@@ -62,8 +62,8 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: fnldoc
-        path: fnl/**/README.md
+        name: vimdoc
+        path: doc
 
   fnldoc:
     runs-on: ubuntu-latest
@@ -86,6 +86,8 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
+        name: fnldoc
+        path: fnl/**/README.md
 
 
   fennel:
