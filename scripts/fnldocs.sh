@@ -27,6 +27,7 @@ get-deps () {
 get-about () {
 	local SOURCE="${1}"
 
+	local ABOUT=$(
 	awk '{
 		if ($2 == "ABOUT:") {
 			getline
@@ -40,8 +41,13 @@ get-about () {
 			gsub("^; *", "")
 			print $0
 		}
-	}' < "${SOURCE}"
+	}' < "${SOURCE}")
 
+	if [ -n "${ABOUT}" ]; then
+		printf "${ABOUT}"
+	else
+		printf "[none]\n"
+	fi
 }
 
 get-exports () {
@@ -78,6 +84,27 @@ gen-markdown () {
 \n' "${EXPORTS}"
 }
 
+gen-markdown-dir () {
+	local DIR="${1}"
+
+	echo "# $(basename ${DIR})/"
+
+	printf "| %-40s | %-60s |\n" "MODULE" "DESCRIPTION"
+	printf "| ----- | ----- |\n"
+	for SOURCE in ${DIR}/*.fnl; do
+		if [[ "${SOURCE}" =~ "init.fnl" ]]; then
+			continue
+		fi
+
+		local NAME="$(basename "${SOURCE}")"
+		local LINK="$(sed "s:$(dirname ${DIR})::" <<< "${SOURCE}")"
+		local ABOUT="$(get-about "${SOURCE}" | head -1)"
+		
+		printf "| %15s%-25s | %-60s |\n" "[${NAME}]" "(.${LINK})" "${ABOUT}"
+	done
+	echo
+}
+
 
 # --------------------- #
 #         MAIN          #
@@ -94,5 +121,11 @@ for DIR in ${SUB_DIRS}; do
 		fi
 		gen-markdown "${SOURCE}"
 	done > "${DIR}/README.md"
+
+	NESTED_DIRS="$(find "${DIR}"/* -type d)"
+
+	for NDIR in ${NESTED_DIRS}; do
+		gen-markdown-dir "${NDIR}"
+	done >> "${DIR}/README.md"
 done
 :: DONE

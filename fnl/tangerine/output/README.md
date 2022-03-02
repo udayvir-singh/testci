@@ -1,5 +1,5 @@
 # display.fnl
-> 
+> [none]
 
 **DEPENDS:**
 ```
@@ -17,7 +17,7 @@ utils[window]
 ```
 
 # error.fnl
-> 
+> [none]
 
 **DEPENDS:**
 ```
@@ -39,7 +39,7 @@ utils[window]
 ```
 
 # logger.fnl
-> 
+> [none]
 
 **DEPENDS:**
 ```
