@@ -136,6 +136,12 @@ jobs:
         name: vimdoc
         path: doc
 
+    - name: Download fennel docs
+      uses: actions/download-artifact@v2
+      with:
+        name: fnldoc
+        path: fnl
+
     - name: Download fennel:out
       uses: actions/download-artifact@v2
       with:
@@ -149,5 +155,5 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: '[auto]: build deps'
-        file_pattern: lua doc/tangerine.txt
+        file_pattern: lua fnl doc/tangerine.txt
 

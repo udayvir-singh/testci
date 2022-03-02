@@ -84,7 +84,7 @@ gen-markdown () {
 
 	printf '
 **EXPORTS**
-```clojure
+```fennel
 %s
 ```
 \n' "${EXPORTS}"
