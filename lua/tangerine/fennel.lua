@@ -1,9 +1,11 @@
 local env = require("tangerine.utils.env")
-local function format_path(path, ext, _3fmacro)
-  _G.assert((nil ~= ext), "Missing argument ext on fnl/tangerine/fennel.fnl:9")
-  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/fennel.fnl:9")
+local fennel = {}
+local function format_path(path, ext, macro_path_3f)
+  _G.assert((nil ~= macro_path_3f), "Missing argument macro-path? on fnl/tangerine/fennel.fnl:11")
+  _G.assert((nil ~= ext), "Missing argument ext on fnl/tangerine/fennel.fnl:11")
+  _G.assert((nil ~= path), "Missing argument path on fnl/tangerine/fennel.fnl:11")
   local function _1_()
-    if _3fmacro then
+    if macro_path_3f then
       return (";" .. path .. "?/init-macros.fnl")
     else
       return ""
@@ -11,33 +13,34 @@ local function format_path(path, ext, _3fmacro)
   end
   return (path .. "?." .. ext .. ";" .. path .. "?/init." .. ext .. _1_())
 end
-local function get_rtp(ext, _3fmacro)
-  _G.assert((nil ~= ext), "Missing argument ext on fnl/tangerine/fennel.fnl:14")
-  local out = {format_path(env.get("source"), ext, _3fmacro)}
+local function get_rtp(ext, macro_path_3f)
+  _G.assert((nil ~= macro_path_3f), "Missing argument macro-path? on fnl/tangerine/fennel.fnl:16")
+  _G.assert((nil ~= ext), "Missing argument ext on fnl/tangerine/fennel.fnl:16")
+  local out = {format_path(env.get("source"), ext, macro_path_3f)}
   do
     local rtp = (vim.o.runtimepath .. ",")
     for entry in rtp:gmatch("(.-),") do
       local path = (entry .. "/fnl/")
       if (1 == vim.fn.isdirectory(path)) then
-        table.insert(out, format_path(path, ext, _3fmacro))
+        table.insert(out, format_path(path, ext, macro_path_3f))
       else
       end
     end
   end
   return table.concat(out, ";")
 end
-local function load_fennel(version)
-  local version0 = (version or env.get("compiler", "version"))
-  local fennel = require(("tangerine.fennel." .. version0))
-  fennel.path = get_rtp("fnl", false)
-  fennel["macro-path"] = get_rtp("fnl", true)
-  return fennel
+fennel.load = function(_3fversion)
+  local version = (_3fversion or env.get("compiler", "version"))
+  local fennel0 = require(("tangerine.fennel." .. version))
+  fennel0.path = get_rtp("fnl", false)
+  fennel0["macro-path"] = get_rtp("fnl", true)
+  return fennel0
 end
-local original_path = {package.path}
-local function patch_package_path()
-  local path = get_rtp("lua")
-  local target = format_path(env.get("target"), "lua")
-  package.path = (target .. ";" .. path .. ";" .. original_path[1])
+local orig = {path = package.path}
+fennel["patch-path"] = function()
+  local targetdirs = get_rtp("lua", false)
+  local sourcedirs = format_path(env.get("target"), "lua", false)
+  package.path = (orig.path .. ";" .. targetdirs .. ";" .. sourcedirs)
   return true
 end
-return {load = load_fennel, ["patch-package-path"] = patch_package_path}
+return fennel

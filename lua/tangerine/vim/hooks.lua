@@ -1,15 +1,16 @@
 local env = require("tangerine.utils.env")
+local hooks = {}
 local function exec(...)
-  return vim.cmd(table.concat({...}, " "))
+  return print(table.concat({...}, " "))
 end
-local function parse_autocmd(cmds)
-  _G.assert((nil ~= cmds), "Missing argument cmds on fnl/tangerine/vim/hooks.fnl:12")
-  local groups = table.concat(cmds[1], " ")
-  table.remove(cmds, 1)
-  return "au", groups, table.concat(cmds, " ")
+local function parse_autocmd(opts)
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/vim/hooks.fnl:15")
+  local groups = table.concat(opts[1], " ")
+  table.remove(opts, 1)
+  return "au", groups, table.concat(opts, " ")
 end
 local function augroup(name, ...)
-  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/vim/hooks.fnl:17")
+  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/vim/hooks.fnl:21")
   exec("augroup", name)
   exec("au!")
   for idx, val in ipairs({...}) do
@@ -18,10 +19,7 @@ local function augroup(name, ...)
   exec("augroup", "END")
   return true
 end
-local source = env.get("source")
-local vimrc = env.get("vimrc")
-local pat = (source .. "*.fnl" .. "," .. vimrc)
-local function run_hooks()
+hooks.run = function()
   local clean_3f = env.get("compiler", "clean")
   if clean_3f then
     _G.tangerine.api.clean.orphaned()
@@ -29,14 +27,17 @@ local function run_hooks()
   end
   return _G.tangerine.api.compile.all()
 end
-local lua_run_hooks = "lua :require 'tangerine.vim.hooks'.run()"
-local function _2_()
-  return augroup("tangerine-onload", {{"VimEnter", "*"}}, lua_run_hooks)
+local run_hooks = "lua :require 'tangerine.vim.hooks'.run()"
+hooks.onsave = function()
+  local vimrc = env.get("vimrc")
+  local source = env.get("source")
+  local sources = (source .. "*.fnl," .. vimrc)
+  return augroup("tangerine-onsave", {{"BufWritePost", sources}, run_hooks})
 end
-local function _3_()
-  return augroup("tangerine-onsave", {{"BufWritePost", pat}}, lua_run_hooks)
+hooks.onload = function()
+  return augroup("tangerine-onload", {{"VimEnter", "*"}, run_hooks})
 end
-local function _4_()
-  return run_hooks()
+hooks.onit = function()
+  return hooks.run()
 end
-return {onload = _2_, onsave = _3_, oninit = _4_, run = run_hooks}
+return hooks
