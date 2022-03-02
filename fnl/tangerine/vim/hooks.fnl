@@ -1,20 +1,25 @@
 ; DEPENDS:
-; (run-hooks) api[init] - _G.tangerine.api
-; (run-hooks) utils[env]
+; (-run)    api[init] -> _G.tangerine.api
+; (-onsave) utils[env]
 (local env (require :tangerine.utils.env))
+
+(local hooks {})
 
 ;; -------------------- ;;
 ;;        Utils         ;;
 ;; -------------------- ;;
 (lambda exec [...]
-  (vim.cmd (table.concat [...] " ")))
+  "executes given multi-args as vim command."
+  (print (table.concat [...] " ")))
 
-(lambda parse-autocmd [cmds]
-  (let [groups (table.concat (. cmds 1) " ")]
-       (table.remove cmds 1)
-       (values :au groups (table.concat cmds " "))))
+(lambda parse-autocmd [opts]
+  "converts 'opts' containing [[group] cmd] chunks into valid autocmd."
+  (let [groups (table.concat (. opts 1) " ")]
+       (table.remove opts 1)
+       (values :au groups (table.concat opts " "))))
 
 (lambda augroup [name ...]
+  "defines augroup with 'name' and multi-args containing [[group] cmd] chunks."
   (exec :augroup name)
   (exec :au!)
   (each [idx val (ipairs [...])]
@@ -26,24 +31,32 @@
 ;; -------------------- ;;
 ;;         AUGS         ;;
 ;; -------------------- ;;
-(local source (env.get :source))
-(local vimrc  (env.get :vimrc))
-(local pat    (.. source "*.fnl" "," vimrc))
-
-(lambda run-hooks []
+(lambda hooks.run []
+  "base runner of hooks, calls compiler as defined in ENV."
   (let [clean? (env.get :compiler :clean)]
        (if clean?
            (_G.tangerine.api.clean.orphaned))
        (_G.tangerine.api.compile.all)))
 
-(local lua-run-hooks
+(local run-hooks ; lua wrapper around hooks.run
        "lua :require 'tangerine.vim.hooks'.run()")
 
+(lambda hooks.onsave []
+  "runs everytime fennel files in source dirs are saved."
+  (let [vimrc   (env.get :vimrc)
+        source  (env.get :source)
+        sources (.. source "*.fnl," vimrc )]
+    (augroup :tangerine-onsave
+             [[:BufWritePost sources] run-hooks])))
 
-:augroups {
-  :onload #(augroup :tangerine-onload [[:VimEnter "*"]]     lua-run-hooks)
-  :onsave #(augroup :tangerine-onsave [[:BufWritePost pat]] lua-run-hooks)
-  :oninit #(run-hooks)
+(lambda hooks.onload []
+  "runs when VimEnter event fires."
+  (augroup :tangerine-onload
+           [[:VimEnter "*"] run-hooks]))
 
-  :run run-hooks
-}
+(lambda hooks.onit []
+  "runs instantly on calling."
+  :call (hooks.run))
+
+
+:return hooks

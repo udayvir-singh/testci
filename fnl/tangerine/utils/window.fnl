@@ -1,3 +1,6 @@
+; ABOUT:
+;   Contains functions to create and control floating windows.
+;
 ; DEPENDS:
 ; (nmap!) utils[env]
 (local env (require :tangerine.utils.env))
@@ -89,26 +92,45 @@
 
 
 ;; -------------------- ;;
-;;        Window        ;;
+;;        Utils         ;;
 ;; -------------------- ;;
+(lambda lineheight [lines]
+  "calculates height occupied by 'lines' relative to window's width."
+  (var height 0)
+  (let [width (vim.api.nvim_win_get_width 0)]
+    (each [_ line (ipairs lines)]
+      (set height
+           (-> (# line) (+ 2) (/ width)
+               (math.ceil 1)
+               (math.max 1)
+               (+ height))))
+    :return height))
+
 (lambda nmap! [buffer lhs rhs]
+  "defines a 'buffer' local mapping for 'lhs' to 'rhs'."
   (vim.api.nvim_buf_set_keymap buffer :n lhs (.. "<cmd>" rhs "<CR>") {:silent true :noremap true}))
 
 (lambda setup-mappings [buffer]
+  "setup floating window mappings defined in ENV for 'buffer'."
   (local {: WinNext : WinPrev : WinClose : WinKill} (env.get :mapping))
   (nmap! buffer WinNext  :FnlWinNext)
   (nmap! buffer WinPrev  :FnlWinPrev)
   (nmap! buffer WinKill  :FnlWinKill)
   (nmap! buffer WinClose :FnlWinClose))
 
-(lambda win.create-float [nlines filetype highlight]
+
+;; -------------------- ;;
+;;        Window        ;;
+;; -------------------- ;;
+(lambda win.create-float [lineheight filetype highlight]
+  "defines a floating window with height 'lineheight'."
   (normalize-parent (vim.fn.win_getid))
   (let [buffer     (vim.api.nvim_create_buf false true)
         win-width  (vim.api.nvim_win_get_width 0)
         win-height (vim.api.nvim_win_get_height 0)
         bordersize 2
         width      (- win-width bordersize)
-        height     (math.max 1 (math.floor (math.min (/ win-height 1.5) nlines)))]
+        height     (math.max 1 (math.floor (math.min (/ win-height 1.5) lineheight)))]
   (vim.api.nvim_open_win buffer true {
     : width 
     : height
@@ -130,8 +152,9 @@
   :return buffer))
 
 (lambda win.set-float [lines filetype highlight]
+  "defines a floating windows for string of 'lines'."
   (let [lines  (vim.split lines "\n")
-        nlines (length lines)
+        nlines (lineheight lines)
         buffer (win.create-float nlines filetype highlight)]
     (vim.api.nvim_buf_set_lines buffer 0 -1 true lines)
     :return true))

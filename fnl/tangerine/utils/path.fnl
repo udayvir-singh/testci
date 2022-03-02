@@ -1,3 +1,6 @@
+; ABOUT:
+;   Provides path manipulation and indexing functions
+;
 ; DEPENDS:
 ; ALL() utils[env]
 (local env (require :tangerine.utils.env))

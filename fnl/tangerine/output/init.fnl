@@ -1,5 +1,5 @@
 ; DEPENDS:
-; :return tangerine.display.**
+; :return display[*]
 
 (local modules {
   :dp  "tangerine.output.display"

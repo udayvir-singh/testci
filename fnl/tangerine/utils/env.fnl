@@ -1,3 +1,8 @@
+; ABOUT:
+;   Stores environment used by rest of tangerine
+;
+;   Provides getter and setter so that multiple modules can have shared configurations.
+
 ;; -------------------- ;;
 ;;        Utils         ;;
 ;; -------------------- ;;
@@ -157,6 +162,7 @@
         (validate-oneof name val scm)))
 
 (lambda validate [tbl schema]
+  "recursively validates 'tbl' against 'schema', raises error on failure."
   (each [key val (pairs tbl)]
         (local scm (. schema key))
         (if (not (. schema key))
@@ -170,6 +176,7 @@
         (validate val scm))))
 
 (lambda pre-process [tbl schema]
+  "recursively runs pre processors defined in 'schema' on 'tbl."
   (each [key val (pairs tbl)]
         (local pre (. schema key))
         (if (= (type pre) :table)

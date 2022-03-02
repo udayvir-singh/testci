@@ -1,8 +1,8 @@
 ; DEPENDS:
-; :api tangerine.api.**
-; :api utils[path]
-; :api utils[logger]
-; :api utils[window]
+; :return api[*]
+; :return utils[path]
+; :return utils[logger]
+; :return utils[window]
 (local prefix "tangerine.")
 
 ;; -------------------- ;;

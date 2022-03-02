@@ -1,5 +1,5 @@
 ; DEPENDS:
-; :return tangerine.utils.**
+; :return utils[*]
 
 (local modules {
   :p   "tangerine.utils.path"
