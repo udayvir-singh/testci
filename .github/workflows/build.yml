@@ -82,7 +82,7 @@ jobs:
     - name: Build fennel docs
       run: |
         rm -rvf $(find fnl -name "*.md")
-        make fnldocs
+        make fnldoc
 
     - uses: actions/upload-artifact@v2
       with:
