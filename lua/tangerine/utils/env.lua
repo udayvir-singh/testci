@@ -40,11 +40,11 @@ local function deepcopy(tbl1, tbl2, _3fnested)
 end
 local schema = {source = "string", target = "string", vimrc = "string", rtpdirs = "list", compiler = {float = "boolean", clean = "boolean", force = "boolean", verbose = "boolean", globals = "list", version = {"oneof", {"latest", "1-0-0", "0-10-0", "0-9-2"}}, hooks = {"array", {"onsave", "onload", "oninit"}}}, diagnostic = {float = "boolean", virtual = "boolean", timeout = "number"}, eval = {float = "boolean"}, mapping = {PeakBuffer = "string", EvalBuffer = "string", GotoOutput = "string", FloatNext = "string", FloatPrev = "string", FloatKill = "string", FloatClose = "string"}, highlight = {float = "string", success = "string", errors = "string", virtual = "string"}}
 local pre_schema = {source = resolve, target = resolve, vimrc = resolve, rtpdirs = nil, compiler = nil, diagnostic = nil, eval = nil, mapping = nil, highlight = nil}
-local ENV = {vimrc = resolve((config_dir .. "/init.fnl")), source = resolve((config_dir .. "/fnl/")), target = resolve((config_dir .. "/lua/")), rtpdirs = {}, compiler = {float = true, clean = true, force = false, verbose = true, globals = vim.tbl_keys(_G), version = "latest", hooks = {}}, diagnostic = {float = true, virtual = true, timeout = 10}, eval = {float = true}, mapping = {PeakBuffer = "gL", EvalBuffer = "gE", GotoOutput = "gO", WinPrev = "<C-J>", WinNext = "<C-K>", WinKill = "<Esc>", WinClose = "<Enter>"}, highlight = {float = "TangerineFloat", success = "String", errors = "DiagnosticError", virtual = "DiagnosticVirtualTextError"}}
+local ENV = {vimrc = resolve((config_dir .. "/init.fnl")), source = resolve((config_dir .. "/fnl/")), target = resolve((config_dir .. "/lua/")), rtpdirs = {}, compiler = {float = true, clean = true, force = false, verbose = true, globals = vim.tbl_keys(_G), version = "latest", hooks = {}}, diagnostic = {float = true, virtual = true, timeout = 10}, eval = {float = true}, mapping = {PeakBuffer = "gL", EvalBuffer = "gE", GotoOutput = "gO", WinPrev = "<C-J>", WinNext = "<C-K>", WinKill = "<Esc>", WinClose = "<Enter>", ["WinResize+"] = "<C-W>=", ["WinResize-"] = "<C-W>-"}, highlight = {float = "TangerineFloat", success = "String", errors = "DiagnosticError", virtual = "DiagnosticVirtualTextError"}}
 local function validate_type(name, val, scm)
-  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:138")
-  _G.assert((nil ~= val), "Missing argument val on fnl/tangerine/utils/env.fnl:138")
-  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/utils/env.fnl:138")
+  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:140")
+  _G.assert((nil ~= val), "Missing argument val on fnl/tangerine/utils/env.fnl:140")
+  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/utils/env.fnl:140")
   local function fail()
     return error(("[tangerine]: bad argument in 'setup()' to " .. name .. ", " .. scm .. " expected got " .. type(val) .. "."))
   end
@@ -57,9 +57,9 @@ local function validate_type(name, val, scm)
   end
 end
 local function validate_oneof(name, val, scm)
-  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:150")
-  _G.assert((nil ~= val), "Missing argument val on fnl/tangerine/utils/env.fnl:150")
-  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/utils/env.fnl:150")
+  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:152")
+  _G.assert((nil ~= val), "Missing argument val on fnl/tangerine/utils/env.fnl:152")
+  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/utils/env.fnl:152")
   validate_type(name, val, "string")
   if not vim.tbl_contains(scm, val) then
     local tbl = table.concat(scm, "' '")
@@ -69,9 +69,9 @@ local function validate_oneof(name, val, scm)
   end
 end
 local function validate_array(name, array, scm)
-  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:158")
-  _G.assert((nil ~= array), "Missing argument array on fnl/tangerine/utils/env.fnl:158")
-  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/utils/env.fnl:158")
+  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:160")
+  _G.assert((nil ~= array), "Missing argument array on fnl/tangerine/utils/env.fnl:160")
+  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/utils/env.fnl:160")
   validate_type(name, array, "table")
   for _, val in ipairs(array) do
     validate_oneof(name, val, scm)
@@ -79,8 +79,8 @@ local function validate_array(name, array, scm)
   return nil
 end
 local function validate(tbl, schema0)
-  _G.assert((nil ~= schema0), "Missing argument schema on fnl/tangerine/utils/env.fnl:164")
-  _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:164")
+  _G.assert((nil ~= schema0), "Missing argument schema on fnl/tangerine/utils/env.fnl:166")
+  _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:166")
   for key, val in pairs(tbl) do
     local scm = (schema0)[key]
     if not (schema0)[key] then
@@ -123,8 +123,8 @@ local function validate(tbl, schema0)
   return nil
 end
 local function pre_process(tbl, schema0)
-  _G.assert((nil ~= schema0), "Missing argument schema on fnl/tangerine/utils/env.fnl:178")
-  _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:178")
+  _G.assert((nil ~= schema0), "Missing argument schema on fnl/tangerine/utils/env.fnl:180")
+  _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:180")
   for key, val in pairs(tbl) do
     local pre = (schema0)[key]
     if (type(pre) == "table") then
@@ -137,8 +137,8 @@ local function pre_process(tbl, schema0)
   return tbl
 end
 local function rget(tbl, args)
-  _G.assert((nil ~= args), "Missing argument args on fnl/tangerine/utils/env.fnl:192")
-  _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:192")
+  _G.assert((nil ~= args), "Missing argument args on fnl/tangerine/utils/env.fnl:194")
+  _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:194")
   if (0 == #args) then
     return tbl
   elseif "else" then
@@ -165,8 +165,8 @@ local function env_get(...)
   return rget(ENV, {...})
 end
 local function env_get_config(opts, args)
-  _G.assert((nil ~= args), "Missing argument args on fnl/tangerine/utils/env.fnl:205")
-  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/utils/env.fnl:205")
+  _G.assert((nil ~= args), "Missing argument args on fnl/tangerine/utils/env.fnl:207")
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/utils/env.fnl:207")
   local key = args[#args]
   if (nil ~= opts[key]) then
     return opts[key]
@@ -177,7 +177,7 @@ local function env_get_config(opts, args)
   end
 end
 local function env_set(tbl)
-  _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:217")
+  _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:219")
   validate(tbl, schema)
   pre_process(tbl, pre_schema)
   return deepcopy(tbl, ENV)

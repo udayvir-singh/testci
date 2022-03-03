@@ -80,28 +80,53 @@ end
 win.prev = function(_3fsteps)
   return move_stack(#win_stack, (-1 * (_3fsteps or 1)))
 end
-win.close = function()
-  local current = vim.fn.win_getid()
+win.resize = function(n)
+  _G.assert((nil ~= n), "Missing argument n on fnl/tangerine/utils/window.fnl:73")
+  local n0 = n
+  local idx_2a = (#win_stack + 1)
   for idx, _15_ in ipairs(win_stack) do
     local _each_16_ = _15_
     local win0 = _each_16_[1]
     local conf = _each_16_[2]
-    if (win0 == current) then
-      vim.api.nvim_win_close(win0, true)
-      update_stack()
-      local _17_
-      if win_stack[idx] then
-        _17_ = idx
-      elseif win_stack[(idx + 1)] then
-        _17_ = (idx + 1)
+    if (win0 == vim.fn.win_getid()) then
+      if (0 >= (conf.height + n0)) then
+        n0 = (1 - conf.height)
       else
-        _17_ = (idx - 1)
       end
-      move_stack(_17_, 0)
+      idx_2a = idx
+      conf["height"] = (conf.height + n0)
+    else
+    end
+    if (idx_2a <= idx) then
+      conf["row"][false] = (conf.row[false] - n0)
+      vim.api.nvim_win_set_config(win0, conf)
     else
     end
   end
-  return nil
+  return true
+end
+win.close = function()
+  local current = vim.fn.win_getid()
+  for idx, _20_ in ipairs(win_stack) do
+    local _each_21_ = _20_
+    local win0 = _each_21_[1]
+    local conf = _each_21_[2]
+    if (win0 == current) then
+      vim.api.nvim_win_close(win0, true)
+      update_stack()
+      local _22_
+      if win_stack[idx] then
+        _22_ = idx
+      elseif win_stack[(idx + 1)] then
+        _22_ = (idx + 1)
+      else
+        _22_ = (idx - 1)
+      end
+      move_stack(_22_, 0)
+    else
+    end
+  end
+  return true
 end
 win.killall = function()
   for idx = 1, #win_stack do
@@ -109,10 +134,10 @@ win.killall = function()
     do end (win_stack)[idx] = nil
   end
   win_stack["total"] = 0
-  return nil
+  return true
 end
 local function lineheight(lines)
-  _G.assert((nil ~= lines), "Missing argument lines on fnl/tangerine/utils/window.fnl:97")
+  _G.assert((nil ~= lines), "Missing argument lines on fnl/tangerine/utils/window.fnl:114")
   local height = 0
   local width = vim.api.nvim_win_get_width(0)
   for _, line in ipairs(lines) do
@@ -120,28 +145,25 @@ local function lineheight(lines)
   end
   return height
 end
-local function nmap_21(buffer, lhs, rhs)
-  _G.assert((nil ~= rhs), "Missing argument rhs on fnl/tangerine/utils/window.fnl:109")
-  _G.assert((nil ~= lhs), "Missing argument lhs on fnl/tangerine/utils/window.fnl:109")
-  _G.assert((nil ~= buffer), "Missing argument buffer on fnl/tangerine/utils/window.fnl:109")
-  return vim.api.nvim_buf_set_keymap(buffer, "n", lhs, ("<cmd>" .. rhs .. "<CR>"), {silent = true, noremap = true})
+local function nmap_21(buffer, ...)
+  _G.assert((nil ~= buffer), "Missing argument buffer on fnl/tangerine/utils/window.fnl:126")
+  for _, _25_ in ipairs({...}) do
+    local _each_26_ = _25_
+    local lhs = _each_26_[1]
+    local rhs = _each_26_[2]
+    vim.api.nvim_buf_set_keymap(buffer, "n", lhs, ("<cmd>" .. rhs .. "<CR>"), {silent = true, noremap = true})
+  end
+  return nil
 end
 local function setup_mappings(buffer)
-  _G.assert((nil ~= buffer), "Missing argument buffer on fnl/tangerine/utils/window.fnl:113")
-  local _local_20_ = env.get("mapping")
-  local WinNext = _local_20_["WinNext"]
-  local WinPrev = _local_20_["WinPrev"]
-  local WinClose = _local_20_["WinClose"]
-  local WinKill = _local_20_["WinKill"]
-  nmap_21(buffer, WinNext, "FnlWinNext")
-  nmap_21(buffer, WinPrev, "FnlWinPrev")
-  nmap_21(buffer, WinKill, "FnlWinKill")
-  return nmap_21(buffer, WinClose, "FnlWinClose")
+  _G.assert((nil ~= buffer), "Missing argument buffer on fnl/tangerine/utils/window.fnl:131")
+  local m = env.get("mapping")
+  return nmap_21(buffer, {m.WinNext, "FnlWinNext"}, {m.WinPrev, "FnlWinPrev"}, {m.WinKill, "FnlWinKill"}, {m.WinClose, "FnlWinClose"}, {m["WinResize+"], "FnlWinResize 1"}, {m["WinResize-"], "FnlWinResize -1"})
 end
 win["create-float"] = function(lineheight0, filetype, highlight)
-  _G.assert((nil ~= highlight), "Missing argument highlight on fnl/tangerine/utils/window.fnl:125")
-  _G.assert((nil ~= filetype), "Missing argument filetype on fnl/tangerine/utils/window.fnl:125")
-  _G.assert((nil ~= lineheight0), "Missing argument lineheight on fnl/tangerine/utils/window.fnl:125")
+  _G.assert((nil ~= highlight), "Missing argument highlight on fnl/tangerine/utils/window.fnl:146")
+  _G.assert((nil ~= filetype), "Missing argument filetype on fnl/tangerine/utils/window.fnl:146")
+  _G.assert((nil ~= lineheight0), "Missing argument lineheight on fnl/tangerine/utils/window.fnl:146")
   normalize_parent(vim.fn.win_getid())
   local buffer = vim.api.nvim_create_buf(false, true)
   local win_width = vim.api.nvim_win_get_width(0)
@@ -158,9 +180,9 @@ win["create-float"] = function(lineheight0, filetype, highlight)
   return buffer
 end
 win["set-float"] = function(lines, filetype, highlight)
-  _G.assert((nil ~= highlight), "Missing argument highlight on fnl/tangerine/utils/window.fnl:154")
-  _G.assert((nil ~= filetype), "Missing argument filetype on fnl/tangerine/utils/window.fnl:154")
-  _G.assert((nil ~= lines), "Missing argument lines on fnl/tangerine/utils/window.fnl:154")
+  _G.assert((nil ~= highlight), "Missing argument highlight on fnl/tangerine/utils/window.fnl:175")
+  _G.assert((nil ~= filetype), "Missing argument filetype on fnl/tangerine/utils/window.fnl:175")
+  _G.assert((nil ~= lines), "Missing argument lines on fnl/tangerine/utils/window.fnl:175")
   local lines0 = vim.split(lines, "\n")
   local nlines = lineheight(lines0)
   local buffer = win["create-float"](nlines, filetype, highlight)
