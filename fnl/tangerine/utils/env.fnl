@@ -22,7 +22,7 @@
            (.. out "/"))))
 
 (lambda table? [tbl]
-  "checks if 'tbl' is a valid table."
+  "checks if 'tbl' is a valid table and not a list."
   (and (= :table (type tbl))
        (not (vim.tbl_islist tbl))))
 
