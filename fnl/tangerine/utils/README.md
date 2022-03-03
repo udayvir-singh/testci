@@ -84,7 +84,8 @@ utils[env]
   :killall <function 3>
   :next <function 4>
   :prev <function 5>
-  :set-float <function 6>
+  :resize <function 6>
+  :set-float <function 7>
 }
 ```
 

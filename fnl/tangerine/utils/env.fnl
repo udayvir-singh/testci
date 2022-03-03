@@ -122,6 +122,8 @@
     :WinNext    "<C-K>"
     :WinKill    "<Esc>"
     :WinClose   "<Enter>"
+    :WinResize+ "<C-W>="
+    :WinResize- "<C-W>-"
   }
   :highlight {
     :float   "TangerineFloat"

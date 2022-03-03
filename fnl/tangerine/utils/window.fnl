@@ -70,6 +70,21 @@
   "switch to previous floating window by [N] steps."
   (move-stack (# win-stack) (* -1 (or ?steps 1))))
 
+(lambda win.resize [n]
+  "changes the heigth of current floating window by factor of 'n'."
+  (var n n)
+  (var idx* (+ (# win-stack) 1)) ; make starting index out of bounds
+  (each [idx [win conf] (ipairs win-stack)]
+        (when (= win (vim.fn.win_getid))
+          (if (>= 0 (+ conf.height n))
+              (set n (- 1 conf.height)))
+          (set idx* idx)
+          (tset conf :height (+ conf.height n)))
+        (when (<= idx* idx)
+          (tset conf :row false (- (. conf :row false) n))
+          (vim.api.nvim_win_set_config win conf)))
+  :return true)
+
 (lambda win.close []
   "close current floating window, switch to nearest neighbor afterwards."
   (let [current (vim.fn.win_getid)]
@@ -81,14 +96,16 @@
               (if (. win-stack idx) idx
                   (. win-stack (+ idx 1)) (+ idx 1) 
                   (- idx 1)) 
-              0)))))
+              0)))
+    :return true))
 
 (lambda win.killall []
   "reset win-stack, close all windows inside."
   (for [idx 1 (# win-stack)]
     (vim.api.nvim_win_close (. win-stack idx 1) true)
     (tset win-stack idx nil))
-  (tset win-stack :total 0))
+  (tset win-stack :total 0)
+  :return true)
 
 
 ;; -------------------- ;;
@@ -106,17 +123,21 @@
                (+ height))))
     :return height))
 
-(lambda nmap! [buffer lhs rhs]
-  "defines a 'buffer' local mapping for 'lhs' to 'rhs'."
-  (vim.api.nvim_buf_set_keymap buffer :n lhs (.. "<cmd>" rhs "<CR>") {:silent true :noremap true}))
+(lambda nmap! [buffer ...]
+  "defines a local mapping to 'buffer' for [lhs rhs] chunks in multi args."
+  (each [_ [lhs rhs] (ipairs [...])]
+    (vim.api.nvim_buf_set_keymap buffer :n lhs (.. "<cmd>" rhs "<CR>") {:silent true :noremap true})))
 
 (lambda setup-mappings [buffer]
   "setup floating window mappings defined in ENV for 'buffer'."
-  (local {: WinNext : WinPrev : WinClose : WinKill} (env.get :mapping))
-  (nmap! buffer WinNext  :FnlWinNext)
-  (nmap! buffer WinPrev  :FnlWinPrev)
-  (nmap! buffer WinKill  :FnlWinKill)
-  (nmap! buffer WinClose :FnlWinClose))
+  (local m (env.get :mapping))
+  (nmap! buffer
+    [m.WinNext    :FnlWinNext]
+    [m.WinPrev    :FnlWinPrev]
+    [m.WinKill    :FnlWinKill]
+    [m.WinClose   :FnlWinClose]
+    [m.WinResize+ "FnlWinResize 1"]
+    [m.WinResize- "FnlWinResize -1"]))
 
 
 ;; -------------------- ;;

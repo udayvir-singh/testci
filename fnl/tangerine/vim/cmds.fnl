@@ -30,6 +30,7 @@
 ;; -------------------- ;;
 (local bang? "{ force=('<bang>' == '!' or nil) }")
 
+
 ; COMMAND |       name       |     func     |  args  |  opts |
 (command! :FnlCompileBuffer  "compile.buffer"  nil         [])
 (command! :FnlCompile        "compile.all"     bang?  [:bang])
@@ -42,10 +43,11 @@
 (command! :FnlPeak    "eval.peak"    "(<line1>, <line2>)"  [:range "%"])
 
 
-(command! :FnlWinClose "win.close"    nil                   [])
-(command! :FnlWinKill  "win.killall"  nil                   [])
-(command! :FnlWinNext  "win.next"     "(<args>)"  [:nargs "?"])
-(command! :FnlWinPrev  "win.prev"     "(<args>)"  [:nargs "?"])
+(command! :FnlWinKill    "win.killall"  nil                   [])
+(command! :FnlWinClose   "win.close"    nil                   [])
+(command! :FnlWinResize  "win.resize"   "(<args>)"  [:nargs "1"])
+(command! :FnlWinNext    "win.next"     "(<args>)"  [:nargs "?"])
+(command! :FnlWinPrev    "win.prev"     "(<args>)"  [:nargs "?"])
 
 
 (command! :FnlGotoOutput  "goto_output"  nil  [])

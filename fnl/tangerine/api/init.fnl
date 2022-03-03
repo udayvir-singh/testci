@@ -43,6 +43,7 @@
     :next    (lazy :utils.window "next")
     :prev    (lazy :utils.window "prev")
     :close   (lazy :utils.window "close")
+    :resize  (lazy :utils.window "resize")
     :killall (lazy :utils.window "killall")
   }
   :goto_output (lazy :utils.path "goto-output")
