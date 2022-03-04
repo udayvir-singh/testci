@@ -21,19 +21,16 @@
            out
            (.. out "/"))))
 
-(lambda table? [tbl]
-  "checks if 'tbl' is a valid table and not a list."
+(lambda table? [tbl scm]
+  "checks if 'tbl' is a valid table and 'scm' is not a list."
   (and (= :table (type tbl))
-       (not (vim.tbl_islist tbl))))
+       (not (vim.tbl_islist scm))))
 
-(lambda deepcopy [tbl1 tbl2 ?nested]
+(lambda deepcopy [tbl1 tbl2]
   "deep copy 'tbl1' onto 'tbl2'."
-  (local nested (or ?nested false))
   (each [key val (pairs tbl1)]
-        (if (and (vim.tbl_isempty val) (not nested))
-            (do :skip) ;; skip empty tables
-            (table? val)
-            (deepcopy val (. tbl2 key) true)
+        (if (table? val (. tbl2 key))
+            (deepcopy val (. tbl2 key))
             :else
             (tset tbl2 key val))))
 
@@ -63,14 +60,18 @@
   :eval {
     :float "boolean"
   }
-  :mapping {
+  :keymaps {
     :PeakBuffer "string"
     :EvalBuffer "string"
     :GotoOutput "string"
-    :FloatNext  "string"
-    :FloatPrev  "string"
-    :FloatKill  "string"
-    :FloatClose "string"
+    :Float {
+      :Next    "string"
+      :Prev    "string"
+      :Close   "string"
+      :KillAll "string"
+      :ResizeI "string"
+      :ResizeD "string"
+    }
   }
   :highlight {
     :float   "string"
@@ -88,7 +89,7 @@
   :compiler nil
   :diagnostic nil
   :eval nil
-  :mapping nil
+  :keymaps nil
   :highlight nil
 })
 
@@ -114,19 +115,21 @@
   :eval {
     :float true
   }
-  :mapping {
+  :keymaps {
     :PeakBuffer "gL"
     :EvalBuffer "gE"
     :GotoOutput "gO"
-    :WinPrev    "<C-J>"
-    :WinNext    "<C-K>"
-    :WinKill    "<Esc>"
-    :WinClose   "<Enter>"
-    :WinResize+ "<C-W>="
-    :WinResize- "<C-W>-"
+    :Float {
+      :Next    "<C-K>"
+      :Prev    "<C-J>"
+      :Close   "<Enter>"
+      :KillAll "<Esc>"
+      :ResizeI "<C-W>="
+      :ResizeD "<C-W>-"
+    }
   }
   :highlight {
-    :float   "TangerineFloat"
+    :float   "Normal"
     :success "String"
     :errors  "DiagnosticError"
     :virtual "DiagnosticVirtualTextError"
@@ -140,14 +143,11 @@
 (lambda validate-type [name val scm]
   "checks if 'scm' == typeof 'val', else throws an error."
   (fn fail []
-    (error 
-      (.. "[tangerine]: bad argument in 'setup()' to " name ", " scm " expected got " (type val) ".")))
+    (error (.. "[tangerine]: bad argument in 'setup()' :" name ", " scm " expected got " (type val) ".")))
   (if (= scm :list)
-      (or (vim.tbl_islist val) 
-          (fail))
+      (or (vim.tbl_islist val) (fail))
       :else
-      (or (= (type val) scm)
-          (fail))))
+      (or (= (type val) scm) (fail))))
 
 (lambda validate-oneof [name val scm]
   "checks if 'val' is member of 'scm', else throws error."
@@ -155,7 +155,7 @@
   (when (not (vim.tbl_contains scm val))
         (local tbl (table.concat scm "' '"))
         (error
-          (.. "[tangerine]: bad argument in 'setup()' to " name " expected to be one-of ['" tbl "']."))))
+          (.. "[tangerine]: bad argument in 'setup()' :" name " expected to be one-of ('" tbl "') got '" val "'."))))
 
 (lambda validate-array [name array scm]
   "checks if members of 'array' are present in 'scm'."
@@ -170,12 +170,12 @@
         (if (not (. schema key))
             (error (.. "[tangerine]: invalid key " key)))
         (if 
-            (= :string (type scm)) (validate-type  key val scm)
-            (= :oneof  (?. scm 1)) (validate-oneof key val (. scm 2))
-            (= :array  (?. scm 1)) (validate-array key val (. scm 2))
-        ; recursive validation
-        (= :table  (type scm))
-        (validate val scm))))
+          (= :string (type scm)) (validate-type  key val scm)
+          (= :oneof  (?. scm 1)) (validate-oneof key val (. scm 2))
+          (= :array  (?. scm 1)) (validate-array key val (. scm 2))
+          ; recursive validation
+          (= :table  (type scm))
+          (validate val scm))))
 
 (lambda pre-process [tbl schema]
   "recursively runs pre processors defined in 'schema' on 'tbl."

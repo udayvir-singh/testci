@@ -130,14 +130,14 @@
 
 (lambda setup-mappings [buffer]
   "setup floating window mappings defined in ENV for 'buffer'."
-  (local m (env.get :mapping))
+  (local w (env.get :keymaps :Float))
   (nmap! buffer
-    [m.WinNext    :FnlWinNext]
-    [m.WinPrev    :FnlWinPrev]
-    [m.WinKill    :FnlWinKill]
-    [m.WinClose   :FnlWinClose]
-    [m.WinResize+ "FnlWinResize 1"]
-    [m.WinResize- "FnlWinResize -1"]))
+    [w.Next    :FnlWinNext]
+    [w.Prev    :FnlWinPrev]
+    [w.Close   :FnlWinClose]
+    [w.KillAll :FnlWinKill]
+    [w.ResizeI "FnlWinResize 1"]
+    [w.ResizeD "FnlWinResize -1"]))
 
 
 ;; -------------------- ;;

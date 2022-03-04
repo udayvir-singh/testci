@@ -7,7 +7,7 @@
   : PeakBuffer
   : EvalBuffer
   : GotoOutput
-} (env.get :mapping))
+} (env.get :keymaps))
 
 ;; -------------------- ;;
 ;;        Utils         ;;
