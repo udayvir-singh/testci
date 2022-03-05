@@ -41,6 +41,6 @@ vim[cmds]
 
 **EXPORTS**
 ```fennel
-:maps vim/maps.fnl:3: attempt to index local '_local_1_' (a nil value)
+:maps [ true ]
 ```
 
