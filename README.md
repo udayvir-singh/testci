@@ -1,6 +1,6 @@
 <!--
 -- DEPENDS: FIME
--- Install     | setup()
+-- Install     | setup
 -- API         | api[*]
 -- Command     | vim[cmds]
 -- Setup, FAQ  | utils[env]

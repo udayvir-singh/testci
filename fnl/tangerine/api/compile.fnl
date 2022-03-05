@@ -172,8 +172,8 @@
   (local dirs 
     (-> (or opts.rtpdirs (env.get :rtpdirs))
         (p.resolve-rtpdirs)))
+  :compile
   (each [_ dir (ipairs dirs)]
-        :compile
         (hmerge logs (compile.dir dir dir (tbl-merge {:verbose false} opts))))
   :logger 
   (log.success "COMPILED RTP" logs opts)
