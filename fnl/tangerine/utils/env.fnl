@@ -15,11 +15,17 @@
             (lua "return true"))))
 
 (lambda resolve [path]
-  "resolves 'path' to POSIX complaint path."
+  "resolves 'path' to POSIX complaint absolute path."
   (let [out (vim.fn.resolve (vim.fn.expand path))]
        (if (endswith out ["/" ".fnl" ".lua"])
-           out
+           (do out)
            (.. out "/"))))
+
+(lambda get-type [x]
+  "returns type of x, correctly types lists."
+  (if (vim.tbl_islist x) 
+      (do "list")
+      (type x)))
 
 (lambda table? [tbl scm]
   "checks if 'tbl' is a valid table and 'scm' is not a list."
@@ -38,7 +44,21 @@
 ;; -------------------- ;;
 ;;        Schema        ;;
 ;; -------------------- ;;
+(local pre-schema { 
+  ; "pre processors called before setting ENV"
+  :source resolve
+  :target resolve
+  :vimrc  resolve
+  :compiler   nil
+  :diagnostic nil
+  :eval       nil
+  :highlight  nil
+  :keymaps    nil
+  :rtpdirs    nil
+})
+
 (local schema {
+  ; "type definition for ENV used in validation"
   :source  "string"
   :target  "string"
   :vimrc   "string"
@@ -79,18 +99,6 @@
     :errors  "string"
     :virtual "string"
   }
-})
-
-(local pre-schema {
-  :source resolve
-  :target resolve
-  :vimrc  resolve
-  :rtpdirs nil
-  :compiler nil
-  :diagnostic nil
-  :eval nil
-  :keymaps nil
-  :highlight nil
 })
 
 (local ENV {
@@ -140,52 +148,54 @@
 ;; -------------------- ;;
 ;;      Validation      ;;
 ;; -------------------- ;;
-(lambda validate-type [name val scm]
-  "checks if 'scm' == typeof 'val', else throws an error."
-  (fn fail []
-    (error (.. "[tangerine]: bad argument in 'setup()' :" name ", " scm " expected got " (type val) ".")))
-  (if (= scm :list)
-      (or (vim.tbl_islist val) (fail))
-      :else
-      (or (= (type val) scm) (fail))))
+(lambda validate-err [key msg ...]
+  "shows validation failed error for 'key' with description 'msg'."
+  (error
+    (.. "[tangerine]: bad argument to 'setup()' in :" key ", " (table.concat [msg ...] " ") ".")))
 
-(lambda validate-oneof [name val scm]
+
+(lambda validate-type [key val scm]
+  "checks if typeof 'val' = 'scm', else throws an error."
+  (local type* (get-type val))
+  (if (not= scm type*)
+      (validate-err key scm :expected :got type*)))
+
+
+(lambda validate-oneof [key val scm]
   "checks if 'val' is member of 'scm', else throws error."
-  (validate-type name val :string)
-  (when (not (vim.tbl_contains scm val))
-        (local tbl (table.concat scm "' '"))
-        (error
-          (.. "[tangerine]: bad argument in 'setup()' :" name " expected to be one-of ('" tbl "') got '" val "'."))))
+  (local expected (vim.inspect scm))
+  (if (not (vim.tbl_contains scm val))
+      (validate-err key "expected to be one of" expected "got" (vim.inspect val))))
 
-(lambda validate-array [name array scm]
+
+(lambda validate-array [key array scm]
   "checks if members of 'array' are present in 'scm'."
-  (validate-type name array :table)
-  (each [_ val (ipairs array)]
-        (validate-oneof name val scm)))
+  (validate-type key array :list)
+  (each [_ val (pairs array)]
+        (validate-oneof key val scm)))
+
 
 (lambda validate [tbl schema]
   "recursively validates 'tbl' against 'schema', raises error on failure."
   (each [key val (pairs tbl)]
         (local scm (. schema key))
-        (if (not (. schema key))
-            (error (.. "[tangerine]: invalid key " key)))
-        (if 
-          (= :string (type scm)) (validate-type  key val scm)
-          (= :oneof  (?. scm 1)) (validate-oneof key val (. scm 2))
-          (= :array  (?. scm 1)) (validate-array key val (. scm 2))
-          ; recursive validation
-          (= :table  (type scm))
-          (validate val scm))))
+        (if (not scm)
+            (validate-err key :invalid :key))
+        (match [(get-type scm) (. scm 1)]
+          [:string nil]    (validate-type  key val scm)
+          [:table  nil]    (validate val scm)
+          [:list   :oneof] (validate-oneof key val (. scm 2))
+          [:list   :array] (validate-array key val (. scm 2)))))
+
 
 (lambda pre-process [tbl schema]
   "recursively runs pre processors defined in 'schema' on 'tbl."
   (each [key val (pairs tbl)]
         (local pre (. schema key))
-        (if (= (type pre) :table)
-            (pre-process val pre)
-            (not= (type pre) :nil)
-            (tset tbl key (pre val))))
-  tbl)
+        (match (type pre)
+          :table    (pre-process val pre)
+          :function (tset tbl key (pre val))))
+  :return tbl)
 
 
 ;; -------------------- ;;
@@ -193,23 +203,22 @@
 ;; -------------------- ;;
 (lambda rget [tbl args]
   "recursively gets value in 'tbl' from list of args."
-  (if (= 0 (# args)) tbl
-  :else
-  (let [current (?. tbl (. args 1))]
-       (table.remove args 1)
-       (if current
-           (rget current args)))))
+  (if (= 0 (# args))
+      (lua "return tbl"))
+  (let [rest (. tbl (. args 1))]
+    (table.remove args 1)
+    (if (not= nil rest)
+        (rget rest args))))
 
 (lambda env-get [...]
-  "getter for table ENV."
+  "getter for de' table ENV."
   (rget ENV [...]))
 
 (lambda env-get-config [opts args]
   "getter for 'opts', returns value of last key in 'args' fallbacks to ENV."
-  (let [key (. args (# args))]
-    (if (not= nil (. opts key))
-        (. opts key)
-        :else
+  (let [last (. args (# args))]
+    (if (not= nil (. opts last))
+        (. opts last)
         (rget ENV args))))
 
 
@@ -217,10 +226,10 @@
 ;;        Setters       ;;
 ;; -------------------- ;;
 (lambda env-set [tbl]
-  "setter for table ENV."
+  "setter for de' table ENV."
   (validate tbl schema)
-  (pre-process tbl pre-schema)
-  (deepcopy tbl ENV))
+  (-> (pre-process tbl pre-schema)
+      (deepcopy ENV)))
 
 
 :return {
