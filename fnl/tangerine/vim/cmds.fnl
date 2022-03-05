@@ -1,3 +1,6 @@
+; ABOUT:
+;   Defines tangerine's default vim commands.
+;
 ; DEPENDS:
 ; (command!) api[init] -> _G.tangerine.api
 (local prefix "lua tangerine.api.")

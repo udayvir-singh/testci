@@ -52,9 +52,10 @@ uninstall:
 #         GIT         #
 # ------------------- #
 LUA_FILES := $(shell find lua -name '*.lua')
+DOC_FILES := $(shell find fnl -name 'README.md')
 
 --pull:
-	git restore doc lua $(shell find fnl -name "README.md")
+	git restore doc lua $(DOC_FILES)
 	echo :: RUNNING GIT PULL
 	echo -e  "   \e[1;32m$$\e[0m git pull"
 	git pull --rebase | sed 's:^:   :'
@@ -62,11 +63,11 @@ LUA_FILES := $(shell find lua -name '*.lua')
 git-pull: git-unskip --pull clean build git-skip
 
 git-skip:
-	git update-index --skip-worktree $(LUA_FILES)
+	git update-index --skip-worktree $(LUA_FILES) $(DOC_FILES)
 	git update-index --skip-worktree doc/tangerine.txt
 
 git-unskip:
-	git update-index --no-skip-worktree $(LUA_FILES)
+	git update-index --no-skip-worktree $(LUA_FILES) $(DOC_FILES)
 	git update-index --no-skip-worktree doc/tangerine.txt
 
 

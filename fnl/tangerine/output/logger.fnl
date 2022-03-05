@@ -1,3 +1,6 @@
+; ABOUT:
+;   Displays compiler success/failure logs to the users.
+;
 ; DEPENDS:
 ; (log.*)   utils[env]
 ; (float-*) utils[window]

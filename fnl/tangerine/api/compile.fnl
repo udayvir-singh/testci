@@ -1,5 +1,5 @@
 ; ABOUT:
-;   Provides functions to diff/compile fennel code.
+;   Functions to diff compile fennel files.
 ;
 ; DEPENDS:
 ; (-string)        fennel

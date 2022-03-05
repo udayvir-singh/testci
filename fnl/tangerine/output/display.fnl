@@ -1,3 +1,6 @@
+; ABOUT:
+;   Serializes evaluation results and pretty prints them.
+;
 ; DEPENDS:
 ; (show) utils[env]
 ; (show) utils[window]

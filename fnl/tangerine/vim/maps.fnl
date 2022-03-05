@@ -1,3 +1,6 @@
+; ABOUT:
+;   Defines mappings for vim[cmds] as described in ENV.
+;
 ; DEPENDS:
 ; (nmap! vmap!) vim[cmds]
 ; (nmap! vmap!) utils[env]

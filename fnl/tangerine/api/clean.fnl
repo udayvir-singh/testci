@@ -1,5 +1,5 @@
 ; ABOUT:
-;   Provides functions to clean stale lua files in build dirs.
+;   Functions to clean stale lua files in target dirs.
 ;
 ; DEPENDS:
 ; (-target)           utils[fs]

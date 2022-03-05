@@ -1,3 +1,3 @@
-lua/**                         linguist-generated
-deps/**                 -diff  linguist-vendored
-lua/tangerine/fennel/*  -diff  linguist-vendored
+fnl/**/README.md         linguist-documentation
+lua/**                   linguist-generated
+deps/**           -diff  linguist-vendored

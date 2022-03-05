@@ -1,3 +1,6 @@
+; ABOUT:
+;   Defines autocmd hooks as described in ENV.
+;
 ; DEPENDS:
 ; (-run)    api[init] -> _G.tangerine.api
 ; (-onsave) utils[env]

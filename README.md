@@ -1,13 +1,11 @@
 <!--
--- DEPENDS:
--- #Install  tangerine.init
--- #Command  tangerine.vim.cmds
--- #Setup    tangerine.utils.env
--- #FAQ      tangerine.utils.env
--- #API      G.tangerine.api.**
--- #FAQ      G.tangerine.fennel
--- #API      G.tangerine.fennel
--- #Build    Makefile
+-- DEPENDS: FIME
+-- Install     | setup()
+-- API         | api[*]
+-- Command     | vim[cmds]
+-- Setup, FAQ  | utils[env]
+-- API,   FAQ  | fennel
+-- Build       | Makefile
 -->
 
 <!-- ignore-start -->
@@ -31,13 +29,19 @@
 # Introduction
 Tangerine provides a painless way to add fennel to your neovim config, without adding to your load times.
 
-It prioritizes speed, transparency and minimalism. It's blazing fast thanks to it diffing algorithm.
+It prioritizes speed, transparency and minimalism and It's blazing fast thanks to it diffing algorithm.
 
 ## Features
-- Lighting fast compile times
-- Smart diffing to only compile files that are stale
-- Loads `init.fnl` automatically for you
-- Abstracts away lua output from user
+### BLAZING Fast
+- Compiles 1000's of files in **milliseconds**
+- Marker based data differencing algorithm
+- Faster than pooling rate of GIF
+
+### Transparent
+- Natively loads `nvim/init.fnl`
+- Doesn't create stupid abstractions
+
+### Evaluation
 - Built-in support for interactive evaluation 
 
 ## Comparison to other plugins

@@ -1,3 +1,6 @@
+; ABOUT:
+;   Sends headache of errors made by devs' to the users.
+;
 ; DEPENDS:
 ; (err.*) utils[env]
 ; (float) utils[window]
