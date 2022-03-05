@@ -1,5 +1,5 @@
 # clean.fnl
-> Provides functions to clean stale lua files in build dirs.
+> Functions to clean stale lua files in target dirs.
 
 **DEPENDS:**
 ```
@@ -19,7 +19,7 @@ utils[path]
 ```
 
 # compile.fnl
-> Provides functions to diff/compile fennel code.
+> Functions to diff compile fennel files.
 
 **DEPENDS:**
 ```
@@ -46,7 +46,7 @@ utils[path]
 ```
 
 # eval.fnl
-> Provides functions for interactive fennel evaluation.
+> Functions for interactive fennel evaluation.
 
 **DEPENDS:**
 ```

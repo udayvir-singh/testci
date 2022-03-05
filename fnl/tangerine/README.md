@@ -18,16 +18,16 @@ utils[env]
 # api/
 | MODULE                                   | DESCRIPTION                                                  |
 | ---------------------------------------- | ------------------------------------------------------------ |
-|     [clean.fnl](./api/clean.fnl)         | Provides functions to clean stale lua files in build dirs.   |
-|   [compile.fnl](./api/compile.fnl)       | Provides functions to diff/compile fennel code.              |
-|      [eval.fnl](./api/eval.fnl)          | Provides functions for interactive fennel evaluation.        |
+|     [clean.fnl](./api/clean.fnl)         | Functions to clean stale lua files in target dirs.           |
+|   [compile.fnl](./api/compile.fnl)       | Functions to diff compile fennel files.                      |
+|      [eval.fnl](./api/eval.fnl)          | Functions for interactive fennel evaluation.                 |
 
 # output/
 | MODULE                                   | DESCRIPTION                                                  |
 | ---------------------------------------- | ------------------------------------------------------------ |
-|   [display.fnl](./output/display.fnl)    | [none]                                                       |
-|     [error.fnl](./output/error.fnl)      | [none]                                                       |
-|    [logger.fnl](./output/logger.fnl)     | [none]                                                       |
+|   [display.fnl](./output/display.fnl)    | Serializes evaluation results and pretty prints them.        |
+|     [error.fnl](./output/error.fnl)      | Sends headache of errors made by devs' to the users.         |
+|    [logger.fnl](./output/logger.fnl)     | Displays compiler success/failure logs to the users.         |
 
 # utils/
 | MODULE                                   | DESCRIPTION                                                  |
@@ -41,7 +41,7 @@ utils[env]
 # vim/
 | MODULE                                   | DESCRIPTION                                                  |
 | ---------------------------------------- | ------------------------------------------------------------ |
-|      [cmds.fnl](./vim/cmds.fnl)          | [none]                                                       |
-|     [hooks.fnl](./vim/hooks.fnl)         | [none]                                                       |
-|      [maps.fnl](./vim/maps.fnl)          | [none]                                                       |
+|      [cmds.fnl](./vim/cmds.fnl)          | Defines tangerine's default vim commands.                    |
+|     [hooks.fnl](./vim/hooks.fnl)         | Defines autocmd hooks as described in ENV.                   |
+|      [maps.fnl](./vim/maps.fnl)          | Defines mappings for vim[cmds] as described in ENV.          |
 

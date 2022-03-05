@@ -32,16 +32,29 @@ Table of Contents                                *tangerine-table-of-contents*
 Tangerine provides a painless way to add fennel to your neovim config, without
 adding to your load times.
 
-It prioritizes speed, transparency and minimalism. It’s blazing fast thanks
-to it diffing algorithm.
+It prioritizes speed, transparency and minimalism and It’s blazing fast
+thanks to it diffing algorithm.
 
 FEATURES                                                  *tangerine-features*
 
+BLAZING FAST ~
 
-- Lighting fast compile times
-- Smart diffing to only compile files that are stale
-- Loads `init.fnl` automatically for you
-- Abstracts away lua output from user
+
+- Compiles 1000’s of files in **milliseconds**
+- Marker based data differencing algorithm
+- Faster than pooling rate of GIF
+
+
+TRANSPARENT ~
+
+
+- Natively loads `nvim/init.fnl`
+- Doesn’t create stupid abstractions
+
+
+EVALUATION ~
+
+
 - Built-in support for interactive evaluation
 
 

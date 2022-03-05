@@ -4,13 +4,13 @@ local function exec(...)
   return print(table.concat({...}, " "))
 end
 local function parse_autocmd(opts)
-  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/vim/hooks.fnl:15")
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/vim/hooks.fnl:18")
   local groups = table.concat(opts[1], " ")
   table.remove(opts, 1)
   return "au", groups, table.concat(opts, " ")
 end
 local function augroup(name, ...)
-  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/vim/hooks.fnl:21")
+  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/vim/hooks.fnl:24")
   exec("augroup", name)
   exec("au!")
   for idx, val in ipairs({...}) do

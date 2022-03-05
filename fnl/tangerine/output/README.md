@@ -1,5 +1,5 @@
 # display.fnl
-> [none]
+> Serializes evaluation results and pretty prints them.
 
 **DEPENDS:**
 ```
@@ -17,7 +17,7 @@ utils[window]
 ```
 
 # error.fnl
-> [none]
+> Sends headache of errors made by devs' to the users.
 
 **DEPENDS:**
 ```
@@ -39,7 +39,7 @@ utils[window]
 ```
 
 # logger.fnl
-> [none]
+> Displays compiler success/failure logs to the users.
 
 **DEPENDS:**
 ```

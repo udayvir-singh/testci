@@ -14,12 +14,12 @@ local function toboolean(x)
   end
 end
 err["compile?"] = function(msg)
-  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:22")
+  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:25")
   return toboolean((msg:match("^Parse error.*:([0-9]+)") or msg:match("^Compile error.*:([0-9]+)")))
 end
 err.parse = function(msg, offset)
-  _G.assert((nil ~= offset), "Missing argument offset on fnl/tangerine/output/error.fnl:28")
-  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:28")
+  _G.assert((nil ~= offset), "Missing argument offset on fnl/tangerine/output/error.fnl:31")
+  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:31")
   local lines = vim.split(msg, "\n")
   local line = string.match(lines[1], ".*:([0-9]+)")
   local msg0 = string.gsub(lines[2], "^ +", "")
@@ -31,8 +31,8 @@ err.clear = function()
   return vim.api.nvim_buf_clear_namespace(0, namespace, 0, -1)
 end
 err.send = function(line, msg)
-  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:46")
-  _G.assert((nil ~= line), "Missing argument line on fnl/tangerine/output/error.fnl:46")
+  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:49")
+  _G.assert((nil ~= line), "Missing argument line on fnl/tangerine/output/error.fnl:49")
   local line0 = (line - 1)
   local msg0 = (";; " .. msg)
   local timeout = env.get("diagnostic", "timeout")
@@ -47,16 +47,16 @@ err.send = function(line, msg)
   return true
 end
 err.soft = function(msg)
-  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:67")
+  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:70")
   return vim.api.nvim_echo({{msg, hl_errors}}, false, {})
 end
 err.float = function(msg)
-  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:71")
+  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:74")
   return win["set-float"](msg, "text", hl_errors)
 end
 err.handle = function(msg, opts)
-  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/output/error.fnl:75")
-  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:75")
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/output/error.fnl:78")
+  _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:78")
   if (env.conf(opts, {"diagnostic", "virtual"}) and err["compile?"](msg) and number_3f(opts.offset)) then
     err.send(err.parse(msg, opts.offset))
   else

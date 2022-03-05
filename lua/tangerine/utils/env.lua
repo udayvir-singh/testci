@@ -19,18 +19,17 @@ local function resolve(path)
     return (out .. "/")
   end
 end
-local function table_3f(tbl)
+local function table_3f(tbl, scm)
+  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:24")
   _G.assert((nil ~= tbl), "Missing argument tbl on fnl/tangerine/utils/env.fnl:24")
-  return (("table" == type(tbl)) and not vim.tbl_islist(tbl))
+  return (("table" == type(tbl)) and not vim.tbl_islist(scm))
 end
-local function deepcopy(tbl1, tbl2, _3fnested)
+local function deepcopy(tbl1, tbl2)
   _G.assert((nil ~= tbl2), "Missing argument tbl2 on fnl/tangerine/utils/env.fnl:29")
   _G.assert((nil ~= tbl1), "Missing argument tbl1 on fnl/tangerine/utils/env.fnl:29")
-  local nested = (_3fnested or false)
   for key, val in pairs(tbl1) do
-    if (vim.tbl_isempty(val) and not nested) then
-    elseif table_3f(val) then
-      deepcopy(val, (tbl2)[key], true)
+    if table_3f(val, (tbl2)[key]) then
+      deepcopy(val, (tbl2)[key])
     elseif "else" then
       tbl2[key] = val
     else
@@ -38,15 +37,15 @@ local function deepcopy(tbl1, tbl2, _3fnested)
   end
   return nil
 end
-local schema = {source = "string", target = "string", vimrc = "string", rtpdirs = "list", compiler = {float = "boolean", clean = "boolean", force = "boolean", verbose = "boolean", globals = "list", version = {"oneof", {"latest", "1-0-0", "0-10-0", "0-9-2"}}, hooks = {"array", {"onsave", "onload", "oninit"}}}, diagnostic = {float = "boolean", virtual = "boolean", timeout = "number"}, eval = {float = "boolean"}, mapping = {PeakBuffer = "string", EvalBuffer = "string", GotoOutput = "string", FloatNext = "string", FloatPrev = "string", FloatKill = "string", FloatClose = "string"}, highlight = {float = "string", success = "string", errors = "string", virtual = "string"}}
-local pre_schema = {source = resolve, target = resolve, vimrc = resolve, rtpdirs = nil, compiler = nil, diagnostic = nil, eval = nil, mapping = nil, highlight = nil}
-local ENV = {vimrc = resolve((config_dir .. "/init.fnl")), source = resolve((config_dir .. "/fnl/")), target = resolve((config_dir .. "/lua/")), rtpdirs = {}, compiler = {float = true, clean = true, force = false, verbose = true, globals = vim.tbl_keys(_G), version = "latest", hooks = {}}, diagnostic = {float = true, virtual = true, timeout = 10}, eval = {float = true}, mapping = {PeakBuffer = "gL", EvalBuffer = "gE", GotoOutput = "gO", WinPrev = "<C-J>", WinNext = "<C-K>", WinKill = "<Esc>", WinClose = "<Enter>", ["WinResize+"] = "<C-W>=", ["WinResize-"] = "<C-W>-"}, highlight = {float = "TangerineFloat", success = "String", errors = "DiagnosticError", virtual = "DiagnosticVirtualTextError"}}
+local schema = {source = "string", target = "string", vimrc = "string", rtpdirs = "list", compiler = {float = "boolean", clean = "boolean", force = "boolean", verbose = "boolean", globals = "list", version = {"oneof", {"latest", "1-0-0", "0-10-0", "0-9-2"}}, hooks = {"array", {"onsave", "onload", "oninit"}}}, diagnostic = {float = "boolean", virtual = "boolean", timeout = "number"}, eval = {float = "boolean"}, keymaps = {PeakBuffer = "string", EvalBuffer = "string", GotoOutput = "string", Float = {Next = "string", Prev = "string", Close = "string", KillAll = "string", ResizeI = "string", ResizeD = "string"}}, highlight = {float = "string", success = "string", errors = "string", virtual = "string"}}
+local pre_schema = {source = resolve, target = resolve, vimrc = resolve, rtpdirs = nil, compiler = nil, diagnostic = nil, eval = nil, keymaps = nil, highlight = nil}
+local ENV = {vimrc = resolve((config_dir .. "/init.fnl")), source = resolve((config_dir .. "/fnl/")), target = resolve((config_dir .. "/lua/")), rtpdirs = {}, compiler = {float = true, clean = true, force = false, verbose = true, globals = vim.tbl_keys(_G), version = "latest", hooks = {}}, diagnostic = {float = true, virtual = true, timeout = 10}, eval = {float = true}, keymaps = {PeakBuffer = "gL", EvalBuffer = "gE", GotoOutput = "gO", Float = {Next = "<C-K>", Prev = "<C-J>", Close = "<Enter>", KillAll = "<Esc>", ResizeI = "<C-W>=", ResizeD = "<C-W>-"}}, highlight = {float = "Normal", success = "String", errors = "DiagnosticError", virtual = "DiagnosticVirtualTextError"}}
 local function validate_type(name, val, scm)
-  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:140")
-  _G.assert((nil ~= val), "Missing argument val on fnl/tangerine/utils/env.fnl:140")
-  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/utils/env.fnl:140")
+  _G.assert((nil ~= scm), "Missing argument scm on fnl/tangerine/utils/env.fnl:143")
+  _G.assert((nil ~= val), "Missing argument val on fnl/tangerine/utils/env.fnl:143")
+  _G.assert((nil ~= name), "Missing argument name on fnl/tangerine/utils/env.fnl:143")
   local function fail()
-    return error(("[tangerine]: bad argument in 'setup()' to " .. name .. ", " .. scm .. " expected got " .. type(val) .. "."))
+    return error(("[tangerine]: bad argument in 'setup()' :" .. name .. ", " .. scm .. " expected got " .. type(val) .. "."))
   end
   if (scm == "list") then
     return (vim.tbl_islist(val) or fail())
@@ -63,7 +62,7 @@ local function validate_oneof(name, val, scm)
   validate_type(name, val, "string")
   if not vim.tbl_contains(scm, val) then
     local tbl = table.concat(scm, "' '")
-    return error(("[tangerine]: bad argument in 'setup()' to " .. name .. " expected to be one-of ['" .. tbl .. "']."))
+    return error(("[tangerine]: bad argument in 'setup()' :" .. name .. " expected to be one-of ('" .. tbl .. "') got '" .. val .. "'."))
   else
     return nil
   end

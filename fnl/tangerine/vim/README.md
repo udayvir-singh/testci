@@ -1,5 +1,5 @@
 # cmds.fnl
-> [none]
+> Defines tangerine's default vim commands.
 
 **DEPENDS:**
 ```
@@ -12,7 +12,7 @@ _G.tangerine.api
 ```
 
 # hooks.fnl
-> [none]
+> Defines autocmd hooks as described in ENV.
 
 **DEPENDS:**
 ```
@@ -31,7 +31,7 @@ utils[env]
 ```
 
 # maps.fnl
-> [none]
+> Defines mappings for vim[cmds] as described in ENV.
 
 **DEPENDS:**
 ```
@@ -41,6 +41,6 @@ vim[cmds]
 
 **EXPORTS**
 ```fennel
-:maps [ true ]
+:maps vim/maps.fnl:3: attempt to index local '_local_1_' (a nil value)
 ```
 
