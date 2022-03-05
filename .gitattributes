@@ -1,3 +1,2 @@
-fnl/**/README.md         linguist-documentation
 lua/**                   linguist-generated
 deps/**           -diff  linguist-vendored
