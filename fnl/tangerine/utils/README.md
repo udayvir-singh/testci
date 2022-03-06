@@ -59,12 +59,10 @@ utils[env]
   :list-fnl-files <function 3>
   :list-lua-files <function 4>
   :resolve <function 5>
-  :resolve-rtpdir <function 6>
-  :resolve-rtpdirs <function 7>
-  :shortname <function 8>
-  :source <function 9>
-  :target <function 10>
-  :wildcard <function 11>
+  :shortname <function 6>
+  :source <function 7>
+  :target <function 8>
+  :wildcard <function 9>
 }
 ```
 

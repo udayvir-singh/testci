@@ -148,7 +148,7 @@ end
 compile.rtp = function(_3fopts)
   local opts = (_3fopts or {})
   local logs = {}
-  local dirs = p["resolve-rtpdirs"]((opts.rtpdirs or env.get("rtpdirs")))
+  local dirs = env.conf(opts, {"rtpdirs"})
   for _, dir in ipairs(dirs) do
     local out_2_auto = (compile.dir(dir, dir, tbl_merge({verbose = false}, opts)) or {})
     do
