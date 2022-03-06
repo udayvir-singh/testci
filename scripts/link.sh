@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-SOURCE_DIR="${1}"
-TARGET_DIR="${2}"
+set -eou pipefail
+
+SOURCE_DIR="${1?required arg SOURCE}"
+TARGET_DIR="${2?required arg TARGET}"
 
 source $(dirname $0)/utils/core.sh
 

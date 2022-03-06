@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eou pipefail
+
 source $(dirname $0)/../utils/core.sh
 source $(dirname $0)/../utils/table.sh
 
@@ -11,27 +13,28 @@ BLANK="^ *$"
 
 declare -A regex
 
-# utils
+# --------------------- #
+#      PARSE OPTS       #
+# --------------------- #
 error () {
-	local  MSG="${1}"; shift 1
+	local  MSG="${1-}"; shift 1
 	local ARGS="${@}"
 
 	printf "loc: ${MSG}\n" ${ARGS} >&2
 	exit 1
 }
 
-## OPTS
-while [ -n "${1}" ]; do
-	[[ -z "${2}" || "${2}" =~ "--" ]] && error 'missing value for %s' "${1}"
+while [ -n "${1-}" ]; do
+	[[ -z "${2-}" || "${2-}" =~ "--" ]] && error 'missing value for %s' "${1-}"
 
-	case "${1}" in
-	--comment) regex[Comment]="${2}"; shift 2 ;;
-	--docs)    regex[Docs]="${2}";    shift 2 ;;
-	--head)    GIT_HEAD="${2}"; shift 2 ;;
-	--title)   TITLE="${2}"; shift 2 ;;
-	--dir)     DIR="${2}"; shift 2 ;;
-	--ext)     EXT="${2}"; shift 2 ;;
-	*)         error 'invalid option "%s"' "${1}" ;;
+	case "${1-}" in
+	--comment) regex[Comment]="${2-}"; shift 2 ;;
+	--docs)    regex[Docs]="${2-}";    shift 2 ;;
+	--head)    GIT_HEAD="${2-}"; shift 2 ;;
+	--title)   TITLE="${2-}"; shift 2 ;;
+	--dir)     DIR="${2-}"; shift 2 ;;
+	--ext)     EXT="${2-}"; shift 2 ;;
+	*)         error 'invalid option "%s"' "${1-}" ;;
 	esac
 done
 
@@ -44,22 +47,24 @@ else
 	DIFF_CMD="diff"
 fi
 
-## MAIN
+# --------------------- #
+#         UTILS         #
+# --------------------- #
 lines () {
-	local FILE="${1}"
+	local FILE="${1-}"
 
 	wc -l < "${FILE}"
 }
 
 count () {
-	local FILE="${1}"
-	local REGEX="${2}"
+	local FILE="${1-}"
+	local REGEX="${2-}"
 
-	egrep -c "${REGEX}" < "${FILE}"
+	egrep -c "${REGEX}" < "${FILE}" || true
 }
 
 changes () {
-	local FILE="${1}"
+	local FILE="${1-}"
 	local DIFF="$(git ${DIFF_CMD} --numstat ${GIT_HEAD} "${FILE}")"
 	local STAT=""
 
@@ -81,56 +86,58 @@ changes () {
 	}'
 }
 
-main () {
-	declare -A TOTAL=()
+# --------------------- #
+#         MAIN          #
+# --------------------- #
+declare -A TOTAL=()
 
-	for key in Lines Blank ${!regex[*]}; do
-		TOTAL[$key]=0
-	done
+for key in Lines Blank ${!regex[*]}; do
+	TOTAL[$key]=0 # normalize total
+done
 
-	DRAW_HEADER ${TITLE} Code ${!regex[*]} Blank SUBTOTAL
+DRAW_HEADER ${TITLE} Code ${!regex[*]} Blank SUBTOTAL
 
-	local  FILES="$(list_files "${DIR}" "${EXT}")"
-	local NFILES="$(wc -l <<< "${FILES}")"
+local  FILES="$(list_files "${DIR}" "${EXT}")"
+local NFILES="$(wc -l <<< "${FILES}")"
 
-	for FILE in ${FILES}; do
-		Lines=$(lines $FILE) 
-		Blank=$(count $FILE "$BLANK")
-		Code=$(( Lines - Blank ))
+for FILE in ${FILES}; do
+	## Get Lines of code
+	Lines=$(lines ${FILE}) 
+	Blank=$(count ${FILE} "${BLANK}")
+	Code=$(( Lines - Blank ))
 
-		if [ -n "${regex[Comment]}" ]; then
-			Comment=$(count $FILE "${regex[Comment]}")
+	if [ -n "${regex[Comment]-}" ]; then
+		Comment=$(count ${FILE} "${regex[Comment]}")
 
-			let Code-=$Comment
-			let TOTAL[Comment]+=$Comment
-		fi
+		let Code-=${Comment}
+		let TOTAL[Comment]+=${Comment}
+	fi
 
-		if [ -n "${regex[Docs]}" ]; then
-			Docs=$(count $FILE "${regex[Docs]}")
+	if [ -n "${regex[Docs]-}" ]; then
+		Docs=$(count ${FILE} "${regex[Docs]}")
 
-			let Code-=$Docs
-			let TOTAL[Docs]+=$Docs
-		fi
+		let Code-=${Docs}
+		let TOTAL[Docs]+=${Docs}
+	fi
 
-		let TOTAL[Blank]+=$Blank
-		let TOTAL[Lines]+=$Lines
-		let TOTAL[Code]+=$Code
+	let TOTAL[Blank]+=${Blank}
+	let TOTAL[Lines]+=${Lines}
+	let TOTAL[Code]+=${Code}
 
-		Changes=$(changes $FILE)
-		Lines=$(printf "%-4s%4s" $Lines $Changes)
+	## Diff Changes
+	Changes=$(changes ${FILE})
+	Lines=$(printf "%-4s%4s" ${Lines} ${Changes})
 
-		COLS=(${FILE#$DIR/} $Code $Docs $Comment $Blank)
-
-		if [ "${NFILES}" -gt 1 ]; then
-			DRAW_ROW ${COLS[*]} "$Lines"
-		else
-			DRAW_FOOTER ${COLS[*]} "$Lines" | tail -n +2
-		fi
-	done
+	## Draw Rows
+	COLS=(${FILE#${DIR}/} ${Code} ${Docs-} ${Comment-} ${Blank})
 
 	if [ "${NFILES}" -gt 1 ]; then
-		DRAW_FOOTER TOTAL: ${TOTAL[Code]} ${TOTAL[Docs]} ${TOTAL[Comment]} ${TOTAL[Blank]} ${TOTAL[Lines]}
+		DRAW_ROW ${COLS[*]} "${Lines}"
+	else
+		DRAW_FOOTER ${COLS[*]} "${Lines}" | tail -n +2
 	fi
-}
+done
 
-eval main
+if [ "${NFILES}" -gt 1 ]; then
+	DRAW_FOOTER TOTAL: ${TOTAL[Code]} ${TOTAL[Docs]-} ${TOTAL[Comment]-} ${TOTAL[Blank]} ${TOTAL[Lines]}
+fi

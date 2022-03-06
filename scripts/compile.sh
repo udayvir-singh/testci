@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-FENNEL_BIN="${1}"
-SOURCE_DIR="${2}"
+set -eou pipefail
+
+FENNEL_BIN="${1?required arg FENNEL BINARY}"
+SOURCE_DIR="${2?required arg SOURCE}"
 
 source $(dirname $0)/utils/core.sh
 
