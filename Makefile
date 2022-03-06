@@ -14,6 +14,10 @@ default: help
 .PHONY: fnl deps
 build: deps fnl fnldoc vimdoc
 
+watch-build:
+	watchexec -f "fnl/**/*.fnl" -f "README.md" -i "fnl/**/README.md" \
+		"make --no-print-directory clean build && notify-send 'DONE' '  BUILDING tangerine.nvim'"
+
 fnl: 
 	./scripts/compile.sh "$(FENNEL_BIN)" "$(SOURCE_DIR)"
 
@@ -97,37 +101,54 @@ loc-yaml:
 # ------------------- #
 #        INFO         #
 # ------------------- #
+.ONESHELL:
+
+define HELP
+| Usage: make [target] ...
+| 
+| Building:
+|   :fnl            compiles fennel files
+|   :deps           copy required deps in lua folder
+|   :vimdoc         runs panvimdoc to generate vimdocs
+|   :fnldoc         generates module level README
+| 
+|   :build          combines :fnl :deps :fnldoc :vimdoc
+|   :watch-build    watches source dir, runs :build on changes
+| 
+|   :install        install tangerine on this system
+|   :clean          deletes build and install dir
+|   :help           print this help
+| 
+| 
+| Git helpers:
+|   - Hooks for git meant to be used in development,
+|   - run :git-skip before running :build to prevent output files in git index
+| 
+|   :git-skip       make git ignore build dirs
+|   :git-unskip     reverts git-skip, run :build before executing
+|   :git-pull       clean build dirs before fetching to avoid conflicts
+| 
+| 
+| Lines of Code:
+|   - Pretty prints lines of code in source dirs, possible targets are:
+| 
+|   :loc-fennel
+|   :loc-bash
+|   :loc-markdown
+|   :loc-makefile
+|   :loc-yaml
+| 
+| 
+| Examples:
+|   make clean build
+|   make install
+|   make loc-fennel
+endef
+
 help:
-	echo 'Usage: make [target] ...'
-	echo 
-	echo 'Targets:'
-	echo '  :fnl            compiles fennel files'
-	echo '  :deps           copy required deps in lua folder'
-	echo '  :vimdoc         runs panvimdoc to generate vimdocs'
-	echo '  :fnldoc         generates module level README'
-	echo '  :build          combines :fnl :deps :fnldoc :vimdoc'
-	echo '  :install        install tangerine on this system'
-	echo '  :clean          deletes build and install dir'
-	echo '  :help           print this help.'
-	echo 
-	echo 'Git helpers:'
-	echo '  Hooks for git meant to be used in development,'
-	echo '  run :git-skip before running :build to prevent output files in git index'
-	echo '  ---'
-	echo '  :git-skip       make git ignore build dirs'
-	echo '  :git-unskip     reverts git-skip, run :build before executing'
-	echo '  :git-pull       clean build dirs before fetching to avoid conflicts'
-	echo
-	echo 'Lines of Code:'
-	echo '  Pretty prints lines of code in source dirs, possible targets are:'
-	echo '  ---'
-	echo '  :loc-fennel'
-	echo '  :loc-bash'
-	echo '  :loc-markdown'
-	echo '  :loc-makefile'
-	echo '  :loc-yaml'
-	echo
-	echo 'Examples:'
-	echo '  make clean build'
-	echo '  make install'
-	echo '  make loc-fennel'
+	if command -v bat &>/dev/null; then
+		echo "$(HELP)" | sed "s:^| ::" | bat -p -l clj --theme=ansi
+	else
+		echo "$(HELP)" | sed "s:^| ::" | less -F
+	fi
+
