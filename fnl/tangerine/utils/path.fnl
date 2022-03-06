@@ -19,21 +19,6 @@
   "resolves 'path' to POSIX complaint path."
   (vim.fn.resolve (vim.fn.expand path)))
 
-(lambda p.resolve-rtpdir [dir]
-  "resolves 'dir' to valid &rtp path."
-  (let [path (p.resolve dir)]
-       (if (vim.startswith path "/")
-           path ;; return absolute path
-           :else
-           (.. (vim.fn.stdpath :config) "/" dir))))
-
-(lambda p.resolve-rtpdirs [dirs]
-  "resolves list of 'dirs' to valid &rtp paths."
-  (local out [])
-  (each [_ dir (ipairs dirs)]
-        (table.insert out (p.resolve-rtpdir dir)))
-  :return out)
-
 
 ;; ------------------------- ;;
 ;;     Path Transformers     ;;

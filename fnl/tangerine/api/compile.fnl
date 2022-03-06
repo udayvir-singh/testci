@@ -169,9 +169,7 @@
   ;; opt { :force boolean :verbose boolean :rtpdirs list :globals list }
   (local opts (or ?opts {}))
   (local logs [])
-  (local dirs 
-    (-> (or opts.rtpdirs (env.get :rtpdirs))
-        (p.resolve-rtpdirs)))
+  (local dirs (env.conf opts [:rtpdirs]))
   :compile
   (each [_ dir (ipairs dirs)]
         (hmerge logs (compile.dir dir dir (tbl-merge {:verbose false} opts))))

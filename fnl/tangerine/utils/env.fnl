@@ -9,7 +9,7 @@
 (local config-dir (vim.fn.stdpath :config))
 
 (lambda endswith [str args]
-  "checks if 'str' endswith one of arr::'args'."
+  "checks if 'str' ends with one of arr::'args'."
   (each [i v (pairs args)]
         (if (vim.endswith str v)
             (lua "return true"))))
@@ -20,6 +20,14 @@
        (if (endswith out ["/" ".fnl" ".lua"])
            (do out)
            (.. out "/"))))
+
+(lambda rtpdirs [dirs]
+  "resolve list of 'dirs' to valid &rtp paths."
+  (icollect [_ dir (pairs dirs)]
+    (let [path (resolve dir)]
+      (if (vim.startswith path "/")
+          (do path)
+          (.. config-dir "/" path)))))
 
 (lambda get-type [x]
   "returns type of x, correctly types lists."
@@ -46,15 +54,15 @@
 ;; -------------------- ;;
 (local pre-schema { 
   ; "pre processors called before setting ENV"
-  :source resolve
-  :target resolve
-  :vimrc  resolve
-  :compiler   nil
-  :diagnostic nil
-  :eval       nil
-  :highlight  nil
-  :keymaps    nil
-  :rtpdirs    nil
+  :source  resolve
+  :target  resolve
+  :vimrc   resolve
+  :rtpdirs rtpdirs
+  :compiler    nil
+  :diagnostic  nil
+  :eval        nil
+  :highlight   nil
+  :keymaps     nil
 })
 
 (local schema {
@@ -214,11 +222,11 @@
   "getter for de' table ENV."
   (rget ENV [...]))
 
-(lambda env-get-config [opts args]
+(lambda env-get-conf [opts args]
   "getter for 'opts', returns value of last key in 'args' fallbacks to ENV."
   (let [last (. args (# args))]
     (if (not= nil (. opts last))
-        (. opts last)
+        (. (pre-process opts pre-schema) last)
         (rget ENV args))))
 
 
@@ -235,5 +243,5 @@
 :return {
   :get  env-get
   :set  env-set
-  :conf env-get-config
+  :conf env-get-conf
 }
