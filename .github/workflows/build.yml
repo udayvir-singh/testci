@@ -12,20 +12,23 @@ on:
       - .github/**
 
 jobs:
+  # -------------------- #
+  #       METADATA       #
+  # -------------------- #
   loc:
     name: lines of code
     runs-on: ubuntu-latest
     container: alpine
 
     steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+
     - name: Install requirements
       run: |
         apk update && apk upgrade 
         apk add make git bash curl coreutils findutils
-
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 2
 
     - name: FENNEL
       run:  make loc-fennel LOC_HEAD="HEAD"
@@ -42,6 +45,10 @@ jobs:
     - name: YAML
       run:  make loc-yaml LOC_HEAD="HEAD"
 
+
+  # -------------------- #
+  #    DOCUMENTATION     #
+  # -------------------- #
   vimdoc:
     runs-on: ubuntu-latest
     container: pandoc/minimal:2.17-alpine
@@ -79,17 +86,21 @@ jobs:
     - name: Install Tangerine
       run:  make install
 
+    - name: Clean previous build
+      run:  rm -rvf $(find fnl -name "README.md")
+
     - name: Build fennel docs
-      run: |
-        rm -rvf $(find fnl -name "*.md")
-        make fnldoc
+      run:  make fnldoc
 
     - uses: actions/upload-artifact@v2
       with:
         name: fnldoc
         path: fnl/**/README.md
 
-
+  
+  # -------------------- #
+  #     BUILD FENNEL     #
+  # -------------------- #
   fennel:
     runs-on: ubuntu-latest
     container: alpine
@@ -102,8 +113,8 @@ jobs:
         apk update && apk upgrade 
         apk add make bash curl coreutils findutils lua5.4
         # links lua5.4 -> lua
-        cd /usr/bin && ln -s lua5.4 lua
-        cd /usr/lib && ln -s lua5.4/liblua.so liblua5.4.so
+        ln -sv /usr/bin/lua5.4           /usr/bin/lua
+        ln -sv /usr/lib/lua5.4/liblua.so /usr/lib/liblua5.4.so
 
     - name: Clean previous build
       run:  make clean
@@ -114,10 +125,12 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: fennel-out
-        path: |
-          lua 
-          !lua/tangerine/fennel/*
+        path: lua 
 
+
+  # -------------------- #
+  #     COMMIT BUILD     #
+  # -------------------- #
   commit:
     name: commit changes
     runs-on: ubuntu-latest
@@ -158,4 +171,3 @@ jobs:
       with:
         commit_message: '[auto]: run build steps'
         file_pattern: lua fnl doc/tangerine.txt
-
