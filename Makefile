@@ -30,8 +30,12 @@ fnldoc:
 vimdoc:
 	[ -d doc ] || mkdir doc
 	./scripts/docs.sh README.md ./doc/tangerine.txt
+ifndef NO_HELPTAGS
 	echo :: GENERATING HELPTAGS
 	nvim -n --noplugin --headless -c "helptags doc" -c "q" doc/tangerine.txt
+else
+	echo :: DONE
+endif
 
 clean:
 	rm -rf doc/tags doc/tangerine.txt

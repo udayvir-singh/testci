@@ -82,7 +82,7 @@ panvimdoc () {
 
 :: RUNNING PANVIMDOC
 if panvimdoc; then
-	log 2 DONE
+	log 2 "${TARGET#./}"
 else
 	log 1 ERROR
 	logcat "${LOGFILE}"

@@ -65,7 +65,7 @@ jobs:
       run:  make clean
 
     - name: Build vimdoc
-      run:  make vimdoc
+      run:  make vimdoc NO_HELPTAGS=1
 
     - uses: actions/upload-artifact@v2
       with:
