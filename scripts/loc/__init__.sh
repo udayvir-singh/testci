@@ -97,8 +97,8 @@ done
 
 DRAW_HEADER ${TITLE} Code ${!regex[*]} Blank SUBTOTAL
 
-local  FILES="$(list_files "${DIR}" "${EXT}")"
-local NFILES="$(wc -l <<< "${FILES}")"
+FILES="$(list_files "${DIR}" "${EXT}")"
+NFILES="$(wc -l <<< "${FILES}")"
 
 for FILE in ${FILES}; do
 	## Get Lines of code
