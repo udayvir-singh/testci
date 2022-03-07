@@ -9,7 +9,6 @@
 (local err {})
 
 (local hl-errors  (env.get :highlight :errors))
-(local hl-virtual (env.get :highlight :virtual))
 
 ;; -------------------- ;;
 ;;       Parsing        ;;
@@ -33,35 +32,44 @@
   (let [lines (vim.split msg "\n")
         line  (string.match (. lines 1) ".*:([0-9]+)")
         msg   (string.gsub  (. lines 2) "^ +" "")]
-    (values (+ (tonumber line) offset) msg)))
+    (values (+ (tonumber line) offset -1) msg)))
 
 
 ;; -------------------- ;;
 ;;      Diagnostic      ;;
 ;; -------------------- ;;
-(local timer {:t (vim.loop.new_timer)})
+(local timer {:get (vim.loop.new_timer)})
 
 (lambda err.clear []
   "clears all errors in current namespace."
-  (let [namespace  (vim.api.nvim_create_namespace :tangerine)]
-       (vim.api.nvim_buf_clear_namespace 0 namespace 0 -1)))
+  (let [nspace  (vim.api.nvim_create_namespace :tangerine)]
+    (vim.diagnostic.reset nspace)
+    (vim.api.nvim_buf_clear_namespace 0 nspace 0 -1)))
 
-(lambda err.send [line msg]
+(lambda err.send [line msg virtual?]
   "create diagnostic error on line-number 'line' with virtual text of 'msg'."
-  (let [line       (- line 1)
-        msg        (.. ";; " msg)
-        timeout    (env.get :diagnostic :timeout)
-        timer      timer.t
-        namespace  (vim.api.nvim_create_namespace :tangerine)]
-    (vim.api.nvim_buf_add_highlight 0 namespace hl-errors line 0 -1)
-
-    (vim.api.nvim_buf_set_extmark 0 namespace line 0 {
-        :virt_text [[msg hl-virtual]]
-    })
-
-    (timer:start (* 1000 timeout) 0
-                 (vim.schedule_wrap #(vim.api.nvim_buf_clear_namespace 0 namespace 0 -1)))
-    true))
+  (let [buffer  (vim.api.nvim_get_current_buf)
+        timeout (env.get :diagnostic :timeout)
+        nspace  (vim.api.nvim_create_namespace :tangerine)]
+    :diagnostic
+    (vim.diagnostic.set
+      nspace
+      buffer
+      [{
+        :lnum line
+        :col 0
+        :end_col -1
+        :severity vim.diagnostic.severity.ERROR
+        :source "tangerine"
+        :message msg
+      }]
+      (if virtual?
+        {:virtual_text {:spacing 1 :prefix ";;"}} 
+        {:virtual_text false}))
+    :cleanup
+    (timer.get:start (* 1000 timeout) 0
+                     (vim.schedule_wrap err.clear))
+    :return true))
 
 
 ;; -------------------- ;;
@@ -78,12 +86,12 @@
 (lambda err.handle [msg opts]
   "handler for fennel errors, meant to be used with xpcall."
   ;; opts { :float boolean :virtual boolean :offset number }
-  ;; handle diagnostic
-  (if (and (env.conf opts [:diagnostic :virtual]) 
-           (err.compile? msg) 
-           (number? opts.offset))
-      (err.send (err.parse msg opts.offset)))
-  ;; display error
+  ; handle diagnostic
+  (when (and (err.compile? msg) (number? opts.offset))
+    (local (line msg) (err.parse msg opts.offset))
+    (err.send line msg 
+              (env.conf opts [:diagnostic :virtual])))
+  ; display error
   (if (env.conf opts [:diagnostic :float])
       (err.float msg)
       (err.soft msg))
@@ -91,7 +99,7 @@
 
 ; EXAMPLES:
 ; (err.handle "Compile error:0\n  example message"
-;             {:float true :virtual true :offset 90})
+;             {:float true :virtual true :offset 99})
 
 
 :return err

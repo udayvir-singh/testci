@@ -28,30 +28,38 @@ dp.serialize = function(xs, return_3f)
   end
   return (_2_() .. out)
 end
+dp.format = function(code)
+  _G.assert((nil ~= code), "Missing argument code on fnl/tangerine/output/display.fnl:50")
+  local luafmt = env.get("eval", "luafmt")()
+  if ((0 == #luafmt) or (0 == vim.fn.executable(luafmt[1]))) then
+    return code
+  else
+    return vim.fn.system(luafmt, code)
+  end
+end
 dp.show = function(_3fval, opts)
-  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/output/display.fnl:50")
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/output/display.fnl:62")
   if (_3fval == nil) then
     return
   else
   end
-  do
-    local out = dp.serialize(_3fval, true)
-    if env.conf(opts, {"eval", "float"}) then
-      win["set-float"](out, "fennel", env.get("highlight", "float"))
-    elseif "else" then
-      print(out)
-    else
-    end
+  local out = dp.serialize(_3fval, true)
+  if env.conf(opts, {"eval", "float"}) then
+    win["set-float"](out, "fennel", env.get("highlight", "float"))
+  elseif "else" then
+    print(out)
+  else
   end
   return true
 end
 dp["show-lua"] = function(code, opts)
-  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/output/display.fnl:61")
-  _G.assert((nil ~= code), "Missing argument code on fnl/tangerine/output/display.fnl:61")
+  _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/output/display.fnl:73")
+  _G.assert((nil ~= code), "Missing argument code on fnl/tangerine/output/display.fnl:73")
+  local out = string.gsub(dp.format(code), "\n$", "")
   if env.conf(opts, {"eval", "float"}) then
-    win["set-float"](code, "lua", env.get("highlight", "float"))
+    win["set-float"](out, "lua", env.get("highlight", "float"))
   elseif "else" then
-    print(code)
+    print(out)
   else
   end
   return true

@@ -57,7 +57,7 @@
   (var index start)
   (each [idx [win conf] (ipairs win-stack)]
         (local idx* (+ idx steps))
-        (if (and (= win (vim.fn.win_getid)) (. win-stack idx*))
+        (if (and (= win (vim.api.nvim_get_current_win)) (. win-stack idx*))
             (set index idx*)))
   (if (. win-stack index)
       (vim.api.nvim_set_current_win (. win-stack index 1))))
@@ -75,7 +75,7 @@
   (var n n)
   (var idx* (+ (# win-stack) 1)) ; make starting index out of bounds
   (each [idx [win conf] (ipairs win-stack)]
-        (when (= win (vim.fn.win_getid))
+        (when (= win (vim.api.nvim_get_current_win))
           (if (>= 0 (+ conf.height n))
               (set n (- 1 conf.height)))
           (set idx* idx)
@@ -87,7 +87,7 @@
 
 (lambda win.close []
   "close current floating window, switch to nearest neighbor afterwards."
-  (let [current (vim.fn.win_getid)]
+  (let [current (vim.api.nvim_get_current_win)]
     (each [idx [win conf] (ipairs win-stack)]
           (when (= win current)
             (vim.api.nvim_win_close win true)
@@ -145,7 +145,7 @@
 ;; -------------------- ;;
 (lambda win.create-float [lineheight filetype highlight]
   "defines a floating window with height 'lineheight'."
-  (normalize-parent (vim.fn.win_getid))
+  (normalize-parent (vim.api.nvim_get_current_win))
   (let [buffer     (vim.api.nvim_create_buf false true)
         win-width  (vim.api.nvim_win_get_width 0)
         win-height (vim.api.nvim_win_get_height 0)
@@ -163,7 +163,7 @@
     :relative "win"
   })
   ;; insert into win-stack
-  (insert-stack (vim.fn.win_getid))
+  (insert-stack (vim.api.nvim_get_current_win))
   (update-stack)
   ;; set options
   (vim.api.nvim_buf_set_option buffer :ft filetype)

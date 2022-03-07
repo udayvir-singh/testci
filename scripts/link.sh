@@ -19,7 +19,7 @@ for SOURCE in "${SOURCE_DIR}"/*; do
 	if ln -srf "${SOURCE}" "${TARGET_DIR}" 2> "${LOGFILE}"; then
 		log 2 "${SOURCE}"
 	else
-		log 1 "${SOURCE}"
+		log 1 "${SOURCE}" >&2
 		logcat "${LOGFILE}"
 		exit 1
 	fi

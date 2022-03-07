@@ -178,6 +178,26 @@ compile.all = function(_3fopts)
     end
     merge(logs, out_2_auto)
   end
+  for _, source in ipairs(p["list-fnl-files"]()) do
+    local target = p.target(source)
+    local sname = p.shortname(source)
+    if compile_3f(source, target, opts) then
+      table.insert(logs, sname)
+      local out_2_auto
+      local function _19_()
+        return compile.file(source, target, opts)
+      end
+      local function _20_(_241)
+        return log.failure("COMPILE ERROR", sname, _241, opts)
+      end
+      out_2_auto = xpcall(_19_, _20_)
+      if ((0 == out_2_auto) or (false == out_2_auto)) then
+        return 0
+      else
+      end
+    else
+    end
+  end
   do
     local out_2_auto = (compile.rtp(copts) or {})
     do
@@ -188,26 +208,6 @@ compile.all = function(_3fopts)
       end
     end
     merge(logs, out_2_auto)
-  end
-  for _, source in ipairs(p["list-fnl-files"]()) do
-    local target = p.target(source)
-    local sname = p.shortname(source)
-    if compile_3f(source, target, opts) then
-      table.insert(logs, sname)
-      local out_2_auto
-      local function _20_()
-        return compile.file(source, target, opts)
-      end
-      local function _21_(_241)
-        return log.failure("COMPILE ERROR", sname, _241, opts)
-      end
-      out_2_auto = xpcall(_20_, _21_)
-      if ((0 == out_2_auto) or (false == out_2_auto)) then
-        return 0
-      else
-      end
-    else
-    end
   end
   log.success("COMPILED", logs, opts)
   return logs

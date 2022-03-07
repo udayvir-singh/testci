@@ -10,9 +10,10 @@ utils[window]
 **EXPORTS**
 ```fennel
 :display {
-  :serialize <function 1>
-  :show <function 2>
-  :show-lua <function 3>
+  :format <function 1>
+  :serialize <function 2>
+  :show <function 3>
+  :show-lua <function 4>
 }
 ```
 

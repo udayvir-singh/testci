@@ -1,5 +1,5 @@
 <!--
--- DEPENDS: FIME
+-- DEPENDS: FIXME
 -- Install     | setup
 -- API         | api[*]
 -- Command     | vim[cmds]

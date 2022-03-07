@@ -84,7 +84,7 @@ panvimdoc () {
 if panvimdoc; then
 	log 2 "${TARGET#./}"
 else
-	log 1 ERROR
+	log 1 ERROR >&2
 	logcat "${LOGFILE}"
 	exit 1
 fi

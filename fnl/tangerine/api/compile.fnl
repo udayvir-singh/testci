@@ -185,7 +185,6 @@
   (local logs  [])
   :compile
   (hmerge logs (compile.vimrc copts))
-  (hmerge logs (compile.rtp   copts))
   (each [_ source (ipairs (p.list-fnl-files))]
         (local target (p.target source))
         (local sname  (p.shortname source))
@@ -193,6 +192,7 @@
           (table.insert logs sname)
           (hpcall #(compile.file source target opts)
                   #(log.failure "COMPILE ERROR" sname $1 opts))))
+  (hmerge logs (compile.rtp copts))
   :logger
   (log.success "COMPILED" logs opts)
   :return logs)

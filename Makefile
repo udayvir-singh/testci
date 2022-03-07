@@ -16,7 +16,9 @@ build: deps fnl fnldoc vimdoc
 
 watch-build:
 	watchexec -f "fnl/**/*.fnl" -f "README.md" -i "fnl/**/README.md" \
-		"make --no-print-directory clean build && notify-send 'DONE' '  BUILDING tangerine.nvim'"
+		'make --no-print-directory clean build && 
+		notify-send DONE "  ==> tangerine.nvim" ||
+		notify-send "BUILD ERROR" "$$(cat /tmp/tangerine-err)"'
 
 fnl: 
 	./scripts/compile.sh "$(FENNEL_BIN)" "$(SOURCE_DIR)"

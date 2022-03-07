@@ -63,7 +63,7 @@ local function move_stack(start, steps)
     local win0 = _each_12_[1]
     local conf = _each_12_[2]
     local idx_2a = (idx + steps)
-    if ((win0 == vim.fn.win_getid()) and win_stack[idx_2a]) then
+    if ((win0 == vim.api.nvim_get_current_win()) and win_stack[idx_2a]) then
       index = idx_2a
     else
     end
@@ -88,7 +88,7 @@ win.resize = function(n)
     local _each_16_ = _15_
     local win0 = _each_16_[1]
     local conf = _each_16_[2]
-    if (win0 == vim.fn.win_getid()) then
+    if (win0 == vim.api.nvim_get_current_win()) then
       if (0 >= (conf.height + n0)) then
         n0 = (1 - conf.height)
       else
@@ -106,7 +106,7 @@ win.resize = function(n)
   return true
 end
 win.close = function()
-  local current = vim.fn.win_getid()
+  local current = vim.api.nvim_get_current_win()
   for idx, _20_ in ipairs(win_stack) do
     local _each_21_ = _20_
     local win0 = _each_21_[1]
@@ -164,7 +164,7 @@ win["create-float"] = function(lineheight0, filetype, highlight)
   _G.assert((nil ~= highlight), "Missing argument highlight on fnl/tangerine/utils/window.fnl:146")
   _G.assert((nil ~= filetype), "Missing argument filetype on fnl/tangerine/utils/window.fnl:146")
   _G.assert((nil ~= lineheight0), "Missing argument lineheight on fnl/tangerine/utils/window.fnl:146")
-  normalize_parent(vim.fn.win_getid())
+  normalize_parent(vim.api.nvim_get_current_win())
   local buffer = vim.api.nvim_create_buf(false, true)
   local win_width = vim.api.nvim_win_get_width(0)
   local win_height = vim.api.nvim_win_get_height(0)
@@ -172,7 +172,7 @@ win["create-float"] = function(lineheight0, filetype, highlight)
   local width = (win_width - bordersize)
   local height = math.max(1, math.floor(math.min((win_height / 1.5), lineheight0)))
   vim.api.nvim_open_win(buffer, true, {width = width, height = height, col = 0, row = (win_height - bordersize - height - win_stack.total), style = "minimal", anchor = "NW", border = "single", relative = "win"})
-  insert_stack(vim.fn.win_getid())
+  insert_stack(vim.api.nvim_get_current_win())
   update_stack()
   vim.api.nvim_buf_set_option(buffer, "ft", filetype)
   vim.api.nvim_win_set_option(0, "winhl", ("Normal:" .. highlight))

@@ -37,7 +37,7 @@ for SOURCE in ${SOURCES}; do
 	if compile "${SOURCE}" "${TARGET}"; then
 		log 2 "${NAME}" 
 	else
-		log 1 "${NAME}" 
+		log 1 "${NAME}" >&2
 		logcat "${LOGFILE}"
 		exit 1
 	fi

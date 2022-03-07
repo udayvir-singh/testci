@@ -2,8 +2,8 @@
 ;   Serializes evaluation results and pretty prints them.
 ;
 ; DEPENDS:
-; (show) utils[env]
-; (show) utils[window]
+; (show)        utils[window]
+; (show format) utils[env]
 (local env (require :tangerine.utils.env))
 (local win (require :tangerine.utils.window))
 (local dp {})
@@ -45,6 +45,18 @@
 
 
 ;; -------------------- ;;
+;;        Format        ;;
+;; -------------------- ;;
+(lambda dp.format [code]
+  "runs formatter on lua 'code' defined in ENV."
+  (let [luafmt ((env.get :eval :luafmt))]
+    (if (or (= 0 (# luafmt))
+            (= 0 (vim.fn.executable (. luafmt 1))))
+        (do code)
+        (vim.fn.system luafmt code))))
+
+
+;; -------------------- ;;
 ;;        Output        ;;
 ;; -------------------- ;;
 (lambda dp.show [?val opts]
@@ -55,25 +67,22 @@
     (if (env.conf opts [:eval :float])
         (win.set-float out :fennel (env.get :highlight :float))
         :else
-        (print out)))
-  :return true)
+        (print out))
+    :return true))
 
 (lambda dp.show-lua [code opts]
   "show lua 'code' inside float if opts.float = true."
   ;; opts { :float boolean }
-  (if (env.conf opts [:eval :float])
-      (win.set-float code :lua (env.get :highlight :float))
-      :else
-      (print code))
-  :return true)
+  (let [out (string.gsub (dp.format code) "\n$" "")]
+    (if (env.conf opts [:eval :float])
+        (win.set-float out :lua (env.get :highlight :float))
+        :else
+        (print out))
+    :return true))
 
 ; EXAMPLES:
-; (local example {
-;   2 [1 [2] 3]        
-;   :foo "baz \""
-; })
-; (dp.show example {:float true})
-; (dp.show-lua "print('example')" {:float true})
+; (dp.show { 3 [:list 1] :foo* "baz \"" } {:float true})
+; (dp.show-lua "return {foo={bar='value', baz=string, wrap=here}}" {:float true})
 
 
 :return dp

@@ -86,7 +86,8 @@
     :timeout "number"
   }
   :eval {
-    :float "boolean"
+    :float  "boolean"
+    :luafmt "function"
   }
   :keymaps {
     :PeakBuffer "string"
@@ -105,7 +106,6 @@
     :float   "string"
     :success "string"
     :errors  "string"
-    :virtual "string"
   }
 })
 
@@ -129,7 +129,14 @@
     :timeout 10
   }
   :eval {
-    :float true
+    :float  true
+    :luafmt #[
+      (vim.fn.expand "~/.luarocks/bin/lua-format")
+      ;;;
+      "--spaces-inside-table-braces"
+      "--column-table-limit" 50
+      "--column-limit" (vim.api.nvim_win_get_width 0)
+    ]
   }
   :keymaps {
     :PeakBuffer "gL"
@@ -148,7 +155,6 @@
     :float   "Normal"
     :success "String"
     :errors  "DiagnosticError"
-    :virtual "DiagnosticVirtualTextError"
   }
 })
 
