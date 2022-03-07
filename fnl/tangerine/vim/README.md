@@ -8,7 +8,8 @@ _G.tangerine.api
 
 **EXPORTS**
 ```fennel
-:cmds [ true ]
+:cmds Error detected while processing command line:
+E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
 ```
 
 # hooks.fnl
@@ -22,12 +23,8 @@ utils[env]
 
 **EXPORTS**
 ```fennel
-:hooks {
-  :onit <function 1>
-  :onload <function 2>
-  :onsave <function 3>
-  :run <function 4>
-}
+:hooks Error detected while processing command line:
+E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
 ```
 
 # maps.fnl
@@ -41,6 +38,7 @@ vim[cmds]
 
 **EXPORTS**
 ```fennel
-:maps [ true ]
+:maps Error detected while processing command line:
+E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
 ```
 

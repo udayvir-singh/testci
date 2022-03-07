@@ -6,11 +6,8 @@ compares UTC in marker to ftime(source).
 
 **EXPORTS**
 ```fennel
-:diff {
-  :create-marker <function 1>
-  :read-marker <function 2>
-  :stale? <function 3>
-}
+:diff Error detected while processing command line:
+E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
 ```
 
 # env.fnl
@@ -20,11 +17,8 @@ Provides getter and setter so that multiple modules can have shared configuratio
 
 **EXPORTS**
 ```fennel
-:env {
-  :conf <function 1>
-  :get <function 2>
-  :set <function 3>
-}
+:env Error detected while processing command line:
+E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
 ```
 
 # fs.fnl
@@ -32,15 +26,8 @@ Provides getter and setter so that multiple modules can have shared configuratio
 
 **EXPORTS**
 ```fennel
-:fs {
-  :dir-exists? <function 1>
-  :dirname <function 2>
-  :mkdir <function 3>
-  :read <function 4>
-  :readable? <function 5>
-  :remove <function 6>
-  :write <function 7>
-}
+:fs Error detected while processing command line:
+E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
 ```
 
 # path.fnl
@@ -53,17 +40,8 @@ utils[env]
 
 **EXPORTS**
 ```fennel
-:path {
-  :from-x-to-y <function 1>
-  :goto-output <function 2>
-  :list-fnl-files <function 3>
-  :list-lua-files <function 4>
-  :resolve <function 5>
-  :shortname <function 6>
-  :source <function 7>
-  :target <function 8>
-  :wildcard <function 9>
-}
+:path Error detected while processing command line:
+E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
 ```
 
 # window.fnl
@@ -76,14 +54,7 @@ utils[env]
 
 **EXPORTS**
 ```fennel
-:window {
-  :close <function 1>
-  :create-float <function 2>
-  :killall <function 3>
-  :next <function 4>
-  :prev <function 5>
-  :resize <function 6>
-  :set-float <function 7>
-}
+:window Error detected while processing command line:
+E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
 ```
 
