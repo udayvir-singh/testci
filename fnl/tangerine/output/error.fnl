@@ -42,12 +42,16 @@
 
 (lambda err.clear []
   "clears all errors in current namespace."
+  (if (not vim.diagnostic)
+      (lua :return))
   (let [nspace  (vim.api.nvim_create_namespace :tangerine)]
     (vim.diagnostic.reset nspace)
     (vim.api.nvim_buf_clear_namespace 0 nspace 0 -1)))
 
 (lambda err.send [line msg virtual?]
   "create diagnostic error on line-number 'line' with virtual text of 'msg'."
+  (if (not vim.diagnostic)
+      (lua :return))
   (let [buffer  (vim.api.nvim_get_current_buf)
         timeout (env.get :eval :diagnostic :timeout)
         nspace  (vim.api.nvim_create_namespace :tangerine)]
@@ -87,7 +91,7 @@
   "handler for fennel errors, meant to be used with xpcall."
   ;; opts { :float boolean :virtual boolean :offset number }
   ; handle diagnostic
-  (when (and vim.diagnostic (err.compile? msg) (number? opts.offset))
+  (when (and (err.compile? msg) (number? opts.offset))
     (local (line msg) (err.parse msg opts.offset))
     (err.send line msg 
               (env.conf opts [:eval :diagnostic :virtual])))
