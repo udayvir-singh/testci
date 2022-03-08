@@ -35,7 +35,7 @@ err.send = function(line, msg, virtual_3f)
   _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:49")
   _G.assert((nil ~= line), "Missing argument line on fnl/tangerine/output/error.fnl:49")
   local buffer = vim.api.nvim_get_current_buf()
-  local timeout = env.get("diagnostic", "timeout")
+  local timeout = env.get("eval", "diagnostic", "timeout")
   local nspace = vim.api.nvim_create_namespace("tangerine")
   local function _2_()
     if virtual_3f then
@@ -61,10 +61,10 @@ err.handle = function(msg, opts)
   _G.assert((nil ~= msg), "Missing argument msg on fnl/tangerine/output/error.fnl:86")
   if (err["compile?"](msg) and number_3f(opts.offset)) then
     local line, msg0 = err.parse(msg, opts.offset)
-    err.send(line, msg0, env.conf(opts, {"diagnostic", "virtual"}))
+    err.send(line, msg0, env.conf(opts, {"eval", "diagnostic", "virtual"}))
   else
   end
-  if env.conf(opts, {"diagnostic", "float"}) then
+  if env.conf(opts, {"eval", "float"}) then
     err.float(msg)
   else
     err.soft(msg)

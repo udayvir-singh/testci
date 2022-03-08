@@ -157,8 +157,8 @@ local function nmap_21(buffer, ...)
 end
 local function setup_mappings(buffer)
   _G.assert((nil ~= buffer), "Missing argument buffer on fnl/tangerine/utils/window.fnl:131")
-  local w = env.get("keymaps", "Float")
-  return nmap_21(buffer, {w.Next, "FnlWinNext"}, {w.Prev, "FnlWinPrev"}, {w.Close, "FnlWinClose"}, {w.KillAll, "FnlWinKill"}, {w.ResizeI, "FnlWinResize 1"}, {w.ResizeD, "FnlWinResize -1"})
+  local w = env.get("keymaps", "float")
+  return nmap_21(buffer, {w.next, "FnlWinNext"}, {w.prev, "FnlWinPrev"}, {w.kill, "FnlWinKill"}, {w.close, "FnlWinClose"}, {w.resizef, "FnlWinResize 1"}, {w.resizeb, "FnlWinResize -1"})
 end
 win["create-float"] = function(lineheight0, filetype, highlight)
   _G.assert((nil ~= highlight), "Missing argument highlight on fnl/tangerine/utils/window.fnl:146")
