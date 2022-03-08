@@ -1,4 +1,4 @@
-local config_dir = ("" .. vim.fn.stdpath("config"))
+local config_dir = vim.fn.stdpath("config")
 local function endswith(str, args)
   _G.assert((nil ~= args), "Missing argument args on fnl/tangerine/utils/env.fnl:11")
   _G.assert((nil ~= str), "Missing argument str on fnl/tangerine/utils/env.fnl:11")
