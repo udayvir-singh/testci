@@ -9,8 +9,10 @@ utils[env]
 
 **EXPORTS**
 ```fennel
-:fennel Error detected while processing command line:
-E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
+:fennel {
+  :load <function 1>
+  :patch-path <function 2>
+}
 ```
 
 # api/

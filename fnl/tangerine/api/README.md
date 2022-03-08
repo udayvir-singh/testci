@@ -12,8 +12,10 @@ utils[path]
 
 **EXPORTS**
 ```fennel
-:clean Error detected while processing command line:
-E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
+:clean {
+  :orphaned <function 1>
+  :target <function 2>
+}
 ```
 
 # compile.fnl
@@ -32,8 +34,15 @@ utils[path]
 
 **EXPORTS**
 ```fennel
-:compile Error detected while processing command line:
-E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
+:compile {
+  :all <function 1>
+  :buffer <function 2>
+  :dir <function 3>
+  :file <function 4>
+  :rtp <function 5>
+  :string <function 6>
+  :vimrc <function 7>
+}
 ```
 
 # eval.fnl
@@ -50,7 +59,11 @@ utils[path]
 
 **EXPORTS**
 ```fennel
-:eval Error detected while processing command line:
-E5108: Error executing lua ...rine/start/tangerine.nvim/lua/tangerine/output/error.lua:30: attempt to index field 'diagnostic' (a nil value)
+:eval {
+  :buffer <function 1>
+  :file <function 2>
+  :peak <function 3>
+  :string <function 4>
+}
 ```
 
