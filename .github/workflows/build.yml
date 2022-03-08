@@ -16,8 +16,8 @@ jobs:
   #       METADATA       #
   # -------------------- #
   loc:
-    name: lines of code
-    runs-on: ubuntu-latest
+    name:      lines of code
+    runs-on:   ubuntu-latest
     container: alpine
 
     steps:
@@ -47,10 +47,37 @@ jobs:
 
 
   # -------------------- #
+  #    DOCUMENTATION     #
+  # -------------------- #
+  vimdoc:
+    runs-on:   ubuntu-latest
+    container: pandoc/minimal:2.17-alpine
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Install requirements
+      run: |
+        apk update && apk upgrade 
+        apk add make bash curl coreutils findutils neovim
+
+    - name: Clean previous build
+      run:  make clean
+
+    - name: Build vimdoc
+      run:  make vimdoc NO_HELPTAGS=1
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: vimdoc
+        path: doc
+
+
+  # -------------------- #
   #     BUILD FENNEL     #
   # -------------------- #
   fennel:
-    runs-on: ubuntu-latest
+    runs-on:   ubuntu-latest
     container: alpine
 
     steps:
@@ -75,37 +102,11 @@ jobs:
         name: fennel-out
         path: lua 
 
-
-  # -------------------- #
-  #    DOCUMENTATION     #
-  # -------------------- #
-  vimdoc:
-    runs-on: ubuntu-latest
-    container: pandoc/minimal:2.17-alpine
-
-    steps:
-    - uses: actions/checkout@v2
-    
-    - name: Install requirements
-      run: |
-        apk update && apk upgrade 
-        apk add make bash curl coreutils findutils neovim
-
-    - name: Clean previous build
-      run:  make clean
-
-    - name: Build vimdoc
-      run:  make vimdoc NO_HELPTAGS=1
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: vimdoc
-        path: doc
-
   fnldoc:
-    runs-on: ubuntu-latest
-    container: alpine:latest
-    needs: [fennel]
+    name:      fennel docs
+    needs:     [fennel]
+    runs-on:   ubuntu-latest
+    container: alpine
 
     steps:
     - uses: actions/checkout@v2
@@ -127,9 +128,6 @@ jobs:
     - name: Install Tangerine
       run:  make deps install
 
-    - name: debug
-      run: nvim -v
-
     - name: Build fennel docs
       run:  make fnldoc
 
@@ -143,9 +141,9 @@ jobs:
   #     COMMIT BUILD     #
   # -------------------- #
   commit:
-    name: commit changes
+    name:    commit changes
+    needs:   [vimdoc, fnldoc, fennel]
     runs-on: ubuntu-latest
-    needs: [vimdoc, fnldoc, fennel]
     
     steps:
     - uses: actions/checkout@v2
