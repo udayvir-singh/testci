@@ -7,6 +7,7 @@
 ;;        Utils         ;;
 ;; -------------------- ;;
 (local config-dir (vim.fn.stdpath :config))
+(local a "")
 
 (lambda endswith [str args]
   "checks if 'str' ends with one of arr::'args'."
