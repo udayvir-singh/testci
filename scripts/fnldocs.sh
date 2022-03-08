@@ -28,7 +28,7 @@ get-deps () {
 
 get-about () {
 	local SOURCE="${1}"
-local ABOUT=$(
+	local ABOUT=$(
 	awk '{
 		if ($2 == "ABOUT:") {
 			getline
@@ -51,19 +51,29 @@ local ABOUT=$(
 	fi
 }
 
+nvim-eval () {
+	local SOURCE="${1}"
+	local LUACMD="lua xpcall(
+		function()  require('tangerine.api').eval.file('${SOURCE}', {float=false}) end,
+		function(x) print('ERROR:', x) end
+	)"
+
+	nvim -n --noplugin --headless \
+	     -c "${LUACMD}" \
+	     -c q 2>&1 | tr -d '\r'
+}
+
 get-exports () {
 	local SOURCE="${1}"
-
-	local RETURN=$(
-	nvim -n --noplugin --headless \
-		-c "lua require('tangerine.api').eval.file('${SOURCE}', {float=false})" \
-		-c "q" 2>&1 | 
-	sed 's/:return //' |
-	tr -d '\r')
-
 	local MODULE=$(basename "${SOURCE}")
+	local RETURN=$(nvim-eval "${SOURCE}")
 
-	printf ":%s %s\n" "${MODULE%.fnl}" "${RETURN}"
+	if [[ "${RETURN}" =~ "ERROR:" ]]; then
+		echo "${RETURN}" | sed 's/^/       /' >&2
+		exit 1
+	fi
+
+	printf ":%s%s\n" "${MODULE%.fnl}" "${RETURN#:return}"
 }
 
 gen-markdown () {
