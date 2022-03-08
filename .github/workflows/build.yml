@@ -176,7 +176,7 @@ jobs:
       run:  git status --short --ignored
 
     - name: Show diffs
-      run:  git diff
+      run:  git diff --color=always
 
     - name: Commit
       uses: stefanzweifel/git-auto-commit-action@v4
