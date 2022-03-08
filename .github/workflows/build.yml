@@ -174,8 +174,7 @@ jobs:
 
     - name: Print Changes
       run: |
-        git status --short --ignored
-        echo 'DIFF'
+        git status --short --ignored; echo
         git diff --color=always
 
     - name: Commit
