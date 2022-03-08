@@ -175,6 +175,9 @@ jobs:
     - name: Print Changes
       run:  git status --short --ignored
 
+    - name: Show diffs
+      run:  git diff
+
     - name: Commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
