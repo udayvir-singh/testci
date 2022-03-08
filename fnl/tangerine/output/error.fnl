@@ -87,7 +87,7 @@
   "handler for fennel errors, meant to be used with xpcall."
   ;; opts { :float boolean :virtual boolean :offset number }
   ; handle diagnostic
-  (when (and (err.compile? msg) (number? opts.offset))
+  (when (and vim.diagnostic (err.compile? msg) (number? opts.offset))
     (local (line msg) (err.parse msg opts.offset))
     (err.send line msg 
               (env.conf opts [:eval :diagnostic :virtual])))

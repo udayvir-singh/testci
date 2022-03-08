@@ -89,6 +89,9 @@ jobs:
     - name: Clean previous build
       run:  rm -rvf $(find fnl -name "README.md")
 
+    - name: debug
+      run: nvim -v
+
     - name: Build fennel docs
       run:  make fnldoc
 
