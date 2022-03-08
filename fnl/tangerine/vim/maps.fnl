@@ -7,9 +7,9 @@
 (local env (require :tangerine.utils.env))
 
 (local {
-  : PeakBuffer
-  : EvalBuffer
-  : GotoOutput
+  : eval_buffer
+  : peak_buffer
+  : goto_output
 } (env.get :keymaps))
 
 ;; -------------------- ;;
@@ -25,13 +25,13 @@
 ;; -------------------- ;;
 ;;         MAPS         ;;
 ;; -------------------- ;;
-(nmap! PeakBuffer :FnlPeak)
-(vmap! PeakBuffer :FnlPeak)
+(nmap! eval_buffer :FnlBuffer)
+(vmap! eval_buffer :FnlBuffer)
 
-(nmap! EvalBuffer :FnlBuffer)
-(vmap! EvalBuffer :FnlBuffer)
+(nmap! peak_buffer :FnlPeak)
+(vmap! peak_buffer :FnlPeak)
 
-(nmap! GotoOutput :FnlGotoOutput)
+(nmap! goto_output :FnlGotoOutput)
 
 
 [true]

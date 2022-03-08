@@ -48,6 +48,17 @@
             :else
             (tset tbl2 key val))))
 
+(lambda luafmt []
+  "returns default lua formatter for ENV."
+  (let [exec  (vim.fn.expand "~/.luarocks/bin/lua-format")
+        width (vim.api.nvim_win_get_width 0)]
+    :return [ 
+      exec
+      "--spaces-inside-table-braces"
+      "--column-table-limit" 50
+      "--column-limit" width
+    ]))
+
 
 ;; -------------------- ;;
 ;;        Schema        ;;
@@ -59,11 +70,11 @@
   :vimrc   resolve
   :rtpdirs rtpdirs
   :compiler    nil
-  :diagnostic  nil
   :eval        nil
-  :highlight   nil
   :keymaps     nil
+  :highlight   nil
 })
+
 
 (local schema {
   ; "type definition for ENV used in validation"
@@ -71,6 +82,7 @@
   :target  "string"
   :vimrc   "string"
   :rtpdirs "list"
+
   :compiler {
     :float   "boolean"
     :clean   "boolean"
@@ -80,28 +92,30 @@
     :version [:oneof ["latest" "1-0-0" "0-10-0" "0-9-2"]]
     :hooks   [:array ["onsave" "onload" "oninit"]]
   }
-  :diagnostic {
-    :float   "boolean"
-    :virtual "boolean"
-    :timeout "number"
-  }
+
   :eval {
     :float  "boolean"
     :luafmt "function"
-  }
-  :keymaps {
-    :PeakBuffer "string"
-    :EvalBuffer "string"
-    :GotoOutput "string"
-    :Float {
-      :Next    "string"
-      :Prev    "string"
-      :Close   "string"
-      :KillAll "string"
-      :ResizeI "string"
-      :ResizeD "string"
+    :diagnostic {
+      :virtual "boolean"
+      :timeout "number"
     }
   }
+
+  :keymaps {
+    :peak_buffer "string"
+    :eval_buffer "string"
+    :goto_output "string"
+    :float {
+      :next    "string"
+      :prev    "string"
+      :kill    "string"
+      :close   "string"
+      :resizef "string"
+      :resizeb "string"
+    }
+  }
+
   :highlight {
     :float   "string"
     :success "string"
@@ -109,48 +123,46 @@
   }
 })
 
+
 (local ENV {
-  :vimrc  (resolve (.. config-dir "/init.fnl"))
-  :source (resolve (.. config-dir "/fnl/"))
-  :target (resolve (.. config-dir "/lua/"))
+  :vimrc   (resolve (.. config-dir "/init.fnl"))
+  :source  (resolve (.. config-dir "/fnl/"))
+  :target  (resolve (.. config-dir "/lua/"))
   :rtpdirs []
+
   :compiler {
     :float   true
     :clean   true
     :force   false
     :verbose true
-    :globals (vim.tbl_keys _G)
     :version "latest"           
+    :globals (vim.tbl_keys _G)
     :hooks   []
   }
-  :diagnostic {
-    :float   true
-    :virtual true
-    :timeout 10
-  }
+
   :eval {
     :float  true
-    :luafmt #[
-      (vim.fn.expand "~/.luarocks/bin/lua-format")
-      ;;;
-      "--spaces-inside-table-braces"
-      "--column-table-limit" 50
-      "--column-limit" (vim.api.nvim_win_get_width 0)
-    ]
-  }
-  :keymaps {
-    :PeakBuffer "gL"
-    :EvalBuffer "gE"
-    :GotoOutput "gO"
-    :Float {
-      :Next    "<C-K>"
-      :Prev    "<C-J>"
-      :Close   "<Enter>"
-      :KillAll "<Esc>"
-      :ResizeI "<C-W>="
-      :ResizeD "<C-W>-"
+    :luafmt luafmt
+    :diagnostic {
+      :virtual true
+      :timeout 10
     }
   }
+
+  :keymaps {
+    :eval_buffer "gE"
+    :peak_buffer "gL"
+    :goto_output "gO"
+    :float {
+      :next    "<C-K>"
+      :prev    "<C-J>"
+      :kill    "<Esc>"
+      :close   "<Enter>"
+      :resizef "<C-W>="
+      :resizeb "<C-W>-"
+    }
+  }
+
   :highlight {
     :float   "Normal"
     :success "String"
@@ -250,4 +262,4 @@
   :get  env-get
   :set  env-set
   :conf env-get-conf
-}
+} 

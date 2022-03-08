@@ -14,9 +14,9 @@
   "safely require vimrc if readable."
   (let [module "tangerine_vimrc"
         path   (.. (env.get :target) module ".lua")]
-        (if (= 1 (vim.fn.filereadable path))
-            (xpcall #(require module)
-                    #(print (.. "[tangerine]: ERROR LOADING VIMRC...\n" $1))))))
+    (if (= 1 (vim.fn.filereadable path))
+        (xpcall #(require module)
+                #(print (.. "[tangerine]: ERROR LOADING VIMRC...\n" $1))))))
 
 (lambda load-hooks [hooks]
   "loads hooks that are present in ENV from table of 'hooks'."
@@ -25,19 +25,19 @@
 
 (lambda setup [config]
   "main entry point for tangerine, setups required configuration."
-  ;; setup ENV and package.path
+  ; setup ENV and package.path
   (env.set config)
   (fennel.patch-path)
-  ;; setup tangerine api
+  ; setup tangerine.api
   (global tangerine {
     :api    api
     :fennel fennel.load
   })
-  ;; setup vim config
+  ; load vim config
   (require :tangerine.vim.cmds)
   (require :tangerine.vim.maps)
   (load-hooks (require :tangerine.vim.hooks))
-  ;; load vimrc
+  ; load vimrc
   (load-vimrc)
   :return true)
 

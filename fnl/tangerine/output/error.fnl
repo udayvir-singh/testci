@@ -49,7 +49,7 @@
 (lambda err.send [line msg virtual?]
   "create diagnostic error on line-number 'line' with virtual text of 'msg'."
   (let [buffer  (vim.api.nvim_get_current_buf)
-        timeout (env.get :diagnostic :timeout)
+        timeout (env.get :eval :diagnostic :timeout)
         nspace  (vim.api.nvim_create_namespace :tangerine)]
     :diagnostic
     (vim.diagnostic.set
@@ -90,9 +90,9 @@
   (when (and (err.compile? msg) (number? opts.offset))
     (local (line msg) (err.parse msg opts.offset))
     (err.send line msg 
-              (env.conf opts [:diagnostic :virtual])))
+              (env.conf opts [:eval :diagnostic :virtual])))
   ; display error
-  (if (env.conf opts [:diagnostic :float])
+  (if (env.conf opts [:eval :float])
       (err.float msg)
       (err.soft msg))
   :return true)

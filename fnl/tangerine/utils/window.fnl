@@ -75,14 +75,14 @@
   (var n n)
   (var idx* (+ (# win-stack) 1)) ; make starting index out of bounds
   (each [idx [win conf] (ipairs win-stack)]
-        (when (= win (vim.api.nvim_get_current_win))
-          (if (>= 0 (+ conf.height n))
-              (set n (- 1 conf.height)))
-          (set idx* idx)
-          (tset conf :height (+ conf.height n)))
-        (when (<= idx* idx)
-          (tset conf :row false (- (. conf :row false) n))
-          (vim.api.nvim_win_set_config win conf)))
+    (when (= win (vim.api.nvim_get_current_win))
+      (if (>= 0 (+ conf.height n))
+          (set n (- 1 conf.height)))
+      (set idx* idx)
+      (tset conf :height (+ conf.height n)))
+    (when (<= idx* idx)
+      (tset conf :row false (- (. conf :row false) n))
+      (vim.api.nvim_win_set_config win conf)))
   :return true)
 
 (lambda win.close []
@@ -130,14 +130,14 @@
 
 (lambda setup-mappings [buffer]
   "setup floating window mappings defined in ENV for 'buffer'."
-  (local w (env.get :keymaps :Float))
+  (local w (env.get :keymaps :float))
   (nmap! buffer
-    [w.Next    :FnlWinNext]
-    [w.Prev    :FnlWinPrev]
-    [w.Close   :FnlWinClose]
-    [w.KillAll :FnlWinKill]
-    [w.ResizeI "FnlWinResize 1"]
-    [w.ResizeD "FnlWinResize -1"]))
+    [w.next    :FnlWinNext]
+    [w.prev    :FnlWinPrev]
+    [w.kill    :FnlWinKill]
+    [w.close   :FnlWinClose]
+    [w.resizef "FnlWinResize 1"]
+    [w.resizeb "FnlWinResize -1"]))
 
 
 ;; -------------------- ;;
