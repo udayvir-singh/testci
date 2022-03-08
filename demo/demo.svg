@@ -11,662 +11,499 @@
 0% {
 transform: translateX(0)
 }
-
 .03% {
 transform: translateX(-74px)
 }
-
 .04% {
 transform: translateX(-148px)
 }
-
 .23% {
 transform: translateX(-592px)
 }
-
 1.05% {
 transform: translateX(-814px)
 }
-
 1.85% {
 transform: translateX(-962px)
 }
-
 1.97% {
 transform: translateX(-1110px)
 }
-
 1.98% {
 transform: translateX(-1258px)
 }
-
 2.09% {
 transform: translateX(-1554px)
 }
-
 2.59% {
 transform: translateX(-1776px)
 }
-
 3.41% {
 transform: translateX(-1924px)
 }
-
 4% {
 transform: translateX(-2146px)
 }
-
 4.45% {
 transform: translateX(-2368px)
 }
-
 6.4% {
 transform: translateX(-2442px)
 }
-
 7.37% {
 transform: translateX(-2516px)
 }
-
 7.41% {
 transform: translateX(-3034px)
 }
-
 9.47% {
 transform: translateX(-3182px)
 }
-
 10.8% {
 transform: translateX(-3478px)
 }
-
 12.53% {
 transform: translateX(-3552px)
 }
-
 12.95% {
 transform: translateX(-3626px)
 }
-
 13.66% {
 transform: translateX(-3700px)
 }
-
 14.21% {
 transform: translateX(-3774px)
 }
-
 14.44% {
 transform: translateX(-3848px)
 }
-
 14.86% {
 transform: translateX(-3922px)
 }
-
 15.1% {
 transform: translateX(-3996px)
 }
-
 15.31% {
 transform: translateX(-4070px)
 }
-
 16.4% {
 transform: translateX(-4144px)
 }
-
 16.84% {
 transform: translateX(-4218px)
 }
-
 17.38% {
 transform: translateX(-4292px)
 }
-
 19.08% {
 transform: translateX(-4366px)
 }
-
 19.56% {
 transform: translateX(-4440px)
 }
-
 20.11% {
 transform: translateX(-4514px)
 }
-
 20.64% {
 transform: translateX(-4588px)
 }
-
 21.45% {
 transform: translateX(-4662px)
 }
-
 23.68% {
 transform: translateX(-5106px)
 }
-
 24.2% {
 transform: translateX(-5402px)
 }
-
 25% {
 transform: translateX(-5624px)
 }
-
 25.12% {
 transform: translateX(-5846px)
 }
-
 25.24% {
 transform: translateX(-6068px)
 }
-
 25.35% {
 transform: translateX(-6216px)
 }
-
 25.84% {
 transform: translateX(-6438px)
 }
-
 26.8% {
 transform: translateX(-6586px)
 }
-
 28.23% {
 transform: translateX(-6734px)
 }
-
 29.54% {
 transform: translateX(-6808px)
 }
-
 29.67% {
 transform: translateX(-7030px)
 }
-
 30.12% {
 transform: translateX(-7252px)
 }
-
 30.82% {
 transform: translateX(-7474px)
 }
-
 31.44% {
 transform: translateX(-7622px)
 }
-
 32.23% {
 transform: translateX(-7770px)
 }
-
 32.35% {
 transform: translateX(-7844px)
 }
-
 32.36% {
 transform: translateX(-7918px)
 }
-
 32.48% {
 transform: translateX(-8066px)
 }
-
 32.6% {
 transform: translateX(-8214px)
 }
-
 32.72% {
 transform: translateX(-8362px)
 }
-
 32.84% {
 transform: translateX(-8510px)
 }
-
 32.96% {
 transform: translateX(-8658px)
 }
-
 33.08% {
 transform: translateX(-8806px)
 }
-
 33.2% {
 transform: translateX(-8954px)
 }
-
 33.32% {
 transform: translateX(-9102px)
 }
-
 33.43% {
 transform: translateX(-9176px)
 }
-
 33.44% {
 transform: translateX(-9250px)
 }
-
 33.55% {
 transform: translateX(-9398px)
 }
-
 33.67% {
 transform: translateX(-9546px)
 }
-
 33.79% {
 transform: translateX(-9694px)
 }
-
 33.91% {
 transform: translateX(-9842px)
 }
-
 34.03% {
 transform: translateX(-9990px)
 }
-
 34.15% {
 transform: translateX(-10138px)
 }
-
 34.52% {
 transform: translateX(-10286px)
 }
-
 35.03% {
 transform: translateX(-10360px)
 }
-
 35.04% {
 transform: translateX(-10434px)
 }
-
 35.73% {
 transform: translateX(-10508px)
 }
-
 35.99% {
 transform: translateX(-10582px)
 }
-
 36.49% {
 transform: translateX(-10656px)
 }
-
 36.95% {
 transform: translateX(-10730px)
 }
-
 38.67% {
 transform: translateX(-10804px)
 }
-
 38.98% {
 transform: translateX(-10878px)
 }
-
 40.98% {
 transform: translateX(-10952px)
 }
-
 41.22% {
 transform: translateX(-11026px)
 }
-
 41.63% {
 transform: translateX(-11248px)
 }
-
 43.37% {
 transform: translateX(-11322px)
 }
-
 44.23% {
 transform: translateX(-11396px)
 }
-
 44.87% {
 transform: translateX(-11470px)
 }
-
 45.26% {
 transform: translateX(-11914px)
 }
-
 46.62% {
 transform: translateX(-12062px)
 }
-
 47.21% {
 transform: translateX(-12210px)
 }
-
 48.86% {
 transform: translateX(-12358px)
 }
-
 49.76% {
 transform: translateX(-12506px)
 }
-
 50.1% {
 transform: translateX(-12580px)
 }
-
 51.79% {
 transform: translateX(-12654px)
 }
-
 52.24% {
 transform: translateX(-12728px)
 }
-
 52.54% {
 transform: translateX(-12802px)
 }
-
 53.8% {
 transform: translateX(-12876px)
 }
-
 54.13% {
 transform: translateX(-12950px)
 }
-
 54.6% {
 transform: translateX(-13024px)
 }
-
 55.63% {
 transform: translateX(-13098px)
 }
-
 56.52% {
 transform: translateX(-13172px)
 }
-
 57.5% {
 transform: translateX(-13246px)
 }
-
 57.98% {
 transform: translateX(-13320px)
 }
-
 58.29% {
 transform: translateX(-13394px)
 }
-
 58.94% {
 transform: translateX(-13468px)
 }
-
 59.22% {
 transform: translateX(-13542px)
 }
-
 60.54% {
 transform: translateX(-13616px)
 }
-
 61.19% {
 transform: translateX(-13690px)
 }
-
 61.91% {
 transform: translateX(-13764px)
 }
-
 63.77% {
 transform: translateX(-13838px)
 }
-
 64.43% {
 transform: translateX(-13912px)
 }
-
 64.71% {
 transform: translateX(-13986px)
 }
-
 65.66% {
 transform: translateX(-14060px)
 }
-
 68.77% {
 transform: translateX(-14504px)
 }
-
 70.51% {
 transform: translateX(-14578px)
 }
-
 72.04% {
 transform: translateX(-14652px)
 }
-
 72.83% {
 transform: translateX(-14726px)
 }
-
 74.37% {
 transform: translateX(-14800px)
 }
-
 74.41% {
 transform: translateX(-15244px)
 }
-
 75.51% {
 transform: translateX(-15392px)
 }
-
 76.02% {
 transform: translateX(-15540px)
 }
-
 76.45% {
 transform: translateX(-15688px)
 }
-
 77.15% {
 transform: translateX(-15836px)
 }
-
 78.58% {
 transform: translateX(-15910px)
 }
-
 78.59% {
 transform: translateX(-15984px)
 }
-
 79.72% {
 transform: translateX(-16058px)
 }
-
 80.46% {
 transform: translateX(-16132px)
 }
-
 81.1% {
 transform: translateX(-16206px)
 }
-
 82.28% {
 transform: translateX(-16280px)
 }
-
 82.92% {
 transform: translateX(-16354px)
 }
-
 83.68% {
 transform: translateX(-16428px)
 }
-
 84.25% {
 transform: translateX(-16502px)
 }
-
 84.55% {
 transform: translateX(-16576px)
 }
-
 85.13% {
 transform: translateX(-16650px)
 }
-
 86.15% {
 transform: translateX(-16724px)
 }
-
 86.61% {
 transform: translateX(-16798px)
 }
-
 88.03% {
 transform: translateX(-16872px)
 }
-
 88.39% {
 transform: translateX(-16946px)
 }
-
 89.89% {
 transform: translateX(-17020px)
 }
-
 90.64% {
 transform: translateX(-17168px)
 }
-
 91.44% {
 transform: translateX(-17316px)
 }
-
 91.56% {
 transform: translateX(-17464px)
 }
-
 91.68% {
 transform: translateX(-17538px)
 }
-
 91.83% {
 transform: translateX(-17686px)
 }
-
 92.62% {
 transform: translateX(-17760px)
 }
-
 92.63% {
 transform: translateX(-17834px)
 }
-
 92.74% {
 transform: translateX(-17908px)
 }
-
 92.75% {
 transform: translateX(-17982px)
 }
-
 92.86% {
 transform: translateX(-18056px)
 }
-
 92.98% {
 transform: translateX(-18130px)
 }
-
 93.58% {
 transform: translateX(-18278px)
 }
-
 94.38% {
 transform: translateX(-18426px)
 }
-
 94.49% {
 transform: translateX(-18500px)
 }
-
 94.5% {
 transform: translateX(-18574px)
 }
-
 94.61% {
 transform: translateX(-18722px)
 }
-
 94.73% {
 transform: translateX(-18870px)
 }
-
 94.85% {
 transform: translateX(-19018px)
 }
-
 95.29% {
 transform: translateX(-19462px)
 }
-
 99.14% {
 transform: translateX(-19536px)
 }
-
 99.95% {
 transform: translateX(-19610px)
 }
-
 to {
 transform: translateX(-19684px)
 }
 }
-
 .a {
 fill: #16111d
 }
-
 .f {
 fill: #16111d
 }
-
 .g,
 .h,
 .i {
 fill: #c0caf5;
 white-space: pre
 }
-
 .h,
 .i {
 fill: #3b4261
 }
-
 .i {
 fill: #737aa2
 }
-
 .j {
 fill: #251c30
 }
-
 .k {
 fill: #ff9e64;
 font-weight: 700;
 white-space: pre
 }
-
 .l,
 .m,
 .n,
@@ -675,56 +512,45 @@ white-space: pre
 fill: #2ac3de;
 white-space: pre
 }
-
 .m,
 .n,
 .o,
 .p {
 fill: #bb9af7
 }
-
 .n,
 .o,
 .p {
 fill: #ff9e64
 }
-
 .o,
 .p {
 fill: #9ece6a
 }
-
 .p {
 fill: #7dcfff
 }
-
 .q {
 fill: #1f2335
 }
-
 .r {
 fill: #a9b1d6;
 white-space: pre
 }
-
 .s {
 fill: #314379
 }
-
 .t,
 .u {
 white-space: pre
 }
-
 .t {
 fill: #a9b1d6;
 font-weight: 700
 }
-
 .u {
 fill: #3d59a1
 }
-
 .A,
 .B,
 .w,
@@ -734,7 +560,6 @@ fill: #3d59a1
 fill: #565f89;
 white-space: pre
 }
-
 .A,
 .B,
 .x,
@@ -742,7 +567,6 @@ white-space: pre
 .z {
 fill: #db4b4b
 }
-
 .A,
 .B,
 .y,
@@ -750,33 +574,27 @@ fill: #db4b4b
 fill: #c0caf5;
 text-decoration: underline
 }
-
 .A,
 .B,
 .z {
 fill: #7dcfff
 }
-
 .A,
 .B {
 fill: #2ac3de
 }
-
 .B {
 fill: #bb9af7
 }
-
 .C {
 fill: #2a1722
 }
-
 .D,
 .I {
 fill: #ff9e64;
 text-decoration: underline;
 white-space: pre
 }
-
 .I {
 font-weight: 700
 }
@@ -1009,15 +827,12 @@ font-weight: 700
 </symbol>
 <symbol id="22">
 <path class="q" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">DEMO</text>
 </symbol>
 <symbol id="23">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r"></text>
 </symbol>
 <symbol id="24">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">j</text>
 </symbol>
 <symbol id="25">
 <path class="f" d="M0 0h6v2.171H0z" />
@@ -1747,15 +1562,11 @@ font-weight: 700
 </symbol>
 <symbol id="66">
 <path class="f" d="M0 0h17v2.171H0z" />
-<text y="1.67" class="t">-- VISUAL LINE --</text>
 <path class="f" d="M17.034 0h57v2.171h-57z" />
-<text x="17.034" y="1.67" class="r">j</text>
 </symbol>
 <symbol id="67">
 <path class="f" d="M0 0h17v2.171H0z" />
-<text y="1.67" class="t">-- VISUAL LINE --</text>
 <path class="f" d="M17.034 0h57v2.171h-57z" />
-<text x="17.034" y="1.67" class="r">2</text>
 </symbol>
 <symbol id="68">
 <path class="f" d="M0 0h6v2.171H0z" />
@@ -1867,9 +1678,7 @@ font-weight: 700
 </symbol>
 <symbol id="73">
 <path class="f" d="M0 0h17v2.171H0z" />
-<text y="1.67" class="t">-- VISUAL LINE --</text>
 <path class="f" d="M17.034 0h57v2.171h-57z" />
-<text x="17.034" y="1.67" class="r">3</text>
 </symbol>
 <symbol id="74">
 <path class="f" d="M0 0h6v2.171H0z" />
@@ -2005,9 +1814,7 @@ font-weight: 700
 </symbol>
 <symbol id="80">
 <path class="f" d="M0 0h17v2.171H0z" />
-<text y="1.67" class="t">-- VISUAL LINE --</text>
 <path class="f" d="M17.034 0h57v2.171h-57z" />
-<text x="17.034" y="1.67" class="r"></text>
 </symbol>
 <symbol id="81">
 <path class="q" d="M0 0h74v2.171H0z" />
@@ -2015,7 +1822,6 @@ font-weight: 700
 </symbol>
 <symbol id="82">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">1,1 All</text>
 </symbol>
 <symbol id="83">
 <path class="f" d="M0 0h74v2.171H0z" />
@@ -2137,87 +1943,59 @@ font-weight: 700
 </symbol>
 <symbol id="93">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r"></text>
 </symbol>
 <symbol id="94">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,1 All</text>
 </symbol>
 <symbol id="95">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,4 All</text>
 </symbol>
 <symbol id="96">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,5 All</text>
 </symbol>
 <symbol id="97">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,6 All</text>
 </symbol>
 <symbol id="98">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,7 All</text>
 </symbol>
 <symbol id="99">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,8 All</text>
 </symbol>
 <symbol id="100">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,9 All</text>
 </symbol>
 <symbol id="101">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,10 All</text>
 </symbol>
 <symbol id="102">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,11 All</text>
 </symbol>
 <symbol id="103">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,12 All</text>
 </symbol>
 <symbol id="104">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,13 All</text>
 </symbol>
 <symbol id="105">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,14 All</text>
 </symbol>
 <symbol id="106">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,15 All</text>
 </symbol>
 <symbol id="107">
 <path class="f" d="M0 0h1v2.171H0z" />
@@ -2231,21 +2009,16 @@ font-weight: 700
 </symbol>
 <symbol id="108">
 <path class="f" d="M0 0h12v2.171H0z" />
-<text y="1.67" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 0h62v2.171h-62z" />
-<text x="12.024" y="1.67" class="r">1,16 All</text>
 </symbol>
 <symbol id="109">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">1,15 All</text>
 </symbol>
 <symbol id="110">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">1,15 j</text>
 </symbol>
 <symbol id="111">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">1,15</text>
 </symbol>
 <symbol id="112">
 <path class="f" d="M0 0h2v2.171H0z" />
@@ -2881,7 +2654,6 @@ font-weight: 700
 </symbol>
 <symbol id="148">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">k</text>
 </symbol>
 <symbol id="149">
 <path class="f" d="M0 0h6v2.171H0z" />
@@ -3001,7 +2773,6 @@ font-weight: 700
 </symbol>
 <symbol id="155">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">l</text>
 </symbol>
 <symbol id="156">
 <path class="f" d="M0 0h2v2.171H0z" />
@@ -3091,7 +2862,6 @@ font-weight: 700
 </symbol>
 <symbol id="159">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">g</text>
 </symbol>
 <symbol id="160">
 <path class="f" d="M0 0h2v2.171H0z" />
@@ -3251,7 +3021,6 @@ font-weight: 700
 </symbol>
 <symbol id="167">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">2,35 All</text>
 </symbol>
 <symbol id="168">
 <path class="f" d="M0 0h74v2.171H0z" />
@@ -3267,7 +3036,6 @@ font-weight: 700
 </symbol>
 <symbol id="170">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">:FnlCompile! 1,1 All</text>
 </symbol>
 <symbol id="171">
 <path class="f" d="M0 0h1v2.171H0z" />
@@ -3301,7 +3069,6 @@ font-weight: 700
 </symbol>
 <symbol id="174">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">:FnlCompile! 1,3 All</text>
 </symbol>
 <symbol id="175">
 <path class="f" d="M0 0h1v2.171H0z" />
@@ -3329,23 +3096,18 @@ font-weight: 700
 </symbol>
 <symbol id="178">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">1,16 All</text>
 </symbol>
 <symbol id="179">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">2,16 All</text>
 </symbol>
 <symbol id="180">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">3,16 All</text>
 </symbol>
 <symbol id="181">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">1,16</text>
 </symbol>
 <symbol id="182">
 <path class="f" d="M0 0h74v2.171H0z" />
-<text y="1.67" class="r">1,10 All</text>
 </symbol>
 <symbol id="a">
 <path fill="transparent" d="M0 0h74v22H0z" />
@@ -3980,7 +3742,6 @@ font-weight: 700
 <use xlink:href="#16" y="41.249" />
 <use xlink:href="#22" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1</text>
 </svg>
 <svg x="1924">
 <use xlink:href="#a" />
@@ -4007,9 +3768,7 @@ font-weight: 700
 <use xlink:href="#16" y="41.249" />
 <use xlink:href="#22" y="43.42" />
 <path class="f" d="M0 45.591h17v2.171H0z" />
-<text y="47.261" class="t">-- VISUAL LINE --</text>
 <path class="f" d="M17.034 45.591h57v2.171h-57z" />
-<text x="17.034" y="47.261" class="r">1</text>
 </svg>
 <svg x="1998">
 <use xlink:href="#a" />
@@ -4192,9 +3951,7 @@ font-weight: 700
 <use xlink:href="#14" y="41.249" />
 <use xlink:href="#22" y="43.42" />
 <path class="f" d="M0 45.591h17v2.171H0z" />
-<text y="47.261" class="t">-- VISUAL LINE --</text>
 <path class="f" d="M17.034 45.591h57v2.171h-57z" />
-<text x="17.034" y="47.261" class="r">g</text>
 </svg>
 <svg x="2516">
 <use xlink:href="#a" />
@@ -4530,7 +4287,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,1 O</text>
 </svg>
 <svg x="3330">
 <use xlink:href="#a" />
@@ -4639,9 +4395,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">1,2 All</text>
 </svg>
 <svg x="3626">
 <use xlink:href="#a" />
@@ -4675,9 +4429,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">1,3 All</text>
 </svg>
 <svg x="3700">
 <use xlink:href="#a" />
@@ -7457,7 +7209,6 @@ font-weight: 700
 <use xlink:href="#42" y="41.249" />
 <use xlink:href="#22" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">c</text>
 </svg>
 <svg x="11026">
 <use xlink:href="#a" />
@@ -7484,7 +7235,6 @@ font-weight: 700
 <use xlink:href="#42" y="41.249" />
 <use xlink:href="#22" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">ci</text>
 </svg>
 <svg x="11100">
 <use xlink:href="#a" />
@@ -7511,7 +7261,6 @@ font-weight: 700
 <use xlink:href="#42" y="41.249" />
 <use xlink:href="#22" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">ciw</text>
 </svg>
 <svg x="11174">
 <use xlink:href="#a" />
@@ -7890,7 +7639,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,1 j</text>
 </svg>
 <svg x="12062">
 <use xlink:href="#a" />
@@ -7917,7 +7665,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">2,1 All</text>
 </svg>
 <svg x="12136">
 <use xlink:href="#a" />
@@ -7944,7 +7691,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">2,1 l</text>
 </svg>
 <svg x="12210">
 <use xlink:href="#a" />
@@ -7971,7 +7717,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">2,2 All</text>
 </svg>
 <svg x="12284">
 <use xlink:href="#a" />
@@ -7998,7 +7743,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">2,2 $</text>
 </svg>
 <svg x="12358">
 <use xlink:href="#a" />
@@ -8025,7 +7769,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">2,15 All</text>
 </svg>
 <svg x="12432">
 <use xlink:href="#a" />
@@ -8078,9 +7821,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,16 All</text>
 </svg>
 <svg x="12580">
 <use xlink:href="#a" />
@@ -8107,9 +7848,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,17 All</text>
 </svg>
 <svg x="12654">
 <use xlink:href="#a" />
@@ -8153,9 +7892,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,18 All</text>
 </svg>
 <svg x="12728">
 <use xlink:href="#a" />
@@ -8199,9 +7936,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,19 All</text>
 </svg>
 <svg x="12802">
 <use xlink:href="#a" />
@@ -8245,9 +7980,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,20 All</text>
 </svg>
 <svg x="12876">
 <use xlink:href="#a" />
@@ -8291,9 +8024,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,21 All</text>
 </svg>
 <svg x="12950">
 <use xlink:href="#a" />
@@ -8337,9 +8068,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,22 All</text>
 </svg>
 <svg x="13024">
 <use xlink:href="#a" />
@@ -8383,9 +8112,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,23 All</text>
 </svg>
 <svg x="13098">
 <use xlink:href="#a" />
@@ -8429,9 +8156,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,24 All</text>
 </svg>
 <svg x="13172">
 <use xlink:href="#a" />
@@ -8475,9 +8200,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,25 All</text>
 </svg>
 <svg x="13246">
 <use xlink:href="#a" />
@@ -8521,9 +8244,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,26 All</text>
 </svg>
 <svg x="13320">
 <use xlink:href="#a" />
@@ -8567,9 +8288,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,27 All</text>
 </svg>
 <svg x="13394">
 <use xlink:href="#a" />
@@ -8613,9 +8332,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,28 All</text>
 </svg>
 <svg x="13468">
 <use xlink:href="#a" />
@@ -8659,9 +8376,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,29 All</text>
 </svg>
 <svg x="13542">
 <use xlink:href="#a" />
@@ -8705,9 +8420,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,30 All</text>
 </svg>
 <svg x="13616">
 <use xlink:href="#a" />
@@ -8751,9 +8464,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,31 All</text>
 </svg>
 <svg x="13690">
 <use xlink:href="#a" />
@@ -8797,9 +8508,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,32 All</text>
 </svg>
 <svg x="13764">
 <use xlink:href="#a" />
@@ -8843,9 +8552,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,33 All</text>
 </svg>
 <svg x="13838">
 <use xlink:href="#a" />
@@ -8889,9 +8596,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,34 All</text>
 </svg>
 <svg x="13912">
 <use xlink:href="#a" />
@@ -8935,9 +8640,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,35 All</text>
 </svg>
 <svg x="13986">
 <use xlink:href="#a" />
@@ -8964,9 +8667,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">2,36 All</text>
 </svg>
 <svg x="14060">
 <use xlink:href="#a" />
@@ -9459,7 +9160,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">:FnlCompile! 1,2 All</text>
 </svg>
 <svg x="15466">
 <use xlink:href="#a" />
@@ -9566,7 +9266,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">:FnlCompile! 1,4 All</text>
 </svg>
 <svg x="15762">
 <use xlink:href="#a" />
@@ -10060,9 +9759,7 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h12v2.171H0z" />
-<text y="47.261" class="t">-- INSERT --</text>
 <path class="f" d="M12.024 45.591h62v2.171h-62z" />
-<text x="12.024" y="47.261" class="r">1,17 All</text>
 </svg>
 <svg x="17020">
 <use xlink:href="#a" />
@@ -10115,7 +9812,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,16 j</text>
 </svg>
 <svg x="17168">
 <use xlink:href="#a" />
@@ -10168,7 +9864,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">2,16 j</text>
 </svg>
 <svg x="17316">
 <use xlink:href="#a" />
@@ -10221,7 +9916,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">3,16 j</text>
 </svg>
 <svg x="17464">
 <use xlink:href="#a" />
@@ -10248,7 +9942,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">4,16 All</text>
 </svg>
 <svg x="17538">
 <use xlink:href="#a" />
@@ -10275,7 +9968,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">4,16</text>
 </svg>
 <svg x="17612">
 <use xlink:href="#a" />
@@ -10302,7 +9994,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">4,16 k</text>
 </svg>
 <svg x="17686">
 <use xlink:href="#a" />
@@ -10355,7 +10046,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">3,16 k</text>
 </svg>
 <svg x="17834">
 <use xlink:href="#a" />
@@ -10408,7 +10098,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">2,16 k</text>
 </svg>
 <svg x="17982">
 <use xlink:href="#a" />
@@ -10513,7 +10202,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,16 h</text>
 </svg>
 <svg x="18278">
 <use xlink:href="#a" />
@@ -10566,7 +10254,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,15 h</text>
 </svg>
 <svg x="18426">
 <use xlink:href="#a" />
@@ -10593,7 +10280,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,14 All</text>
 </svg>
 <svg x="18500">
 <use xlink:href="#a" />
@@ -10620,7 +10306,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,14 h</text>
 </svg>
 <svg x="18574">
 <use xlink:href="#a" />
@@ -10647,7 +10332,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,13 All</text>
 </svg>
 <svg x="18648">
 <use xlink:href="#a" />
@@ -10674,7 +10358,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,13 h</text>
 </svg>
 <svg x="18722">
 <use xlink:href="#a" />
@@ -10701,7 +10384,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,12 All</text>
 </svg>
 <svg x="18796">
 <use xlink:href="#a" />
@@ -10728,7 +10410,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,12 h</text>
 </svg>
 <svg x="18870">
 <use xlink:href="#a" />
@@ -10755,7 +10436,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,11 All</text>
 </svg>
 <svg x="18944">
 <use xlink:href="#a" />
@@ -10782,7 +10462,6 @@ font-weight: 700
 <use xlink:href="#91" y="41.249" />
 <use xlink:href="#81" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,11 h</text>
 </svg>
 <svg x="19018">
 <use xlink:href="#a" />
@@ -10986,7 +10665,6 @@ font-weight: 700
 <use xlink:href="#42" y="41.249" />
 <use xlink:href="#22" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,10 Z</text>
 </svg>
 <svg x="19610">
 <use xlink:href="#a" />
@@ -11013,7 +10691,6 @@ font-weight: 700
 <use xlink:href="#42" y="41.249" />
 <use xlink:href="#22" y="43.42" />
 <path class="f" d="M0 45.591h74v2.171H0z" />
-<text y="47.261" class="r">1,10 ZQ</text>
 </svg>
 <svg x="19684">
 <use xlink:href="#a" />
