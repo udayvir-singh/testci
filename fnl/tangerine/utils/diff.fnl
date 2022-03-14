@@ -14,11 +14,11 @@
 (lambda df.read-marker [path]
   "reads marker located in first 21 bytes of 'path'."
   (with-open [file (assert (io.open path "r"))]
-      (local bytes  (or (file:read 21) ""))
-      (local marker (bytes:match ":fennel:([0-9]+)"))
-      (if marker 
-          (tonumber marker)
-          :else false)))
+    (local bytes  (or (file:read 21) ""))
+    (local marker (bytes:match ":fennel:([0-9]+)"))
+    (if marker 
+        (tonumber marker)
+        :else false)))
 
 (lambda df.stale? [source target]
   "compares marker of 'target' with ftime(source), true if source is stale."

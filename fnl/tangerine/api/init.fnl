@@ -47,5 +47,5 @@
     :killall (lazy :utils.window "killall")
   }
   :goto_output (lazy :utils.path "goto-output")
-  :serialize   (lazy :utils.logger "serialize")
+  :serialize   (lazy :output.display "serialize")
 }

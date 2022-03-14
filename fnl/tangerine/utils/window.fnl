@@ -118,7 +118,7 @@
     (each [_ line (ipairs lines)]
       (set height
            (-> (# line) (+ 2) (/ width)
-               (math.ceil 1)
+               (math.ceil)
                (math.max 1)
                (+ height))))
     :return height))

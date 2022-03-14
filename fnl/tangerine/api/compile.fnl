@@ -165,8 +165,8 @@
       :return [sname])))
 
 (lambda compile.rtp [?opts]
-  "diff compiles files in ENV.rtpdirs and 'opts.dirs'"
-  ;; opt { :force boolean :verbose boolean :rtpdirs list :globals list }
+  "diff compiles files in ENV.rtpdirs and 'opts.rtpdirs'"
+  ;; opt { :rtpdirs list :force boolean :verbose boolean :globals list }
   (local opts (or ?opts {}))
   (local logs [])
   (local dirs (env.conf opts [:rtpdirs]))
