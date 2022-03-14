@@ -141,7 +141,7 @@ local function lineheight(lines)
   local height = 0
   local width = vim.api.nvim_win_get_width(0)
   for _, line in ipairs(lines) do
-    height = (math.max(math.ceil(((#line + 2) / width), 1), 1) + height)
+    height = (math.max(math.ceil(((#line + 2) / width)), 1) + height)
   end
   return height
 end

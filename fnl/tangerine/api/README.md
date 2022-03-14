@@ -14,7 +14,8 @@ utils[path]
 ```fennel
 :clean {
   :orphaned <function 1>
-  :target <function 2>
+  :rtp <function 2>
+  :target <function 3>
 }
 ```
 
