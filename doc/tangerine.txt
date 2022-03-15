@@ -38,9 +38,9 @@ thanks to it diffing algorithm.
 FEATURES                                                  *tangerine-features*
 
 
-- **BLAZING FAST**, compiles files in milliseconds
+- _BLAZING_ fast, compiles files in milliseconds
 - 200% support for interactive evaluation
-- Doesn’t create stupid abstractions
+- Transparent, doesn’t create stupid abstractions
 - Natively loads `nvim/init.fnl`
 
 
@@ -187,9 +187,9 @@ add much to your config. #### Default config
         },
     
         highlight = {
-            float = "Normal",
+            float   = "Normal",
             success = "String",
-            errors = "DiagnosticError"
+            errors  = "DiagnosticError"
         },
     }
 <
