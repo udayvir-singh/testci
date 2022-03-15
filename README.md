@@ -128,8 +128,10 @@ local config = vim.stdpath [[config]]
 	},
 
 	eval = {
-		float  = true,         -- show results in floating window
-		luafmt = "f(x) -> []", -- function that returns formater for peaked lua, default [lua-format]
+		float  = true,      -- show results in floating window
+		luafmt = function() -- function that returns formater for peaked lua
+			return {"lua-format"}
+		end,
 
 		diagnostic = { 
 			virtual = true,  -- show errors in virtual text
