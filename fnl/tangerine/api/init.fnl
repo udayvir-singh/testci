@@ -37,6 +37,7 @@
   }
   :clean {
     :target   (lazy :api.clean "target")
+    :rtp      (lazy :api.clean "rtp")
     :orphaned (lazy :api.clean "orphaned")
   }
   :win {

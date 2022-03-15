@@ -45,6 +45,7 @@ panvimdoc () {
 		# parse ignore
 		if ($0 ~ "ignore-line") { 
 			getline
+			getline
 		}
 		if ($0 ~ "ignore-start") {
 			ignore="Yes" 
