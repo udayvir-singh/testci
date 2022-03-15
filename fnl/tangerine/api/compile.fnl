@@ -135,7 +135,7 @@
 ;; -------------------- ;;
 (lambda compile.buffer [?opts]
   "compiles the current active vim buffer."
-  ;; opts { :verbose boolean :filename string :globals list }
+  ;; opts { :float boolean :verbose boolean :filename string :globals list }
   (local opts (or ?opts {}))
   (let [bufname (vim.fn.expand :%:p)
         sname   (vim.fn.expand :%:t)
@@ -150,7 +150,7 @@
 
 (lambda compile.vimrc [?opts]
   "diff compiles ENV.vimrc to ENV.target dir."
-  ;; opts { :force boolean :verbose boolean :filename string :globals list }
+  ;; opts { :force boolean :float boolean :verbose boolean :filename string :globals list }
   (local opts (or ?opts {}))
   (let [source (env.get :vimrc)
         target (p.target source)
@@ -165,8 +165,8 @@
       :return [sname])))
 
 (lambda compile.rtp [?opts]
-  "diff compiles files in ENV.rtpdirs and 'opts.rtpdirs'"
-  ;; opt { :rtpdirs list :force boolean :verbose boolean :globals list }
+  "diff compiles files in ENV.rtpdirs or 'opts.rtpdirs'"
+  ;; opt { :rtpdirs list :force boolean :float boolean :verbose boolean :globals list }
   (local opts (or ?opts {}))
   (local logs [])
   (local dirs (env.conf opts [:rtpdirs]))
@@ -179,7 +179,7 @@
 
 (lambda compile.all [?opts]
   "diff compiles all indexed fennel files in ENV."
-  ;; opt { :force boolean :verbose boolean :rtpdirs list :globals list }
+  ;; opt { :rtpdirs list :force boolean :float boolean :verbose boolean :globals list }
   (local opts  (or ?opts {}))
   (local copts (tbl-merge {:verbose false} opts))
   (local logs  [])

@@ -342,44 +342,58 @@ This section describes function for `tangerine.api.compile.{func}`
 
 <!-- doc=tangerine.api.compile.string() -->
 #### compile-string
-<pre lang="fennel"><code> (compile.string {str})
+<pre lang="fennel"><code> (compile.string {str} {opts})
 </pre></code>
 
-Compiles string {str} of fennel, returns string of lua
+Compiles string {str} of fennel, returns string of lua.
 
-> `[can throw errors]`
+##### Parameters:
+```fennel
+{
+	:filename <string>
+	:globals  <list>
+}
+```
 
 <!-- doc=tangerine.api.compile.file() -->
 #### compile-file
-<pre lang="fennel"><code> (compile.file {source} {target})
+<pre lang="fennel"><code> (compile.file {source} {target} {opts})
 </pre></code>
 
-Compiles fennel {source} and writes output to {target}
+Compiles fennel {source} and writes output to {target}.
 
-> `[can throw errors]`
+##### Parameters:
+```fennel
+{
+	:filename <string>
+	:globals  <list>
+}
+```
 
 <!-- doc=tangerine.api.compile.dir() -->
 #### compile-dir
 <pre lang="fennel"><code> (compile-dir {source} {target} {opts})
 </pre></code>
 
-Compiles fennel in files {source} dir to {target} dir
+Diff compiles files in {source} dir and outputs to {target} dir.
 
-{opts} can be of table:
+##### Parameters:
 ```fennel
 {
 	:force   <boolean>
+	:float   <boolean>
 	:verbose <boolean>
+	:globals <list>
 }
 ```
-If {opts.force} != `true` then it diffs files for compiling
+{opts.force} disables diffing if set to `true`
 
-Example:
+##### Example:
 ```fennel
 (tangerine.api.compile.dir 
 	:path/fnl 
 	:path/lua
-	{ :force false :verbose true })
+	{ :force false :float true :verbose true })
 ```
 
 <!-- doc=tangerine.api.compile.buffer() -->
@@ -387,14 +401,15 @@ Example:
 <pre lang="fennel"><code> (compile-buffer {opts})
 </pre></code>
 
-<ul><li>
-Compiles current fennel buffer
-</li></ul>
+Compiles the current active fennel buffer.
 
-opts can be of table:
+##### Parameters:
 ```fennel
 {
-	:verbose <boolean>
+	:float    <boolean>
+	:verbose  <boolean>
+	:filename <string>
+	:globals  <list>
 }
 ```
 
@@ -403,53 +418,46 @@ opts can be of table:
 <pre lang="fennel"><code> (compile-vimrc {opts})
 </pre></code>
 
-<ul><li>
+Diff compiles `config.vimrc` to `config.target` dir.
 
-Compiles `config.vimrc` to `config.target/tangerine_vimrc.lua`
-
-</li></ul>
-
-opts can be of table:
+##### Parameters:
 ```fennel
 {
-	:force   <boolean>
-	:verbose <boolean>
+	:force    <boolean>
+	:float    <boolean>
+	:verbose  <boolean>
+	:filename <string>
+	:globals  <list>
 }
 ```
-If {opts.force} != `true` then it diffs files for compiling
+{opts.force} disables diffing if set to `true`
 
 <!-- doc=tangerine.api.compile.rtp() -->
 #### compile-rtp
 <pre lang="fennel"><code> (compile.rtp {opts})
 </pre></code>
 
-<ul><li>
+Diff compiles fennel files in `config.rtpdirs` or {opts.rtpdirs}.
 
-Compiles fennel files in `config.rtpdirs`.
-
-</li></ul>
-
-opts can be of table:
+##### Parameters:
 ```fennel
 {
-	:force   <boolean>
-	:verbose <boolean>
-	:rtpdirs <list>
+	:force    <boolean>
+	:float    <boolean>
+	:verbose  <boolean>
+	:globals  <list>
+	:rtpdirs  <list>
 }
 ```
-If {opts.force} != `true` then it diffs files for compiling
+{opts.force} disables diffing if set to `true`
 
-Example:
+##### Example:
 ```fennel
 (tangerine.api.compile.rtp {
-	:force false
+	:force   false
+	:float   true
 	:verbose true
-	:rtpdirs [
-		"colors"
-		"plugin"
-		"~/somedir"
-	]
-})
+	:rtpdirs [ "colors" "plugin" "$HOME/mydir" ]})
 ```
 
 <!-- doc=tangerine.api.compile.all() -->
@@ -457,21 +465,19 @@ Example:
 <pre lang="fennel"><code> (compile.all {opts})
 </pre></code>
 
-<ul><li>
+Diff compiles all indexed fennel files in `config`.
 
-Compiles all indexed fennel files in `config` dirs.
-
-</li></ul>
-
-opts can be of table:
+##### Parameters:
 ```fennel
 {
-	:force   <boolean>
-	:verbose <boolean>
-	:rtpdirs <list>
+	:force    <boolean>
+	:float    <boolean>
+	:verbose  <boolean>
+	:globals  <list>
+	:rtpdirs  <list>
 }
 ```
-If {opts.force} != `true` then it diffs files for compiling
+{opts.force} disables diffing if set to `true`
 
 ## Cleaning Api
 Tangerine comes with functions to clean stale lua file in target dir without their fennel parents.

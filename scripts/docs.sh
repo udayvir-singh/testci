@@ -61,6 +61,11 @@ panvimdoc () {
 			$(NF + 1)="{"doc"}"
 		}
 
+		# parse header blocks
+		if ($(NF) ~ ":$" && $1 == "#####") {
+			$(NF + 1)="~"
+		}
+
 		# strip html blocks
 		if (! code && $1 ~ "^```") {
 			code="Yes"
