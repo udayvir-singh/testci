@@ -32,9 +32,9 @@ Tangerine provides a painless way to add fennel to your neovim config, without a
 It prioritizes speed, transparency and minimalism and It's lightning fast thanks to it diffing algorithm.
 
 ## Features
-- **BLAZING FAST**, compiles files in milliseconds
+- *BLAZING* fast, compiles files in milliseconds
 - 200% support for interactive evaluation 
-- Doesn't create stupid abstractions
+- Transparent, doesn't create stupid abstractions
 - Natively loads `nvim/init.fnl`
 
 ## Comparison to other plugins
@@ -154,9 +154,9 @@ local config = vim.stdpath [[config]]
 	},
 
 	highlight = {
-		float = "Normal",
+		float   = "Normal",
 		success = "String",
-		errors = "DiagnosticError"
+		errors  = "DiagnosticError"
 	},
 }
 ```
