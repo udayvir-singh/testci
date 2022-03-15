@@ -435,24 +435,36 @@ This section describes function for `tangerine.api.compile.{func}`
 
                    *tangerine-compile-string* *tangerine.api.compile.string()*
 
-compile-string                         (compile.string {str})
+compile-string                         (compile.string {str} {opts})
 
 
-Compiles string {str} of fennel, returns string of lua
+Compiles string {str} of fennel, returns string of lua.
 
+PARAMETERS: ~
 
-  `[can throw errors]`
+>
+    {
+        :filename <string>
+        :globals  <list>
+    }
+<
 
 
                        *tangerine-compile-file* *tangerine.api.compile.file()*
 
-compile-file                           (compile.file {source} {target})
+compile-file                           (compile.file {source} {target} {opts})
 
 
-Compiles fennel {source} and writes output to {target}
+Compiles fennel {source} and writes output to {target}.
 
+PARAMETERS: ~
 
-  `[can throw errors]`
+>
+    {
+        :filename <string>
+        :globals  <list>
+    }
+<
 
 
                          *tangerine-compile-dir* *tangerine.api.compile.dir()*
@@ -460,27 +472,29 @@ Compiles fennel {source} and writes output to {target}
 compile-dir                            (compile-dir {source} {target} {opts})
 
 
-Compiles fennel in files {source} dir to {target} dir
+Diff compiles files in {source} dir and outputs to {target} dir.
 
-{opts} can be of table:
+PARAMETERS: ~
 
 >
     {
         :force   <boolean>
+        :float   <boolean>
         :verbose <boolean>
+        :globals <list>
     }
 <
 
 
-If {opts.force} != `true` then it diffs files for compiling
+{opts.force} disables diffing if set to `true`
 
-Example:
+EXAMPLE: ~
 
 >
     (tangerine.api.compile.dir 
         :path/fnl 
         :path/lua
-        { :force false :verbose true })
+        { :force false :float true :verbose true })
 <
 
 
@@ -489,13 +503,16 @@ Example:
 compile-buffer                         (compile-buffer {opts})
 
 
-Compiles current fennel buffer
+Compiles the current active fennel buffer.
 
-opts can be of table:
+PARAMETERS: ~
 
 >
     {
-        :verbose <boolean>
+        :float    <boolean>
+        :verbose  <boolean>
+        :filename <string>
+        :globals  <list>
     }
 <
 
@@ -505,52 +522,53 @@ opts can be of table:
 compile-vimrc                          (compile-vimrc {opts})
 
 
-Compiles `config.vimrc` to `config.target/tangerine_vimrc.lua`
+Diff compiles `config.vimrc` to `config.target` dir.
 
-opts can be of table:
+PARAMETERS: ~
 
 >
     {
-        :force   <boolean>
-        :verbose <boolean>
+        :force    <boolean>
+        :float    <boolean>
+        :verbose  <boolean>
+        :filename <string>
+        :globals  <list>
     }
 <
 
 
-If {opts.force} != `true` then it diffs files for compiling
+{opts.force} disables diffing if set to `true`
 
                          *tangerine-compile-rtp* *tangerine.api.compile.rtp()*
 
 compile-rtp                            (compile.rtp {opts})
 
 
-Compiles fennel files in `config.rtpdirs`.
+Diff compiles fennel files in `config.rtpdirs` or {opts.rtpdirs}.
 
-opts can be of table:
+PARAMETERS: ~
 
 >
     {
-        :force   <boolean>
-        :verbose <boolean>
-        :rtpdirs <list>
+        :force    <boolean>
+        :float    <boolean>
+        :verbose  <boolean>
+        :globals  <list>
+        :rtpdirs  <list>
     }
 <
 
 
-If {opts.force} != `true` then it diffs files for compiling
+{opts.force} disables diffing if set to `true`
 
-Example:
+EXAMPLE: ~
 
 >
     (tangerine.api.compile.rtp {
-        :force false
+        :force   false
+        :float   true
         :verbose true
-        :rtpdirs [
-            "colors"
-            "plugin"
-            "~/somedir"
-        ]
-    })
+        :rtpdirs [ "colors" "plugin" "$HOME/mydir" ]})
 <
 
 
@@ -559,20 +577,22 @@ Example:
 compile-all                            (compile.all {opts})
 
 
-Compiles all indexed fennel files in `config` dirs.
+Diff compiles all indexed fennel files in `config`.
 
-opts can be of table:
+PARAMETERS: ~
 
 >
     {
-        :force   <boolean>
-        :verbose <boolean>
-        :rtpdirs <list>
+        :force    <boolean>
+        :float    <boolean>
+        :verbose  <boolean>
+        :globals  <list>
+        :rtpdirs  <list>
     }
 <
 
 
-If {opts.force} != `true` then it diffs files for compiling
+{opts.force} disables diffing if set to `true`
 
 CLEANING API                                          *tangerine-cleaning-api*
 
