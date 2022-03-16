@@ -600,10 +600,10 @@ This section describes function for `tangerine.api.clean.{func}`
 
                        *tangerine-clean-target* *tangerine.api.clean.target()*
 
-clean-target                           (clean.target {target} {opts})
+clean-target                           (clean.target {source} {target} {opts})
 
 
-Deletes stale or orphaned lua files in {target} dir.
+Deletes orphaned {target} after comparing against {source}.
 
 PARAMETERS: ~
 
