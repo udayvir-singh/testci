@@ -395,37 +395,37 @@ By default tangerine provides the following api
 >
     :Fnl tangerine.api
     
-    > :return {
-        :compile {
-          :all    <function 0>
-          :buffer <function 1>
-          :dir    <function 2>
-          :file   <function 3>
-          :rtp    <function 4>
-          :string <function 5>
-          :vimrc  <function 6>
-        }
-        :clean {
-          :rtp      <function 7>
-          :target   <function 8>
-          :orphaned <function 9>
-        }
-        :eval {
-          :buffer <function 10>
-          :file   <function 11>
-          :peak   <function 12>
-          :string <function 13>
-        }
-        :win {
-          :next    <function 14>
-          :prev    <function 15>
-          :close   <function 16>
-          :killall <function 17>
-          :resize  <function 18>
-        }
-        :goto_output <function 19>
-        :serialize   <function 20>
-      }
+    -> :return {
+         :compile {
+           :all    <function 0>
+           :buffer <function 1>
+           :dir    <function 2>
+           :file   <function 3>
+           :rtp    <function 4>
+           :string <function 5>
+           :vimrc  <function 6>
+         }
+         :clean {
+           :rtp      <function 7>
+           :target   <function 8>
+           :orphaned <function 9>
+         }
+         :eval {
+           :buffer <function 10>
+           :file   <function 11>
+           :peak   <function 12>
+           :string <function 13>
+         }
+         :win {
+           :next    <function 14>
+           :prev    <function 15>
+           :close   <function 16>
+           :killall <function 17>
+           :resize  <function 18>
+         }
+         :goto_output <function 19>
+         :serialize   <function 20>
+       }
 <
 
 
@@ -596,38 +596,67 @@ PARAMETERS: ~
 
 CLEANING API                                          *tangerine-cleaning-api*
 
-Tangerine comes with functions to clean stale lua file in target dir without
-their fennel parents.
-
 This section describes function for `tangerine.api.clean.{func}`
 
                        *tangerine-clean-target* *tangerine.api.clean.target()*
 
-clean-target                           (clean.target {target} {force})
+clean-target                           (clean.target {target} {opts})
 
 
-Deletes lua files in {target} dir without their fennel parent
+Deletes stale or orphaned lua files in {target} dir.
 
-If {force} == `true`, then it deletes all compiled files
+PARAMETERS: ~
+
+>
+    {
+        :force <boolean>
+    }
+<
+
+
+{opts.force} deletes all compiled files if set to `true`
+
+                                                         *tangerine-clean-rtp*
+
+clean-rtp                              (clean.rtp {opts})
+
+
+Deletes orphaned lua files in `config.rtpdirs` or {opts.rtpdirs}.
+
+PARAMETERS: ~
+
+>
+    {
+        :force    <boolean>
+        :float    <boolean>
+        :verbose  <boolean>
+        :rtpdirs  <list>
+    }
+<
+
+
+{opts.force} deletes all compiled files if set to `true`
 
                    *tangerine-clean-orphaned* *tangerine.api.clean.orphaned()*
 
 clean-orphaned                         (clean.orphaned {opts})
 
 
-Deletes lua files in `config.target` dir without their fennel parent
+Deletes orphaned lua files indexed inside `target` dirs.
 
-opts can be of table:
+PARAMETERS: ~
 
 >
     {
-        :force <boolean>
-        :verbose <boolean>
+        :force    <boolean>
+        :float    <boolean>
+        :verbose  <boolean>
+        :rtpdirs  <list>
     }
 <
 
 
-If {opts.force} == `true`, then it deletes all compiled files
+{opts.force} deletes all compiled files if set to `true`
 
 EVALUATION API                                      *tangerine-evaluation-api*
 
