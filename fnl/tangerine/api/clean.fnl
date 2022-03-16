@@ -51,7 +51,7 @@
         :else false)))
 
 (lambda clean.rtp [?opts]
-  "deletes orphaned lua files in ENV.rtpdirs."
+  "deletes orphaned lua files in ENV.rtpdirs or 'opts.rtpdirs'."
   ;; opts { :rtpdirs list :force boolean :verbose boolean :float boolean }
   (local opts (or ?opts {}))
   (local logs [])
