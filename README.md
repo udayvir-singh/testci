@@ -484,10 +484,10 @@ This section describes function for `tangerine.api.clean.{func}`
 
 <!-- doc=tangerine.api.clean.target() -->
 #### clean-target
-<pre lang="fennel"><code> (clean.target {target} {opts})
+<pre lang="fennel"><code> (clean.target {source} {target} {opts})
 </pre></code>
 
-Deletes stale or orphaned lua files in {target} dir.
+Deletes orphaned {target} after comparing against {source}.
 
 ##### Parameters:
 ```fennel
