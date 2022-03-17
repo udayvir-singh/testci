@@ -44,20 +44,20 @@
 ;; -------------------- ;;
 (lambda eval.string [str ?opts]
   "evaluate string 'str' of fennel, pretty prints the output."
-  ;; opts { :filename string :offset number :float boolean }
+  ;; opts { :filename string :offset number :float boolean :virtual boolean }
   (local opts (or ?opts {}))
   (let [fennel   (fennel.load)
         filename (or opts.filename :string)]
     (err.clear) ;; clear previous errors
     (local (ok result) 
       (xpcall #(fennel.eval str {: filename}) 
-              #(err.handle $1 {:float opts.float :offset opts.offset})))
+              #(err.handle $1 opts)))
     (if ok
         (dp.show result {:float opts.float}))))
 
 (lambda eval.file [path ?opts]
   "reads 'path' and passes it off for evaluation."
-  ;; opts { :filename string :float boolean }
+  ;; opts { :filename string :float boolean :virtual boolean }
   (local opts (or ?opts {}))
   (let [path  (p.resolve path)
         sname (p.shortname path)]
@@ -66,7 +66,7 @@
 
 (lambda eval.buffer [start end ?opts]
   "evaluate lines 'start' to 'end' in current vim buffer."
-  ;; opts { :filename string :float boolean }
+  ;; opts { :filename string :float boolean :virtual boolean }
   (local opts (or ?opts {}))
   (let [start   (- start 1)
         lines   (get-lines start end)
@@ -83,8 +83,8 @@
 ;;       Peaking        ;;
 ;; -------------------- ;;
 (lambda eval.peak [start end ?opts]
-  "lookup lua output for lines 'start' to 'end' in current buffer."
-  ;; opts { :filename string :float boolean }
+  "lookup lua output for lines 'start' to 'end' inside scratch buffer."
+  ;; opts { :filename string :float boolean :virtual boolean }
   (local opts (or ?opts {}))
   (let [fennel  (fennel.load)
         start   (- start 1)
@@ -93,12 +93,12 @@
     (err.clear) ;; clear previous errors
     (local (ok result) 
       (xpcall #(fennel.compileString lines {:filename (or opts.filename bufname)}) 
-              #(err.handle $1 {:float opts.float :offset start})))
+              #(err.handle $1 (tbl-merge {:offset start} opts))))
     (if ok
         (dp.show-lua result opts))))
 
 ; EXAMPLES:
-; (eval.peak 80 -1 {:float true :filename "FILE"})
+; (eval.peak 1 -8 {:float true :virtual true :filename "FILE"})
 
 
 :return eval

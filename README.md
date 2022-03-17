@@ -16,7 +16,7 @@
 ![Neovim version](https://img.shields.io/badge/Neovim-0.5-57A143?style=flat-square&logo=neovim)
 ![GNU Neovim version](https://img.shields.io/badge/Neovim%20In%20Emacs-0.5-dac?style=flat-square&logo=gnuemacs&logoColor=daf)
 
-[About](#introduction) • [Installation](#installation) • [Setup](#setup) • [Commands](#commands) • [API](#api)
+[About](#introduction) • [Installation](#installation) • [Setup](#setup) • [Commands](#commands) • [API](#api) • [Development](#development)
 
 <p align="center">
 	<img width="700" src="https://raw.githubusercontent.com/udayvir-singh/testci/master/demo/demo.svg">
@@ -537,93 +537,157 @@ This section describes function for `tangerine.api.eval.{func}`
 
 <!-- doc=tangerine.api.eval.string() -->
 #### eval-string
-<pre lang="fennel"><code> (eval.string {str})
+<pre lang="fennel"><code> (eval.string {str} {opts})
 </pre></code>
 
-<ul><li>
-Evaluates string {str} of fennel, and prints the output
-</li></ul>
+Evaluates string {str} of fennel, pretty prints the output.
 
-Can throw errors
+##### Parameters:
+```fennel
+{
+	:float    <boolean>
+	:virtual  <boolean>
+	:filename <string>
+	:offset   <number> ;; line offset for errors
+}
+```
 
 <!-- doc=tangerine.api.eval.file() -->
 #### eval-file
-<pre lang="fennel"><code> (eval.file {path})
+<pre lang="fennel"><code> (eval.file {path} {opts})
 </pre></code>
 
-<ul><li>
-Evaluates {path} of fennel, and prints the output
-</li></ul>
+Evaluates {path} of fennel, pretty prints the output.
 
-Can throw errors
-
-<!-- doc=tangerine.api.eval.range() -->
-#### eval-range
-<pre lang="fennel"><code> (eval.range {start} {end} {count})
-</pre></code>
-
-<ul><li>
-Evaluates range {start} to {end} in vim buffer 0
-</li></ul>
-
-Optionally takes {count}, only meant to be used in command definitions
+##### Parameters:
+```fennel
+{
+	:float    <boolean>
+	:virtual  <boolean>
+	:filename <string>
+}
+```
 
 <!-- doc=tangerine.api.eval.buffer() -->
 #### eval-buffer
-<pre lang="fennel"><code> (eval.buffer)
+<pre lang="fennel"><code> (eval.buffer {start} {end} {opts})
 </pre></code>
 
-<ul><li>
+Evalutes lines {start} to {end} in current fennel buffer.
 
-Evaluates all lines in vim buffer 0,
-wrapper around `(eval.range 1 -1)`
-
-</li></ul>
-
-## Utils Api
-<!-- doc=tangerine.api.serialize() -->
-#### serialize
-<pre lang="fennel"><code> (tangerine.api.serialize {object})
-</pre></code>
-
-<ul><li>
-Return a human-readable representation of given {object}
-</li></ul>
-
-Example:
+##### Parameters:
 ```fennel
-(tangerine.api.serialize [1 2 3 4])
--> "[ 1 2 3 4 ]"
+{
+	:float    <boolean>
+	:virtual  <boolean>
+	:filename <string>
+}
 ```
 
+<!-- doc=tangerine.api.eval.peak() -->
+#### eval-peak
+<pre lang="fennel"><code> (eval.peak {start} {end} {opts})
+</pre></code>
+
+Peak lua output for lines {start} to {end} inside a scratch buffer.
+
+##### Parameters:
+```fennel
+{
+	:float    <boolean>
+	:virtual  <boolean>
+	:filename <string>
+}
+```
+
+## Utils Api
 <!-- doc=tangerine.api.goto_output() -->
 #### goto_output
 <pre lang="fennel"><code> (tangerine.api.goto_output)
 </pre></code>
 
-<ul><li>
 Open lua source of current fennel buffer in a new buffer
-</li></ul>
 
-<!-- doc=tangerine.fennel() -->
-## Fennel Api
-Underlying fennel used by tangerine can by accessed by calling `tangerine.fennel`
-
-<pre lang="fennel"><code> (tangerine.fennel {version})
+<!-- doc=tangerine.api.serialize() -->
+#### serialize
+<pre lang="fennel"><code> (tangerine.api.serialize {val} {ret?})
 </pre></code>
 
-{version} can be one of [ `latest` `1-0-0` `0-10-0` `0-9-2` ],
-default `config.compiler.version`
+Return a human-readable representation of given {val}.
 
-# Contributing
+Appends return block if {ret?} is `true`
+
+##### Examples:
+```fennel
+(tangerine.api.serialize foo)
+-> "[ 1 2 3 4 ]"
+
+(tangerine.api.serialize foo true)
+-> ":return [ 1 2 3 4 ]"
+```
+## Windows Api
+Provides way for user to interact with floating windows created by tangerine.
+
+This section describes function for `tangerine.api.win.{func}`
+
+<!-- doc=tangerine.api.win.next() -->
+#### win-next 
+<pre lang="fennel"><code> (tangerine.api.win.next {steps?})
+</pre></code>
+
+Switch to next floating window by 1 or N {steps?}.
+
+<!-- doc=tangerine.api.win.prev() -->
+#### win-prev
+<pre lang="fennel"><code> (tangerine.api.win.prev {steps?})
+</pre></code>
+
+Switch to previous floating window by 1 or N {steps?}.
+
+<!-- doc=tangerine.api.win.resize() -->
+#### win-resize
+<pre lang="fennel"><code> (tangerine.api.win.resize {factor})
+</pre></code>
+
+Changes height of current floating window by {factor} of N.
+
+<!-- doc=tangerine.api.win.close() -->
+#### win-close
+<pre lang="fennel"><code> (tangerine.api.win.close)
+</pre></code>
+
+Closes current floating window, switching to nearest neighbor afterwards.
+
+<!-- doc=tangerine.api.win.killall() -->
+#### win-killall
+<pre lang="fennel"><code> (tangerine.api.win.killall)
+</pre></code>
+
+Closes all floating windows created by tangerine.
+
+## Fennel Api
+<!-- doc=tangerine.fennel() -->
+#### fennel-load
+<pre lang="fennel"><code> (tangerine.fennel {version?})
+</pre></code>
+
+Provides underlying fennel used by tangerine
+
+{version?} can be one of [ `"latest" "1-0-0" "0-10-0" "0-9-2"` ]
+
+# Development
 ## Requirements
-| Program       | Description                     |
-|---------------|---------------------------------|
-| [pandoc]()    | for generating vimdoc           |
-| [make]()      | for build instructions          |
-| [lua]()       | for running fennel (included)   |
-| [bash]()      | for running shell scripts       |
-| [coreutils]() | required by shell scripts       |
+| Program       | Description                  |
+|---------------|------------------------------|
+| [lua]()       | runs included fennel         |
+| [pandoc]()    | generates vimdoc             |
+| [make]()      | build instructions           |
+| [bash]()      | runs shell scripts           |
+| [coreutils]() | required by shell scripts    |
+| [findutils]() | " "                          |
+| [curl]()      | " "                          |
+
+NOTE: only GNU/utils work, 9base or busybox should not work
 
 ## Building from source
 ```bash
@@ -645,12 +709,12 @@ see `make help` or [below](#make-targets) for information on targets.
 | `:install` | install tangerine on this system           |
 | `:clean`   | deletes build and install dir              |
 
-- To build tangerine run:
+To build tangerine run:
 ```bash
 $ make clean build
 ```
 
-- Then to install it:
+To install tangerine run:
 ```bash
 $ make install
 ```
@@ -662,36 +726,36 @@ $ make install
 | `git-skip`   | makes git ignore build dirs, run before `make :build`          |
 | `git-unskip` | reverts `git-skip`, run after `make build`                     |
 
-- Example workflow:
+##### Example workflow:
 ```bash
 $ make git-skip # first thing that you should be running
 
 # makes changes to tangerine
+$ ...
 $ make clean build
 
 # commit changes 
 $ git commit -a -m "<msg>"
-$ git push
 
 # cleanly fetch from origin
 $ make git-pull
 ```
 
 ## LOC Helpers
-Tangerine comes with helpers to generate detailed summary about lines of source code
+Helpers to generate detailed summary about lines of code in source files
 
 ```bash
 $ make loc-{language}
 ```
 
-Supported Languages:
+##### Languages:
 - fennel
-- bash / shellscript
+- bash
 - markdown
 - makefile
 - yaml
 
-Examples:
+##### Examples:
 ```bash
 $ make loc-fennel
 

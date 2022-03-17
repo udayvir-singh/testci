@@ -61,10 +61,13 @@ panvimdoc () {
 			$(NF + 1)="{"doc"}"
 		}
 
+		# parse optional args
+		if ($0 ~ "{.+?}") 
+			gsub("?}", "*}", $0)
+
 		# parse header blocks
-		if ($(NF) ~ ":$" && $1 == "#####") {
+		if ($(NF) ~ ":$" && $1 == "#####")
 			$(NF + 1)="~"
-		}
 
 		# strip html blocks
 		if (! code && $1 ~ "^```") {

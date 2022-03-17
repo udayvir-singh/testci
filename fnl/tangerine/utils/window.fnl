@@ -86,7 +86,7 @@
   :return true)
 
 (lambda win.close []
-  "close current floating window, switch to nearest neighbor afterwards."
+  "closes current floating window, switch to nearest neighbor afterwards."
   (let [current (vim.api.nvim_get_current_win)]
     (each [idx [win conf] (ipairs win-stack)]
           (when (= win current)
@@ -96,7 +96,7 @@
               (if (. win-stack idx) idx
                   (. win-stack (+ idx 1)) (+ idx 1) 
                   (- idx 1)) 
-              0)))
+              (do :steps 0))))
     :return true))
 
 (lambda win.killall []
