@@ -37,7 +37,7 @@ eval.string = function(str, _3fopts)
     return fennel0.eval(str, {filename = filename})
   end
   local function _5_(_241)
-    return err.handle(_241, {float = opts.float, offset = opts.offset})
+    return err.handle(_241, opts)
   end
   ok, result = xpcall(_4_, _5_)
   if ok then
@@ -76,7 +76,7 @@ eval.peak = function(start, _end, _3fopts)
     return fennel0.compileString(lines, {filename = (opts.filename or bufname)})
   end
   local function _8_(_241)
-    return err.handle(_241, {float = opts.float, offset = start0})
+    return err.handle(_241, tbl_merge({offset = start0}, opts))
   end
   ok, result = xpcall(_7_, _8_)
   if ok then

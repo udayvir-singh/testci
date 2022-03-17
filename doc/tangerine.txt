@@ -15,8 +15,9 @@ Table of Contents                                *tangerine-table-of-contents*
   - Cleaning Api                                      |tangerine-cleaning-api|
   - Evaluation Api                                  |tangerine-evaluation-api|
   - Utils Api                                            |tangerine-utils-api|
+  - Windows Api                                        |tangerine-windows-api|
   - Fennel Api                                          |tangerine-fennel-api|
-6. Contributing                                       |tangerine-contributing|
+6. Development                                         |tangerine-development|
   - Requirements                                      |tangerine-requirements|
   - Building from source                      |tangerine-building-from-source|
   - Make Targets                                      |tangerine-make-targets|
@@ -664,54 +665,78 @@ This section describes function for `tangerine.api.eval.{func}`
 
                          *tangerine-eval-string* *tangerine.api.eval.string()*
 
-eval-string                            (eval.string {str})
+eval-string                            (eval.string {str} {opts})
 
 
-Evaluates string {str} of fennel, and prints the output
+Evaluates string {str} of fennel, pretty prints the output.
 
-Can throw errors
+PARAMETERS: ~
+
+>
+    {
+        :float    <boolean>
+        :virtual  <boolean>
+        :filename <string>
+        :offset   <number> ;; line offset for errors
+    }
+<
+
 
                              *tangerine-eval-file* *tangerine.api.eval.file()*
 
-eval-file                              (eval.file {path})
+eval-file                              (eval.file {path} {opts})
 
 
-Evaluates {path} of fennel, and prints the output
+Evaluates {path} of fennel, pretty prints the output.
 
-Can throw errors
+PARAMETERS: ~
 
-                           *tangerine-eval-range* *tangerine.api.eval.range()*
+>
+    {
+        :float    <boolean>
+        :virtual  <boolean>
+        :filename <string>
+    }
+<
 
-eval-range                             (eval.range {start} {end} {count})
-
-
-Evaluates range {start} to {end} in vim buffer 0
-
-Optionally takes {count}, only meant to be used in command definitions
 
                          *tangerine-eval-buffer* *tangerine.api.eval.buffer()*
 
-eval-buffer                            (eval.buffer)
+eval-buffer                            (eval.buffer {start} {end} {opts})
 
 
-Evaluates all lines in vim buffer 0, wrapper around `(eval.range 1 -1)`
+Evalutes lines {start} to {end} in current fennel buffer.
 
-UTILS API                                                *tangerine-utils-api*
-
-                             *tangerine-serialize* *tangerine.api.serialize()*
-
-serialize                              (tangerine.api.serialize {object})
-
-
-Return a human-readable representation of given {object}
-
-Example:
+PARAMETERS: ~
 
 >
-    (tangerine.api.serialize [1 2 3 4])
-    -> "[ 1 2 3 4 ]"
+    {
+        :float    <boolean>
+        :virtual  <boolean>
+        :filename <string>
+    }
 <
 
+
+                             *tangerine-eval-peak* *tangerine.api.eval.peak()*
+
+eval-peak                              (eval.peak {start} {end} {opts})
+
+
+Peak lua output for lines {start} to {end} inside a scratch buffer.
+
+PARAMETERS: ~
+
+>
+    {
+        :float    <boolean>
+        :virtual  <boolean>
+        :filename <string>
+    }
+<
+
+
+UTILS API                                                *tangerine-utils-api*
 
                          *tangerine-goto_output* *tangerine.api.goto_output()*
 
@@ -720,28 +745,94 @@ goto_output                            (tangerine.api.goto_output)
 
 Open lua source of current fennel buffer in a new buffer
 
+                             *tangerine-serialize* *tangerine.api.serialize()*
+
+serialize                              (tangerine.api.serialize {val} {ret?})
+
+
+Return a human-readable representation of given {val}.
+
+Appends return block if {ret?} is `true`
+
+EXAMPLES: ~
+
+>
+    (tangerine.api.serialize foo)
+    -> "[ 1 2 3 4 ]"
+    
+    (tangerine.api.serialize foo true)
+    -> ":return [ 1 2 3 4 ]"
+<
+
+
+WINDOWS API                                            *tangerine-windows-api*
+
+Provides way for user to interact with floating windows created by tangerine.
+
+This section describes function for `tangerine.api.win.{func}`
+
+                               *tangerine-win-next* *tangerine.api.win.next()*
+
+win-next                               (tangerine.api.win.next {steps?})
+
+
+Switch to next floating window by 1 or N {steps?}.
+
+                               *tangerine-win-prev* *tangerine.api.win.prev()*
+
+win-prev                               (tangerine.api.win.prev {steps?})
+
+
+Switch to previous floating window by 1 or N {steps?}.
+
+                           *tangerine-win-resize* *tangerine.api.win.resize()*
+
+win-resize                             (tangerine.api.win.resize {factor})
+
+
+Changes height of current floating window by {factor} of N.
+
+                             *tangerine-win-close* *tangerine.api.win.close()*
+
+win-close                              (tangerine.api.win.close)
+
+
+Closes current floating window, switching to nearest neighbor afterwards.
+
+                         *tangerine-win-killall* *tangerine.api.win.killall()*
+
+win-killall                            (tangerine.api.win.killall)
+
+
+Closes all floating windows created by tangerine.
+
 FENNEL API                                              *tangerine-fennel-api*
 
-Underlying fennel used by tangerine can by accessed by calling
-`tangerine.fennel`
+                                  *tangerine-fennel-load* *tangerine.fennel()*
 
-(tangerine.fennel {version})
+fennel-load                            (tangerine.fennel {version?})
 
-{version} can be one of [ `latest` `1-0-0` `0-10-0` `0-9-2` ], default
-`config.compiler.version`
+
+Provides underlying fennel used by tangerine
+
+{version?} can be one of [ `"latest" "1-0-0" "0-10-0" "0-9-2"` ]
 
 ==============================================================================
-6. Contributing                                       *tangerine-contributing*
+6. Development                                         *tangerine-development*
 
 REQUIREMENTS                                          *tangerine-requirements*
 
-│  Program   │         Description         │
-│pandoc <>   │for generating vimdoc        │
-│make <>     │for build instructions       │
-│lua <>      │for running fennel (included)│
-│bash <>     │for running shell scripts    │
-│coreutils <>│required by shell scripts    │
+│  Program   │       Description       │
+│lua <>      │runs included fennel     │
+│pandoc <>   │generates vimdoc         │
+│make <>     │build instructions       │
+│bash <>     │runs shell scripts       │
+│coreutils <>│required by shell scripts│
+│findutils <>│” ”                  │
+│curl <>     │” ”                  │
 
+
+NOTE: only GNU/utils work, 9base or busybox should not work
 
 BUILDING FROM SOURCE                          *tangerine-building-from-source*
 
@@ -767,18 +858,14 @@ MAKE TARGETS                                          *tangerine-make-targets*
 │:clean      │deletes build and install dir          │
 
 
-
-- To build tangerine run:
-
+To build tangerine run:
 
 >
     $ make clean build
 <
 
 
-
-- Then to install it:
-
+To install tangerine run:
 
 >
     $ make install
@@ -793,19 +880,17 @@ GIT HOOKS                                                *tangerine-git-hooks*
 │git-unskip    │reverts git-skip, run after make build                        │
 
 
-
-- Example workflow:
-
+EXAMPLE WORKFLOW: ~
 
 >
     $ make git-skip # first thing that you should be running
     
     # makes changes to tangerine
+    $ ...
     $ make clean build
     
     # commit changes 
     $ git commit -a -m "<msg>"
-    $ git push
     
     # cleanly fetch from origin
     $ make git-pull
@@ -814,17 +899,24 @@ GIT HOOKS                                                *tangerine-git-hooks*
 
 LOC HELPERS                                            *tangerine-loc-helpers*
 
-Tangerine comes with helpers to generate detailed summary about lines of source
-code
+Helpers to generate detailed summary about lines of code in source files
 
 >
     $ make loc-{language}
 <
 
 
-Supported Languages: - fennel - bash / shellscript - markdown - makefile - yaml
+LANGUAGES: ~
 
-Examples:
+
+- fennel
+- bash
+- markdown
+- makefile
+- yaml
+
+
+EXAMPLES: ~
 
 >
     $ make loc-fennel

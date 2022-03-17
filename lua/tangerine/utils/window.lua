@@ -122,7 +122,10 @@ win.close = function()
       else
         _22_ = (idx - 1)
       end
-      move_stack(_22_, 0)
+      local function _24_()
+        return 0
+      end
+      move_stack(_22_, _24_())
     else
     end
   end
@@ -147,10 +150,10 @@ local function lineheight(lines)
 end
 local function nmap_21(buffer, ...)
   _G.assert((nil ~= buffer), "Missing argument buffer on fnl/tangerine/utils/window.fnl:126")
-  for _, _25_ in ipairs({...}) do
-    local _each_26_ = _25_
-    local lhs = _each_26_[1]
-    local rhs = _each_26_[2]
+  for _, _26_ in ipairs({...}) do
+    local _each_27_ = _26_
+    local lhs = _each_27_[1]
+    local rhs = _each_27_[2]
     vim.api.nvim_buf_set_keymap(buffer, "n", lhs, ("<cmd>" .. rhs .. "<CR>"), {silent = true, noremap = true})
   end
   return nil
