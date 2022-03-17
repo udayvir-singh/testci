@@ -54,7 +54,7 @@ panvimdoc () {
 			ignore=Null; getline 
 		}
 
-		# parse docstring
+		# parse doc-tags
 		if ($2 ~ "doc=.+") {
 			doc=$2
 			getline 
@@ -62,12 +62,14 @@ panvimdoc () {
 		}
 
 		# parse optional args
-		if ($0 ~ "{.+?}") 
+		if ($0 ~ "{.+?}") {
 			gsub("?}", "*}", $0)
+		}
 
 		# parse header blocks
-		if ($(NF) ~ ":$" && $1 == "#####")
+		if ($1 == "#####" && $(NF) ~ ":$" ) {
 			$(NF + 1)="~"
+		}
 
 		# strip html blocks
 		if (! code && $1 ~ "^```") {

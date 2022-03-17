@@ -1,5 +1,5 @@
-<!--
--- DEPENDS: FIXME
+<!-- FIXXX_MEEE
+-- DEPENDS:
 -- Install     | setup
 -- API         | api[*]
 -- Command     | vim[cmds]
@@ -677,15 +677,16 @@ Provides underlying fennel used by tangerine
 
 # Development
 ## Requirements
-| Program       | Description                  |
-|---------------|------------------------------|
-| [lua]()       | runs included fennel         |
-| [pandoc]()    | generates vimdoc             |
-| [make]()      | build instructions           |
-| [bash]()      | runs shell scripts           |
-| [coreutils]() | required by shell scripts    |
-| [findutils]() | " "                          |
-| [curl]()      | " "                          |
+| Program       | Description                 |
+|---------------|-----------------------------|
+| [pandoc]()    | generates vimdoc            |
+| [lua]()       | runs included fennel        |
+| [make]()      | runs build instructions     |
+| [watchexec]() | build on changes (optional) |
+| [bash]()      | runs shell scripts          |
+| [coreutils]() | required by shell scripts   |
+| [findutils]() | " "                         |
+| [curl]()      | " "                         |
 
 NOTE: only GNU/utils work, 9base or busybox should not work
 
@@ -700,18 +701,24 @@ make <target>
 see `make help` or [below](#make-targets) for information on targets.
 
 ## Make Targets
-| Target     | Description                                |
-|------------|--------------------------------------------|
-| `:fnl`     | compiles fennel files                      |
-| `:deps`    | copy required deps in lua folder           |
-| `:vimdoc`  | runs panvimdoc to generate vimdocs         |
-| `:build`   | combines `:fnl` `:deps` `:vimdoc`          |
-| `:install` | install tangerine on this system           |
-| `:clean`   | deletes build and install dir              |
+| Target         | Description                                  |
+|----------------|----------------------------------------------|
+| `:fnl`         | compiles fennel files                        |
+| `:deps`        | copy required deps in lua folder             |
+| `:vimdoc`      | runs panvimdoc to generate vimdocs           |
+| `:fnldoc`      | generates module level documentation         |
+|                |                                              |
+| `:build`       | combines `:fnl :deps :vimdoc :fnldoc`        |
+| `:watch-build` | watches source dir, runs `:build` on changes |
+|                |                                              |
+| `:install`     | install tangerine on this system             |
+| `:clean`       | deletes build and install dir                |
 
 To build tangerine run:
 ```bash
 $ make clean build
+# or
+$ make watch-build
 ```
 
 To install tangerine run:
@@ -723,7 +730,7 @@ $ make install
 | Target       | Description                                                    |
 |--------------|----------------------------------------------------------------|
 | `git-pull`   | safely fetches git repo, prevents conflicts with local changes |
-| `git-skip`   | makes git ignore build dirs, run before `make :build`          |
+| `git-skip`   | makes git ignore build dirs, run before `make build`           |
 | `git-unskip` | reverts `git-skip`, run after `make build`                     |
 
 ##### Example workflow:
@@ -748,12 +755,12 @@ Helpers to generate detailed summary about lines of code in source files
 $ make loc-{language}
 ```
 
-##### Languages:
-- fennel
-- bash
-- markdown
-- makefile
-- yaml
+##### Supported Languages:
+- `fennel`
+- `bash`
+- `markdown`
+- `makefile`
+- `yaml`
 
 ##### Examples:
 ```bash

@@ -68,7 +68,7 @@ DOC_FILES := $(shell find fnl -name 'README.md')
 	git restore doc lua $(DOC_FILES)
 	echo :: RUNNING GIT PULL
 	echo -e  "   \e[1;32m$$\e[0m git pull"
-	git pull --rebase | sed 's:^:   :'
+	(git pull --rebase 2>&1 || sleep 4) | sed 's:^:   :'
 
 git-pull: git-unskip --pull clean build git-skip
 
