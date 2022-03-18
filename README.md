@@ -46,10 +46,10 @@ It prioritizes speed, transparency and minimalism and It's lightning fast thanks
 - Excessively feature rich to be used for dotfiles.
 - Blindly compiles all files that it founds, resulting in slow load times.
 
-## Installation
+# Installation
 1. create file `plugin/tangerine.lua` in your config dir
 
-2. add these lines to automatically bootstrap tangerine
+2. add these lines to automatically bootstrap tangerine:
 ```lua
 -- ~/.config/nvim/plugin/tangerine.lua
 
@@ -66,7 +66,7 @@ if vim.fn.empty(vim.fn.glob(tangerine_path)) > 0 then
 	print [[tangerine.nvim: finished installing ]]
 end
 ```
-3. call setup() function
+3. call tangerine's `setup()` function, see [setup](#setup) docs:
 ```lua
 -- ~/.config/nvim/plugin/tangerine.lua
 
@@ -77,7 +77,7 @@ tangerine.setup {}
 
 4. invoke `:FnlCompile` to run tangerine manually or add [hooks](#setup) in your config.
 
-5. create `~/.config/nvim/init.fnl`, and let tangerine do its magic.
+5. create `~/.config/nvim/init.fnl`, and start writing your config.
 
 ---
 You can use a plugin manager to manage tangerine afterwards.
@@ -103,12 +103,12 @@ You can use a plugin manager to manage tangerine afterwards.
 Tangerine comes with sane defaults so that you can get going without having to add much to your config.
 #### Default config
 ```lua
-local config = vim.stdpath [[config]]
+local nvim_dir = vim.stdpath [[config]]
 
 {
-	vimrc   = config .. "/init.fnl",
-	source  = config .. "/fnl",
-	target  = config .. "/lua",
+	vimrc   = nvim_dir .. "/init.fnl",
+	source  = nvim_dir .. "/fnl",
+	target  = nvim_dir .. "/lua",
 	rtpdirs = {},
 
 	compiler = {
@@ -162,7 +162,7 @@ local config = vim.stdpath [[config]]
 ```
 
 #### Example Config
-Here is config that I use in my dotfiles
+Here is config that I use in my dotfiles:
 ```lua
 {
 	-- save fnl output in a separate dir, it gets automatically added to package.path
@@ -181,8 +181,6 @@ Here is config that I use in my dotfiles
 	}
 }
 ```
-
-That's It now get writing your vim config in fennel
 
 # Commands
 <!-- doc=:FnlCompileBuffer -->
