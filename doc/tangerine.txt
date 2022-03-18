@@ -43,22 +43,22 @@ thanks to it diffing algorithm.
 FEATURES                                                  *tangerine-features*
 
 
-- _BLAZING_ fast, compiles files in milliseconds
-- 200% support for interactive evaluation
-- Transparent, doesn’t create stupid abstractions
-- Natively loads `nvim/init.fnl`
+- :fire: _BLAZING_ fast, compile times in milliseconds
+- :ocean: 200% support for interactive evaluation
+- :bamboo: Transparent, doesn’t create stupid abstractions
+- :ribbon: Natively loads `nvim/init.fnl`
 
 
 COMPARISON TO OTHER PLUGINS            *tangerine-comparison-to-other-plugins*
 
-                                                            *tangerine-HOTPOT*
+HOTPOT :STEW: ~
 
 
 - Abstracts too much away from user.
 - Hooks onto lua package searchers to compile [harder to debug]
 
 
-                                                           *tangerine-ANISEED*
+ANISEED :HERB: ~
 
 
 - Excessively feature rich to be used for dotfiles.
@@ -69,8 +69,7 @@ COMPARISON TO OTHER PLUGINS            *tangerine-comparison-to-other-plugins*
 2. Installation                                       *tangerine-installation*
 
 
-1. create file `plugin/tangerine.lua` in your config dir
-1. add these lines to automatically bootstrap tangerine:
+1. create file `plugin/tangerine.lua` to bootstrap tangerine:
 
 
 >
@@ -92,7 +91,7 @@ COMPARISON TO OTHER PLUGINS            *tangerine-comparison-to-other-plugins*
 
 
 
-1. call tangerine’s `setup()` function, see |tangerine-setup| docs:
+1. call tangerine’s `setup()` function, see |tangerine-docs|:
 
 
 >
@@ -105,8 +104,7 @@ COMPARISON TO OTHER PLUGINS            *tangerine-comparison-to-other-plugins*
 
 
 
-1. invoke `:FnlCompile` to run tangerine manually or add |tangerine-hooks| in your
-config.
+1. invoke `:FnlCompile` manually or setup |tangerine-hooks|.
 1. create `~/.config/nvim/init.fnl`, and start writing your config.
 
 
