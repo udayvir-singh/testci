@@ -14,7 +14,7 @@
 # :tangerine: Tangerine :tangerine:
 
 ![Neovim version](https://img.shields.io/badge/Neovim-0.5-57A143?style=flat-square&logo=neovim)
-![GNU Neovim version](https://img.shields.io/badge/Neovim%20In%20Emacs-0.5-dac?style=flat-square&logo=gnuemacs&logoColor=daf)
+![GNU Neovim in Emacs version](https://img.shields.io/badge/Neovim%20In%20Emacs-0.5-dac?style=flat-square&logo=gnuemacs&logoColor=daf)
 
 [About](#introduction) • [Installation](#installation) • [Setup](#setup) • [Commands](#commands) • [API](#api) • [Development](#development)
 
@@ -27,29 +27,29 @@
 <!-- ignore-end -->
 
 # Introduction
-Tangerine provides a painless way to add fennel to your neovim config, without adding to your load times.
+Tangerine provides a painless way to add fennel to your neovim config,
+without adding to your load times.
 
-It prioritizes speed, transparency and minimalism and It's lightning fast thanks to it diffing algorithm.
+It prioritizes speed, transparency and minimalism 
+and It's lightning fast thanks to it diffing algorithm.
 
 ## Features
-- *BLAZING* fast, compiles files in milliseconds
-- 200% support for interactive evaluation 
-- Transparent, doesn't create stupid abstractions
-- Natively loads `nvim/init.fnl`
+- :fire:   *BLAZING* fast, compile times in milliseconds
+- :ocean:  200% support for interactive evaluation 
+- :bamboo: Transparent, doesn't create stupid abstractions
+- :ribbon: Natively loads `nvim/init.fnl`
 
 ## Comparison to other plugins
-#### HOTPOT
+##### HOTPOT :stew:
 - Abstracts too much away from user.
 - Hooks onto lua package searchers to compile [harder to debug]
 
-#### ANISEED
+##### ANISEED :herb:
 - Excessively feature rich to be used for dotfiles.
 - Blindly compiles all files that it founds, resulting in slow load times.
 
 # Installation
-1. create file `plugin/tangerine.lua` in your config dir
-
-2. add these lines to automatically bootstrap tangerine:
+1. create file `plugin/tangerine.lua` to bootstrap tangerine:
 ```lua
 -- ~/.config/nvim/plugin/tangerine.lua
 
@@ -66,7 +66,7 @@ if vim.fn.empty(vim.fn.glob(tangerine_path)) > 0 then
 	print [[tangerine.nvim: finished installing ]]
 end
 ```
-3. call tangerine's `setup()` function, see [setup](#setup) docs:
+2. call tangerine's `setup()` function, see [docs](#setup):
 ```lua
 -- ~/.config/nvim/plugin/tangerine.lua
 
@@ -75,9 +75,9 @@ local tangerine = require [[tangerine]]
 tangerine.setup {}
 ```
 
-4. invoke `:FnlCompile` to run tangerine manually or add [hooks](#setup) in your config.
+3. invoke `:FnlCompile` manually or setup [hooks](#setup).
 
-5. create `~/.config/nvim/init.fnl`, and start writing your config.
+4. create `~/.config/nvim/init.fnl`, and start writing your config.
 
 ---
 You can use a plugin manager to manage tangerine afterwards.
