@@ -100,8 +100,8 @@ You can use a plugin manager to manage tangerine afterwards.
 ```
 
 # Setup
+### Default config
 Tangerine comes with sane defaults so that you can get going without having to add much to your config.
-#### Default config
 ```lua
 local nvim_dir = vim.stdpath [[config]]
 
@@ -161,7 +161,7 @@ local nvim_dir = vim.stdpath [[config]]
 }
 ```
 
-#### Example Config
+### Example Config
 Here is config that I use in my dotfiles:
 ```lua
 {
@@ -183,13 +183,14 @@ Here is config that I use in my dotfiles:
 ```
 
 # Commands
+## Compiling
 <!-- doc=:FnlCompileBuffer -->
 #### :FnlCompileBuffer
 Compiles current active fennel buffer
 
 <!-- doc=:FnlCompile -->
 #### :FnlCompile[!]
-Diff compiles fennel files in `source` dir to `target` dir
+Diff compiles all indexed fennel files
 
 If bang! is present then forcefully compiles all `source` files
 
@@ -199,8 +200,7 @@ Deletes stale or orphaned lua files in `target` dir
 
 If bang! is present then it deletes all lua files.
 
-<hr>
-
+## Evaluation
 <!-- doc=:Fnl -->
 #### :Fnl {expr}
 Executes and Evalutate {expr} of fennel
@@ -228,8 +228,7 @@ Evaluates all lines or [range] in current fennel buffer
 
 > mapped to `gE` by default.
 
-<hr>
-
+## Peaking
 <!-- doc=:FnlPeak -->
 #### :[range]FnlPeak
 Peak lua output for [range] in current fennel buffer
@@ -242,8 +241,7 @@ Open lua output of current fennel buffer in a new buffer
 
 > mapped to `gO` by default.
 
-<hr>
-
+## Window
 <!-- doc=:FnlWinNext -->
 #### :FnlWinNext [N]
 Jump to [N]th next floating window created by tangerine
@@ -274,27 +272,30 @@ Closes all floating windows made by tangerine
 
 > mapped to `ESC` in floats by default.
 
-# FAQ and Tricks
-##### Q: How to make tangerine compile automatically when you open vim
-Ans: add hooks in config of `setup()` function:
-```lua
--- if you want to compile before loading init.fnl (recommended)
-hooks = ["oninit"]
+# FAQ
+**Q: How to make tangerine compile automatically when you open vim**
 
--- if you only want after VimEnter event has fired
-hooks = ["onenter"]
+**A:** add hooks in config:
+```lua
+tangerine.setup {
+	compiler = {
+		-- if you want to compile before loading init.fnl (recommended)
+		hooks = ["oninit"]
+
+		-- if you only want after VimEnter event has fired
+		hooks = ["onenter"]
+	}
+}
 ```
 
-##### Q: How to tuck away compiled output in a separate directory
-Ans: change source in config
-```lua
-source = "/path/to/your/dir"
-```
 
-##### Get underlying fennel used by tangerine
-Call `(tangerine.fennel {version})`, see fennel [api](#fennel-api)
-```fennel
-(tangerine.fennel (or :latest :1-0-0 :0-10-0 :0-9-2))
+**Q: How to tuck away compiled output in a separate directory**
+
+**A:** change source in config:
+```lua
+tangerine.setup {
+	source = "/path/to/your/dir"
+}
 ```
 
 # Api
