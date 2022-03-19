@@ -105,7 +105,7 @@ ANISEED :HERB: ~
 
 
 1. invoke `:FnlCompile` manually or setup |tangerine-hooks|.
-1. create `~/.config/nvim/init.fnl`, and start writing your config.
+2. create `~/.config/nvim/init.fnl`, and start writing your config.
 
 
 ------------------------------------------------------------------------------
@@ -856,17 +856,17 @@ see `make help` or |tangerine-below| for information on targets.
 
 MAKE TARGETS                                          *tangerine-make-targets*
 
-│     Target     │                 Description                  │
-│:fnl            │compiles fennel files                         │
-│:deps           │copy required deps in lua folder              │
-│:vimdoc         │runs panvimdoc to generate vimdocs            │
-│:fnldoc         │generates module level documentation          │
-│                │                                              │
-│:build          │combines :fnl :deps :vimdoc :fnldoc           │
-│:watch-build    │watches source dir, runs :build on changes    │
-│                │                                              │
-│:install        │install tangerine on this system              │
-│:clean          │deletes build and install dir                 │
+│     Target     │                    Description                    │
+│:fnl            │compiles fennel files                              │
+│:deps           │copy required deps in lua folder                   │
+│:vimdoc         │runs panvimdoc to generate vimdocs                 │
+│:fnldoc         │generates module level documentation               │
+│                │                                                   │
+│:build          │combines :fnl :deps :vimdoc :fnldoc                │
+│:watch-build    │watches source dir, runs :build on changes         │
+│                │                                                   │
+│:install        │install tangerine on this system                   │
+│:clean          │deletes build and install dir                      │
 
 
 To build tangerine run:
