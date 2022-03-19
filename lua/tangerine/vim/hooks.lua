@@ -1,7 +1,7 @@
 local env = require("tangerine.utils.env")
 local hooks = {}
 local function exec(...)
-  return print(table.concat({...}, " "))
+  return vim.cmd(table.concat({...}, " "))
 end
 local function parse_autocmd(opts)
   _G.assert((nil ~= opts), "Missing argument opts on fnl/tangerine/vim/hooks.fnl:18")
@@ -20,14 +20,17 @@ local function augroup(name, ...)
   return true
 end
 hooks.run = function()
-  local clean_3f = env.get("compiler", "clean")
-  if clean_3f then
-    _G.tangerine.api.clean.orphaned()
-  else
+  local function _1_()
+    local clean_3f = env.get("compiler", "clean")
+    if clean_3f then
+      _G.tangerine.api.clean.orphaned()
+    else
+    end
+    return _G.tangerine.api.compile.all()
   end
-  return _G.tangerine.api.compile.all()
+  return vim.schedule_wrap(_1_)()
 end
-local run_hooks = "lua :require 'tangerine.vim.hooks'.run()"
+local run_hooks = "lua require 'tangerine.vim.hooks'.run()"
 hooks.onsave = function()
   local vimrc = env.get("vimrc")
   local source = env.get("source")
@@ -37,7 +40,7 @@ end
 hooks.onload = function()
   return augroup("tangerine-onload", {{"VimEnter", "*"}, run_hooks})
 end
-hooks.onit = function()
+hooks.oninit = function()
   return hooks.run()
 end
 return hooks
