@@ -707,7 +707,7 @@ see `make help` or [below](#make-targets) for information on targets.
 | `:vimdoc`      | runs panvimdoc to generate vimdocs           |
 | `:fnldoc`      | generates module level documentation         |
 |                |                                              |
-| `:build`       | combines `:fnl :deps :vimdoc :fnldoc`        |
+| `:build`       | combines `:fnl` `:deps` `:vimdoc` `:fnldoc`  |
 | `:watch-build` | watches source dir, runs `:build` on changes |
 |                |                                              |
 | `:install`     | install tangerine on this system             |
